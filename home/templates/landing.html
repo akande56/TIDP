@@ -1,0 +1,287 @@
+{% load pwa %}
+{% progressive_web_app_meta %}
+
+
+<!DOCTYPE html>
+<html lang="zxx">
+
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <title>TranscriptDigita</title>
+    <!--favicon-->
+    <link rel="shortcut icon" type="image/png" href="/static/landing/images/favicon.png">
+    <!--bootstrap css-->
+    <link rel="stylesheet" type="text/css" href="/static/landing/css/bootstrap.min.css">
+    <!--owl carousel css-->
+    <link rel="stylesheet" type="text/css" href="/static/landing/css/owl.carousel.min.css">
+    <!--magnific popup css-->
+    <link rel="stylesheet" type="text/css" href="/static/landing/css/magnific-popup.css">
+    <!--font awesome css-->
+    <link rel="stylesheet" type="text/css" href="/static/landing/css/font-awesome.min.css">
+    <!--icofont css-->
+    <link rel="stylesheet" type="text/css" href="/static/landing/css/icofont.min.css">
+    <!--animate css-->
+    <link rel="stylesheet" type="text/css" href="/static/landing/css/animate.css">
+    <!--main css-->
+    <link rel="stylesheet" type="text/css" href="/static/landing/css/style.css">
+    <!--responsive css-->
+    <link rel="stylesheet" type="text/css" href="/static/landing/css/responsive.css">
+</head>
+
+<body>
+    <!--start header-->
+    <header id="header">
+        <!--start mainmenu-->
+        <div class="mainmenu">
+            <div class="container">
+                <nav class="navbar navbar-expand-lg">
+                    <div class="container">
+                        <!--logo-->
+                        <a class="logo" href="#"><img src="/static/images/favicon.png" alt="logo" /></a>
+                        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarContent" aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation">
+                            <span class="icon-bar"><i class="icofont-navigation-menu"></i></span>
+                        </button>
+                        <!--navbar links-->
+                        <div class="collapse navbar-collapse" id="navbarContent">
+                            <ul class="navbar-nav mx-auto text-center">
+                                <li class="nav-item">
+                                    <a class="nav-link active" href="#" data-scroll-nav="0">Home</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="#" data-scroll-nav="1">Features</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="#" data-scroll-nav="3">Track Transcript</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="#" data-scroll-nav="5">Verify Transcript</a>
+                                </li>
+                            </ul>
+                            <ul class="navbar-nav shop-btn">
+                                <li class="nav-item">
+                                    <a class="nav-link active" href="{% url 'login' %}">Apply / Register</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </nav>
+            </div>
+        </div>
+        <!--end mainmenu-->
+    </header>
+    <!--end header-->
+    <!--start hero area-->
+    <section id="hero-area" class="hero-three" data-scroll-index="0">
+        <div class="slider owl-carousel">
+            <!--start slide single-->
+            <div class="slide-single">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-5">
+                            <div class="caption-img">
+                                <img src="/static/images/system.png" class="img-fluid" alt="image">
+                            </div>
+                        </div>
+                        <div class="col-md-7">
+                            <div class="caption d-table">
+                                <div class="d-table-cell align-middle">
+                                    <h1>Transcript Simplified</h1>
+                                    <p>With Transcript digita, Institutions and Universities can seemlessly process and manage transcript applications, fastly easyly and secured centered communicaion.</p>
+                                    <div class="hero-btn">
+                                        <a class="bg" href="#product-area-three">Contact Us<i class="fa fa-long-arrow-right"></i></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!--end hero area-->
+    <section id="feat-area" data-scroll-index="1">
+        <div class="container">
+            <div class="row">
+                <!--start feature single-->
+                <div class="col-md-6">
+                    <div class="feat-single three">
+                        <div class="feat-icon">
+                            <i class="icofont-alarm"></i>
+                        </div>
+                        <div class="feat-cont">
+                            <h4>Trancript Request Applications</h4>
+                            <p>Detailed information that should catch the of Our Clients..</p>
+                        </div>
+                    </div>
+                </div>
+                <!--end feature single-->
+                <!--start feature single-->
+                <div class="col-md-6">
+                    <div class="feat-single three">
+                        <div class="feat-icon">
+                            <i class="icofont-video"></i>
+                        </div>
+                        <div class="feat-cont">
+                            <h4>Transcript Processing System</h4>
+                            <p>Detailed information that should catch the attemtion of Our Clients..</p>
+                        </div>
+                    </div>
+                </div>
+                <!--end feature single-->
+                <!--start feature single-->
+                <div class="col-md-6">
+                    <div class="feat-single three">
+                        <div class="feat-icon">
+                            <i class="icofont-chat"></i>
+                        </div>
+                        <div class="feat-cont">
+                            <h4>Transcript Processing System </h4>
+                            <p>Rich comminication routing, ease and simplified.</p>
+                        </div>
+                    </div>
+                </div>
+                <!--end feature single-->
+                <!--start feature single-->
+                <div class="col-md-6">
+                    <div class="feat-single three">
+                        <div class="feat-icon">
+                            <i class="icofont-brand-android-robot"></i>
+                        </div>
+                        <div class="feat-cont">
+                            <h4>Install Any App</h4>
+                            <p>Cross platform, install in on your pc, mobile or any interent connected device.</p>
+                        </div>
+                    </div>
+                </div>
+                <!--end feature single-->
+            </div>
+        </div>
+    </section>
+    <!--end feature area-->
+    <!--start about area-->
+    <section id="about-area" class="bg-gray three">
+        <div class="container">
+            <div class="row">
+                <!--start about content-->
+                <div class="col-lg-6 col-md-8">
+                    <div class="about-cont">
+                        <h6>Core Values</h6>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <ul>
+                                    <li><i class="fa fa-check"></i>Increased Productivity</li>
+                                    <li><i class="fa fa-check"></i>Save Time</li>
+                                    <li><i class="fa fa-check"></i>No MOre Missing Deadlines</li>
+                                </ul>
+                            </div>
+                            <div class="col-md-6">
+                                <ul>
+                                    <li><i class="fa fa-check"></i>Never Lose Transcript</li>
+                                    <li><i class="fa fa-check"></i>Increased Man Power</li>
+                                    <li><i class="fa fa-check"></i>Reduced Risk</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--end about content-->
+                <!--start about image-->
+                <div class="col-lg-6 col-md-4">
+                    <div class="about-img bg d-table">
+                        <div class="align-middle d-table-cell">
+                            <img src="/static/images/system.png" class="img-fluid animation-jump" alt="image">
+                        </div>
+                    </div>
+                </div>
+                <!--end about image-->
+            </div>
+        </div>
+    </section>
+    <!--end about area-->
+    
+    <!--start footer-->
+    <footer id="footer" class="bg-orange">
+        <div class="footer-top">
+            <div class="container">
+                <div class="row">
+                    <!--start footer single-->
+                    <div class="col-lg-3 col-md-6">
+                        <div class="footer-single">
+                            <img src="/static/img/trans.png" class="img-fluid" alt="" />
+                            
+                        </div>
+                    </div>
+                    <!--end footer single-->
+                    <!--start footer single-->
+                    <div class="col-lg-2 col-md-6">
+                        <div class="footer-single">
+                            <ul>
+                                <li><a href="#">Contact Us</a></li>
+                              
+                            </ul>
+                        </div>
+                    </div>
+                    <!--end footer single-->
+                    <!--start footer single-->
+                    <div class="col-lg-2 col-md-6">
+                        <div class="footer-single">
+                            <ul>
+                                <li><a href="#">Verify Transcript</a></li>
+                                <li><a href="#">Privacy & Policy</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <!--end footer single-->
+                    <div class="col-lg-5 col-md-6">
+                        <div class="subscribe">
+                            <input type="email" class="form-control" id="news-email" placeholder="Enter Email">
+                            <button type="submit">Subscribe</button>
+                        </div>
+                        <div class="footer-social">
+                            <h5>Follow Us</h5>
+                            <ul>
+                                <li><a href="#"><i class="icofont-facebook"></i></a></li>
+                                <li><a href="#"><i class="icofont-twitter"></i></a></li>
+                                <li><a href="#"><i class="icofont-google-plus"></i></a></li>
+                                <li><a href="#"><i class="icofont-linkedin"></i></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--start footer bottom-->
+        <div class="footer-btm text-center">
+            <div class="container">
+                <p>&copy; 2023 Transcript Digita. All Rights Reserved By Transcript DIgita</p>
+            </div>
+        </div>
+        <!--end footer bottom-->
+    </footer>
+    <!--end footer-->
+    <!--jQuery js-->
+    <script src="/static/landing/js/jquery-3.3.1.min.js"></script>
+    <!--proper js-->
+    <script src="/static/landing/js/popper.min.js"></script>
+    <!--bootstrap js-->
+    <script src="/static/landing/js/bootstrap.min.js"></script>
+    <!--magnic popup js-->
+    <script src="/static/landing/js/magnific-popup.min.js"></script>
+    <!--owl carousel js-->
+    <script src="/static/landing/js/owl.carousel.min.js"></script>
+    <!--scrollIt js-->
+    <script src="/static/landing/js/scrollIt.min.js"></script>
+    <!--contact js-->
+    <script src="/static/landing/js/contact.js"></script>
+    <!--validator js-->
+    <script src="/static/landing/js/validator.min.js"></script>
+    <!--main js-->
+    <script src="/static/landing/js/custom.js"></script>
+</body>
+
+
+</html>
