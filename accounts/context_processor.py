@@ -3,7 +3,6 @@ from django.contrib.auth.models import User
 from accounts.models import Account
 from django.shortcuts import redirect
 from accounts.models import User
-from home.models import Unit
 import datetime
 
 def user(request):

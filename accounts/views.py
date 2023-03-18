@@ -11,6 +11,8 @@ from accounts.forms import (
     UserLoginForm,
 )
 
+def home(request):
+    pass
 
 def login_(request):
     next = request.GET.get('next')
@@ -118,3 +120,10 @@ class OnBoarding(View, LoginRequiredMixin):
         }
         return render(request, "new/on_boarding.html", context)
         
+
+class PaymentView(LoginRequiredMixin, View):
+    template = "new/payment.html"
+
+    def get(self, request, **kwargs):
+
+        return render(request, "new/payment.html")
