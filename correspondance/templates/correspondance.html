@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+{% block up_style %}
+{% endblock up_style %}
+
+{% block style %}
+    <link rel="stylesheet" href="/static/css/layout-nested.css">    
+{% endblock %}
+
+{% block content %}
+
+
+{% block correspondance %}{% endblock correspondance %}
+
+
+
+<script>
+    var tc = document.querySelectorAll('.email-name');
+    for (var t = 0; t < tc.length; t++) {
+        var c = tc[t];
+        c.addEventListener('click', function () {
+            slideDown(document.querySelector('.inbox-read'));
+            slideUp(document.querySelector('.inbox-right'));
+        });
+    }
+    document.querySelector('.back-inbox').addEventListener('click', function () {
+        console.log('123');
+        slideUp(document.querySelector('.inbox-read'));
+        slideDown(document.querySelector('.inbox-right'));
+    });
+    document.querySelector('.mail-search-toggle').addEventListener('click', function () {
+        slideDown(document.querySelector('.mail-search'));
+    });
+    document.querySelector('.search-close').addEventListener('click', function () {
+        slideUp(document.querySelector('.mail-search'));
+    });
+</script>
+
+
+{% endblock %}

@@ -1,0 +1,94 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="pc-container">
+    <div class="pcoded-content">        
+        <!-- [ Main Content ] start -->
+        <div class="row">
+            <!-- support-section start -->
+            <div class="col-md-6 col-xl-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h6 class="mb-4">Pending Approval</h6>
+                        <div class="row d-flex align-items-center">
+                            <div class="col-9">
+                                <h3 class="f-w-300 d-flex align-items-center ">0</h3>
+                            </div>
+                            <div class="col-3 text-end">
+                                <p class=""><i class="feather icon-delete text-success f-30 m-r-10"></i></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 col-xl-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h6 class="mb-4">Pending Meeting</h6>
+                        <div class="row d-flex align-items-center">
+                            <div class="col-9">
+                                <h3 class="f-w-300 d-flex align-items-center ">0</h3>
+                            </div>
+                            <div class="col-3 text-end">
+                                <p class=""><i class="feather icon-inbox text-success f-30 m-r-10"></i></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 col-xl-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h6 class="mb-4">Messages</h6>
+                        <div class="row d-flex align-items-center">
+                            <div class="col-9">
+                                <h3 class="f-w-300 d-flex align-items-center ">
+                                    0
+                                </h3>
+                            </div>
+                            <div class="col-3 text-end">
+                                <p class=""><i class="feather icon-mail text-success f-30 m-r-10"></i></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-6 col-md-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h5>Incoming Mail report</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="row pb-2">
+                            <div class="col-auto m-b-10">
+                                <h3 class="mb-1">0</h3>
+                                <span>Total Incoming</span>
+                            </div>
+                            <div class="col-auto m-b-10">
+                                <h3 class="mb-1">0</h3>
+                                <span>Approved</span>
+                            </div>
+                        </div>
+                        <div id="account-chart"></div>
+                    </div>
+                </div>
+            </div>
+            <!-- customer-section start -->
+            <div class="col-xl-6 col-md-12">
+                <div class="card">
+                    <div class="card-body">
+                        <h6>Meeting Insight</h6>
+                        <span>This week have been very productive.</span>
+                        <div class="row d-flex justify-content-center align-items-center">
+                            <div class="col">
+                                <div id="satisfaction-chart"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- customer-section end -->
+        </div>
+    </div>
+</div>
+{% endblock content %}

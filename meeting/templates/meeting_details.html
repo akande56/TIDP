@@ -1,0 +1,141 @@
+{% extends 'base.html' %}
+{% load widget_tweaks %}
+
+
+{% load static %}
+{% block style %}
+    <link rel="stylesheet" href="/static/fonts/tabler-icons.min.css">
+{% endblock %}
+
+{% block content %}
+    <div class="pc-container">
+        <div class="pcoded-content">
+            <!-- [ Main Content ] start -->
+            <div class="row">
+                <!-- subscribe start -->
+                <div class="col-md-12">         
+                    <div class="card">
+                        <div class="card-header">
+                            <h5>{{ meeting.title }} </h5>
+                        </div>
+                        {% if messages %}
+                                    {% for message in messages %}
+                                        <div class="alert alert-{% if message.error %}danger{% else %}success{% endif %}" role="alert">
+                                            {{ message }}
+                                        </div>
+                                    {% endfor %}
+                                {% endif %}
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <div class="nav flex-column nav-pills mb-3" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+                                        <a class="nav-link active" id="v-pills-home-tab" data-bs-toggle="pill" href="#v-pills-home" role="tab" aria-controls="v-pills-home" aria-selected="true">Meeting Agandas</a>
+                                        <a class="nav-link" id="v-pills-profile-tab" data-bs-toggle="pill" href="#v-pills-profile" role="tab" aria-controls="v-pills-profile" aria-selected="false">Paticipants</a>
+                                        {% if meeting.scheduled %}
+                                            <a class="nav-link" id="v-pills-messages-tab" data-bs-toggle="pill" href="#v-pills-messages" role="tab" aria-controls="v-pills-messages" aria-selected="false">Meeting Notes</a>
+                                        {% else %}    
+                                            <a class="nav-link" id="v-pills-Results-tab" data-bs-toggle="pill" href="#v-pills-Results" role="tab" aria-controls="v-pills-Results" aria-selected="false">Settings</a>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                                <div class="col-sm-9">
+                                    <div class="tab-content" id="v-pills-tabContent">
+                                        <div class="tab-pane fade show active" id="v-pills-home" role="tabpanel" aria-labelledby="v-pills-home-tab">
+                                            <h5>General Notices : 2018-19</h5>
+                                            <hr>
+                                            <div class="table-responsive">
+                                                <table class="table table-bordered">
+                                                    <tr>
+                                                        <th>Created On</th>
+                                                        <th>Meeting Aganda</th>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>{{ meeting.created }}
+                                                        </td>
+                                                        <td>{{ meeting.agenda | safe}}</td>
+                                                </table>
+                                            </div>
+                                        </div>
+                                        <div class="tab-pane fade" id="v-pills-profile" role="tabpanel" aria-labelledby="v-pills-profile-tab">
+                                            <h5>Paticipants</h5>
+                                            <hr>
+                                            <div class="table-responsive">
+                                                <table class="table table-bordered">
+                                                    <tr>
+                                                        <th>SN</th>
+                                                        <th>Name</th>
+                                                        <th>Staff ID</th>
+                                                        <th>Designatin</th>
+                                                    </tr>
+                                                    {% for staff in meeting.paticipants.all %}
+                                                        <tr>
+                                                            <td>{{ forloop.counter }}</td>
+                                                            <td>{{ staff.user.first_name }}</td>
+                                                            <td>{{ staff.user.username }}</td>
+                                                            <td>{{ staff.user_persona.name }}</td>
+                                                        </tr>
+                                                    {% endfor %}
+                                                </table>
+                                            </div>
+                                        </div>
+                                        <div class="tab-pane fade" id="v-pills-messages" role="tabpanel" aria-labelledby="v-pills-messages-tab">
+                                            <h5>Metting Notes</h5>
+                                            <hr>
+                                            <div class="table-responsive">
+                                                <div class="email-content">
+                                                    <p class="">
+                                                        {{ meeting.notes |safe }}
+                                                    </p>
+                                                </div>
+                                                
+                                                <div class="m-t-15">
+                                                    <form class="form-material" method="post"> {% csrf_token %}
+                                                        <div class="form-group">
+                                                            {% render_field form.content class="form-control" placeholder="Meeting Notes" %}
+                                                        </div>
+
+                                                        <button class="nav-link  link-hover-info" id="v-pills-settings-tab" type="submit">
+                                                            <span>Save</span>
+                                                        </button>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="tab-pane fade" id="v-pills-Results" role="tabpanel" aria-labelledby="v-pills-Results-tab">
+                                            <h5>Set Up The Meeting</h5>
+                                            <hr>
+                                            <div class="m-t-15">
+                                                <form class="form-material" method="post"> {% csrf_token %}
+                                                    <div class="form-group">
+                                                        <label class="form-label" >Title</label>
+                                                        {% render_field form_setting.title class="form-control" value=meeting.title %}
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="form-label" >Venue</label>
+                                                        {% render_field form_setting.venue class="form-control" placeholder="Enter Venue here..." %}
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="form-label" >Paticipants</label>
+                                                        {% render_field form_setting.paticipants class="form-control" value=meeting.paticipants %}
+                                                    </div>
+                                                    <button class="nav-link  link-hover-info" id="v-pills-settings-tab" type="submit">
+                                                        <span>Save</span>
+                                                    </button>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- subscribe end -->
+            </div>
+            <!-- [ Main Content ] end -->
+        </div>
+    </div>
+    <script type="text/javascript" src="{% static "ckeditor/ckeditor-init.js" %}"></script>
+    <script type="text/javascript" src="{% static "ckeditor/ckeditor/ckeditor.js" %}"></script>
+{% endblock %}

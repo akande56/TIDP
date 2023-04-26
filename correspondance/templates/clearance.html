@@ -1,0 +1,144 @@
+{% extends 'correspondance.html' %}
+{% load widget_tweaks %}
+{% load static %}
+
+
+{% block correspondance %}
+<script type="text/javascript" src="{% static "ckeditor/ckeditor-init.js" %}"></script>
+<script type="text/javascript" src="{% static "ckeditor/ckeditor/ckeditor.js" %}"></script>
+   <!-- [ Main Content ] start -->
+<div class="pc-container sidebar-layouts">
+    <div class="pcoded-content">
+        <div class="page-sidebar">
+            <div class="mail-l-content">
+                <ul class="mb-2 nav nav-tab flex-column nav-pills sidebar-links" id="v-pills-tab" role="tablist"
+                    aria-orientation="vertical">
+                    <li class="nav-item mail-section">
+                        <a class="nav-link  link-hover-danger active" id="v-pills-home-tab" data-bs-toggle="pill"
+                            href="#v-pills-home" role="tab" aria-controls="v-pills-home" aria-selected="false">
+                            <span><i class="material-icons-two-tone">move_to_inbox</i> Recieved</span>
+                            <span>{% if unread > 0 %}{{ unread }}{% endif %}</span>
+                        </a>
+                    </li>
+                    <li class="nav-item mail-section">
+                        <a class="nav-link  link-hover-info" id="v-pills-settings-tab" data-bs-toggle="pill"
+                            href="#v-pills-mail" role="tab">
+                            <span><i class="material-icons-two-tone">send</i> Send</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="page-content">
+            <div class="pc-head">
+                <div class="mail-search">
+                    <form class="px-3 w-100 h-100 d-flex align-items-center">
+                        <div class="form-group mb-0 d-flex align-items-center w-100">
+                            <i data-feather="search"></i>
+                            <input type="search" class="form-control border-0 shadow-none"
+                                placeholder="Search here. . .">
+                            <a href="#!" class="search-close text-body"><i data-feather="x" class=""></i></a>
+                        </div>
+                    </form>
+                </div>
+                <div class="pc-toggle-sidemenu">
+                    <a href="#!"><i class="material-icons-two-tone">menu_open</i></a>
+                </div>
+                <div class="pc-head-content">
+                    <ul class="list-inline m-0">
+                        <li class="list-inline-item">
+                            <a href="#!" class="mail-search-toggle"><i class="material-icons-two-tone">search</i></a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="pc-body">
+                <div class="card email-card">
+                    <div class="mail-body">
+                        <!-- [ inbox-right section ] start -->
+                        {% if messages %}
+                    {% for message in messages %}
+                        <div class="alert alert-{% if message.error %}danger{% else %}success{% endif %}" role="alert">
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                {% endif %}
+                        
+                        <div class="inbox-right">
+                            <div class="tab-content p-0" id="v-pills-tabContent">
+                                <div class="tab-pane fade show active" id="v-pills-home" role="tabpanel"
+                                    aria-labelledby="v-pills-home-tab">
+                                    <div class="card-body">
+                                        <div class="mail-body-content table-responsive">
+                                            <table class="table">
+                                                <tbody>
+                                                    {% for memo in outgoing_memos %}
+                                                        <tr class="read">
+                                                            <td>
+                                                                <div class="d-flex align-items-center">
+                                                                    <td> {{ forloop.counter }} </td>
+                                                                    <td>{{ memo.folder.unique_identifier }}</a>
+                                                                    <a href="#">
+                                                                        <i class="feather {% if memo.stared %}icon-star-on text-warning {% else %}icon-star ms-2{% endif %} ms-2"></i>
+                                                                    </a>
+                                                                </div>
+                                                            </td>
+                                                            <td>{{ memo.send_to.user.first_name }}</td>
+                                                            <td>{{ memo.folder.title }}</td>
+                                                            <td class="email-time">{{ memo.created }}</td>
+                                                            <td> {% if memo.sender_stage == 'Clearing' %} 
+                                                                    <button type="btn btn-success" class="btn btn-icon btn-danger">
+                                                                        <a href="{% url 'send_clear_status' memo.id %}"> FORWARD </a>
+                                                                    </button>
+                                                                {% else %} FORWARDED
+                                                                {% endif %}
+                                                            </td>
+                                                        </tr>
+                                                    {% endfor %}
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="tab-pane fade" id="v-pills-mail" role="tabpanel">
+                                    <div class="card-body">
+                                        <div class="mail-body-content table-responsive">
+                                            <table class="table">
+                                                <tbody>
+                                                    {% for memo in incomming_memos %}
+                                                        <tr class="read">
+                                                            <td>
+                                                                <div class="d-flex align-items-center">
+                                                                    <td> {{ forloop.counter }} </td>
+                                                                    <td>{{ memo.folder.unique_identifier }}</a>
+                                                                </div>
+                                                            </td>
+                                                            <td>{{ memo.send_to.user.first_name }}</td>
+                                                            <td>{{ memo.folder.title }}</td>
+                                                            <td class="email-time">{{ memo.created }}</td>
+                                                            <td> 
+                                                                {% if memo.sender_stage == 'Clearing' %} 
+                                                                    <button type="btn btn-success" class="btn btn-icon btn-danger">
+                                                                        <a href="{% url 'recieve_clear_status' memo.id %}"> CLEAR </a>
+                                                                    </button>
+                                                                {% else %} CLEARED
+                                                                {% endif %}    
+                                                            </td>
+                                                        </tr>
+                                                    {% endfor %}
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- [ inbox-right section ] end -->
+                    </div>
+                </div>
+            </div>
+            <div class="pc-sideoverlay"></div>
+        </div>
+    </div>
+</div>
+{% endblock correspondance %}

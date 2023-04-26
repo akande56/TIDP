@@ -1,0 +1,1828 @@
+<!DOCTYPE html>
+<html lang="en">
+
+
+<head>
+    <title>DashboardKit Bootstrap 5 Admin Template</title>
+    <!-- HTML5 Shim and Respond.js IE11 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 11]>
+    	<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    	<script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    	<![endif]-->
+    <!-- Meta -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="description" content="DashboardKit is modern yet powerful Bootstrap 5 Admin Template comes with thousands of UI components & 180+ pages."/>
+    <meta name="keywords" content="DashboardKit, Dashboard Kit, Dashboard UI Kit, Bootstrap 5, Admin Template, Admin Dashboard, CRM, CMS, Free Bootstrap Admin Template"/>
+    <meta name="author" content="DashboardKit" />
+
+    <!-- Favicon icon -->
+    <link rel="icon" href="/static/images/favicon.svg" type="image/x-icon">
+
+    <link href="../../../cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/monokai-sublime.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/static/css/plugins/quill.core.css">
+    <link rel="stylesheet" href="/static/css/plugins/quill.snow.css">
+    <link rel="stylesheet" href="/static/css/plugins/quill.bubble.css">
+    <!-- font css -->
+    <link rel="stylesheet" href="/static/fonts/tabler-icons.min.css">
+    <link rel="stylesheet" href="/static/fonts/feather.css">
+    <link rel="stylesheet" href="/static/fonts/fontawesome.css">
+    <link rel="stylesheet" href="/static/fonts/material.css">
+
+    <!-- vendor css -->
+    <link rel="stylesheet" href="/static/css/style.css" id="main-style-link">
+    <link rel="stylesheet" href="/static/css/customizer.css">
+
+    <link rel="stylesheet" href="/static/css/layout-nested.css">
+</head>
+<body class="">
+	<!-- [ Pre-loader ] start -->
+	<div class="loader-bg">
+		<div class="loader-track">
+			<div class="loader-fill"></div>
+		</div>
+	</div>
+	<!-- [ Pre-loader ] End -->
+	<!-- [ Mobile header ] start -->
+	<div class="pc-mob-header pc-header">
+		<div class="pcm-logo">
+			<img src="/static/images/logo.svg" alt="" class="logo logo-lg">
+		</div>
+		<div class="pcm-toolbar">
+			<a href="#!" class="pc-head-link" id="mobile-collapse">
+				<div class="hamburger hamburger--arrowturn">
+					<div class="hamburger-box">
+						<div class="hamburger-inner"></div>
+					</div>
+				</div>
+				<!-- <i data-feather="menu"></i> -->
+			</a>
+			<a href="#!" class="pc-head-link" id="headerdrp-collapse">
+				<i data-feather="align-right"></i>
+			</a>
+			<a href="#!" class="pc-head-link" id="header-collapse">
+				<i data-feather="more-vertical"></i>
+			</a>
+		</div>
+	</div>
+	<!-- [ Mobile header ] End -->
+
+	<!-- [ navigation menu ] start -->
+	<!-- [ navigation menu ] end -->
+	<!-- [ Header ] start -->
+
+<!-- [ Main Content ] start -->
+<div class="pc-container sidebar-layouts">
+    <div class="pcoded-content">
+        <div class="page-sidebar">
+            <div class="mail-l-content">
+                <div class="p-3">
+                    <a href="#!" class="btn btn-light-secondary btn-block" data-bs-toggle="modal"
+                        data-bs-target="#examplesendmail"><i data-feather="plus"></i> Compose</a>
+                </div>
+                <ul class="mb-2 nav nav-tab flex-column nav-pills sidebar-links" id="v-pills-tab" role="tablist"
+                    aria-orientation="vertical">
+                    <li class="nav-item mail-section">
+                        <a class="nav-link  link-hover-danger active" id="v-pills-home-tab" data-bs-toggle="pill"
+                            href="#v-pills-home" role="tab" aria-controls="v-pills-home" aria-selected="false">
+                            <span><i class="material-icons-two-tone">move_to_inbox</i> Inbox</span>
+                            <span>36</span>
+                        </a>
+                    </li>
+                    <li class="nav-item mail-section">
+                        <a class="nav-link  link-hover-primary" id="v-pills-starred-tab" data-bs-toggle="pill"
+                            href="#v-pills-starred" role="tab">
+                            <span><i class="material-icons-two-tone">star</i> Starred</span>
+                        </a>
+                    </li>
+                    <li class="nav-item mail-section">
+                        <a class="nav-link  link-hover-success" id="v-pills-messages-tab" data-bs-toggle="pill"
+                            href="#v-pills-draft" role="tab">
+                            <span><i class="material-icons-two-tone">collections_bookmark</i> Drafts</span>
+                        </a>
+                    </li>
+                    <li class="nav-item mail-section">
+                        <a class="nav-link  link-hover-info" id="v-pills-settings-tab" data-bs-toggle="pill"
+                            href="#v-pills-mail" role="tab">
+                            <span><i class="material-icons-two-tone">send</i> Sent Mail</span>
+                        </a>
+                    </li>
+                    <li class="nav-item mail-section">
+                        <a class="nav-link  link-hover-warning" id="v-pills-Trash-tab" data-bs-toggle="pill"
+                            href="#v-pills-Trash" role="tab">
+                            <span><i class="material-icons-two-tone">delete</i> Trash</span>
+                        </a>
+                    </li>
+                </ul>
+                <div class="px-3">
+                    <a class="email-more-link text-muted" data-bs-toggle="collapse" href="#email-more-cont"
+                        role="button" aria-expanded="false" aria-controls="email-more-cont">
+                        <span><i class="feather icon-chevron-down me-2 f-18"></i>More</span>
+                        <span style="display: none;"><i class="feather icon-chevron-up me-2 f-18"></i>Less</span>
+                    </a>
+                </div>
+                <div class="collapse" id="email-more-cont">
+                    <ul class="mb-2 nav nav-tab flex-column nav-pills sidebar-links" id="v-pills-tab" role="tablist"
+                        aria-orientation="vertical">
+                        <li class="nav-item mail-section">
+                            <a href="#!" class="nav-link ">
+                                <span><i class="material-icons-two-tone">stars</i> Important</span>
+                                <span>18</span>
+                            </a>
+                        </li>
+                        <li class="nav-item mail-section">
+                            <a href="#!" class="nav-link ">
+                                <span><i class="material-icons-two-tone">mark_chat_unread</i> Chats</span>
+                            </a>
+                        </li>
+                        <li class="nav-item mail-section">
+                            <a href="#!" class="nav-link ">
+                                <span><i class="material-icons-two-tone">report_problem</i> Spam</span>
+                                <span>12</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="page-content">
+            <div class="pc-head">
+                <div class="mail-search">
+                    <form class="px-3 w-100 h-100 d-flex align-items-center">
+                        <div class="form-group mb-0 d-flex align-items-center w-100">
+                            <i data-feather="search"></i>
+                            <input type="search" class="form-control border-0 shadow-none"
+                                placeholder="Search here. . .">
+                            <a href="#!" class="search-close text-body"><i data-feather="x" class=""></i></a>
+                        </div>
+                    </form>
+                </div>
+                <div class="pc-toggle-sidemenu">
+                    <a href="#!"><i class="material-icons-two-tone">menu_open</i></a>
+                </div>
+                <div class="pc-head-content">
+                    <ul class="list-inline m-0">
+                        <li class="list-inline-item">
+                            <a href="#!" class="mail-search-toggle"><i class="material-icons-two-tone">search</i></a>
+                        </li>
+                        <li class="list-inline-item d-none d-sm-inline-block"><a href="#!"><i
+                                    class="material-icons-two-tone">warning</i></a></li>
+                        <li class="list-inline-item"><a href="#!"><i
+                                    class="material-icons-two-tone">move_to_inbox</i></a></li>
+                        <li class="list-inline-item"><a href="#!"><i class="material-icons-two-tone">delete</i></a></li>
+                        <li class="list-inline-item d-none d-sm-inline-block"><a href="#!"><i
+                                    class="material-icons-two-tone">collections_bookmark</i></a></li>
+                        <li class="list-inline-item d-none d-sm-inline-block"><a href="#!"><i
+                                    class="material-icons-two-tone">drafts</i></a></li>
+                        <li class="list-inline-item">
+                            <div class="dropdown">
+                                <a class="dropdown-toggle arrow-none" data-bs-toggle="dropdown" aria-haspopup="true"
+                                    aria-expanded="false">
+                                    <i class="material-icons-two-tone">send</i>
+                                </a>
+                                <div class="dropdown-menu dropdown-menu-end">
+                                    <a class="dropdown-item" href="#">drafts</a>
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item pl-4" href="#"><span><i
+                                                class="feather icon-users me-2"></i>Social</span></a>
+                                    <a class="dropdown-item pl-4" href="#"><span><i
+                                                class="feather icon-tag me-2"></i>Promotion</span></a>
+                                    <a class="dropdown-item pl-4" href="#"><span><i
+                                                class="feather icon-upload-cloud me-2"></i>Update</span></a>
+                                    <a class="dropdown-item pl-4" href="#"><span><i
+                                                class="feather icon-message-square me-2"></i>Forum</span></a>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="list-inline-item">
+                            <div class="dropdown">
+                                <a class="dropdown-toggle arrow-none" data-bs-toggle="dropdown" aria-haspopup="true"
+                                    aria-expanded="false">
+                                    <i class="material-icons-two-tone">more</i>
+                                </a>
+                                <div class="dropdown-menu dropdown-menu-end">
+                                    <a class="dropdown-item" href="#!">Mark as unread</a>
+                                    <a class="dropdown-item" href="#!">Mark as important</a>
+                                    <a class="dropdown-item" href="#!">Mark as not important</a>
+                                    <a class="dropdown-item" href="#!">Filter messages like these</a>
+                                    <a class="dropdown-item" href="#!">Mute</a>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="pc-body">
+                <div class="card email-card">
+                    <div class="mail-body">
+                        <!-- [ inbox-right section ] start -->
+                        <div class="inbox-read">
+                            <div class="card-header">
+                                <ul class="list-inline mb-3 mb-md-0">
+                                    <li class="list-inline-item">
+                                        <a href="#!" class="back-inbox">
+                                            <h5><i class="fas fa-arrow-left"></i></h5>
+                                        </a>
+                                    </li>
+                                    <li class="list-inline-item"><a href="#!" data-bs-toggle="tooltip"
+                                            data-bs-placement="top" title="Insert photo">
+                                            <h5><i class="fas fa-download"></i></h5>
+                                        </a></li>
+                                    <li class="list-inline-item"><a href="#!" data-bs-toggle="tooltip"
+                                            data-bs-placement="top" title="Insert link‬">
+                                            <h5><i class="fas fa-trash-alt"></i></h5>
+                                        </a></li>
+                                    <li class="list-inline-item"><a href="#!" data-bs-toggle="tooltip"
+                                            data-bs-placement="top" title="Snooze">
+                                            <h5><i class="fas fa-clock"></i></h5>
+                                        </a></li>
+                                </ul>
+                            </div>
+                            <div class="card-body">
+                                <div class="email-read">
+                                    <div class="photo-table m-r-10">
+                                        <a href="#">
+                                            <img class="media-object img-radius" src="/static/images/user/avatar-1.jpg"
+                                                alt="E-mail user" style="width:50px;">
+                                        </a>
+                                    </div>=
+                                    <div>
+                                        <a href="#">
+                                            <p class="user-name text-dark mb-1"><strong>John Doe</strong></p>
+                                        </a>
+                                        <a class="user-mail txt-muted" href="#">
+                                            <p class="user-name text-dark mb-1">
+                                                <strong>From:<span class="__cf_email__" data-cfemail="86ece9eee8e2e9e3b1beb0bfc6e1ebe7efeaa8e5e9eb">[email&#160;protected]</span></strong>
+                                            </p>
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="m-b-20 m-l-50 p-l-10 email-contant">
+                                    <div class="photo-contant">
+                                        <div>
+                                            <p class="user-name text-dark mb-1"><strong>Hello Dear...</strong></p>
+                                            <div class="email-content">
+                                                <p class="">
+                                                    Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean
+                                                    commodo ligula eget dolor. Aenean massa. Cum sociis natoque
+                                                    penatibus et magnis dis parturient
+                                                    montes, nascetur ridiculus mus.Aenean commodo ligula eget dolor.
+                                                    Aenean massa. Cum sociis natoque penatibus et magnis dis.
+                                                </p>
+                                                <ul>
+                                                    <li>Lorem ipsum dolor sit amet</li>
+                                                    <li>Consectetur adipiscing elit</li>
+                                                    <ul>
+                                                        <li>Phasellus iaculis neque</li>
+                                                        <li>Purus sodales ultricies</li>
+                                                    </ul>
+                                                    </li>
+                                                    <li>Faucibus porta lacus fringilla vel</li>
+                                                </ul>
+                                                <blockquote class="blockquote">
+                                                    <p class="mb-2">
+                                                        Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean
+                                                        commodo ligula eget dolor. Aenean massa. Cum sociis natoque
+                                                        penatibus et magnis dis parturient
+                                                        montes, nascetur ridiculus mus.
+                                                    </p>
+                                                    <footer class="blockquote-footer mt-2">Someone famous in <cite
+                                                            title="Source Title">Source Title</cite></footer>
+                                                </blockquote>
+                                            </div>
+                                        </div>
+                                        <div class="m-t-15">
+                                            <i class="feather icon-paperclip f-20 m-r-10"></i>Attachments <b>(3)</b>
+                                            <div class="row mail-img m-t-20">
+                                                <div class="col-sm-4 col-md-3 col-xl-2 m-b-20">
+                                                    <img src="/static/images/slider/img-slide-4.jpg"
+                                                        class="img-fluid img-thumbnail" alt="">
+                                                </div>
+                                                <div class="col-sm-4 col-md-3 col-xl-2 m-b-20">
+                                                    <img src="/static/images/slider/img-slide-1.jpg"
+                                                        class="img-fluid img-thumbnail" alt="">
+                                                </div>
+                                                <div class="col-sm-4 col-md-3 col-xl-2 m-b-20">
+                                                    <img src="/static/images/slider/img-slide-3.jpg"
+                                                        class="img-fluid img-thumbnail" alt="">
+                                                </div>
+                                            </div>
+                                            <form class="form-material">
+                                                <div class="form-group">
+                                                    <input type="email" class="form-control" id="exampleInputEmail2"
+                                                        placeholder="Reply Your Thoughts" required="">
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- [ inbox-right section ] end -->
+                        <!-- [ inbox-right section ] start -->
+                        <div class="inbox-right">
+                            <div class="tab-content p-0" id="v-pills-tabContent">
+                                <div class="tab-pane fade show active" id="v-pills-home" role="tabpanel"
+                                    aria-labelledby="v-pills-home-tab">
+                                    <div class="card-header py-0">
+                                        <ul class="nav nav-pills nav-fill mb-0 border-none" id="pills-tab"
+                                            role="tablist">
+                                            <li class="nav-item">
+                                                <a class="nav-link link-hover-danger active" id="pills-primary-tab"
+                                                    data-bs-toggle="pill" href="#pills-primary" role="tab"
+                                                    aria-controls="pills-primary" aria-selected="true">
+                                                    <span><i class="material-icons-two-tone">move_to_inbox</i>
+                                                        primary</span>
+                                                </a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a class="nav-link link-hover-primary" id="pills-social-tab"
+                                                    data-bs-toggle="pill" href="#pills-social" role="tab"
+                                                    aria-controls="pills-social" aria-selected="false">
+                                                    <span><i class="material-icons-two-tone">account_circle</i>
+                                                        Social</span>
+                                                </a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a class="nav-link link-hover-success" id="pills-Promotion-tab"
+                                                    data-bs-toggle="pill" href="#pills-Promotion" role="tab"
+                                                    aria-controls="pills-Promotion" aria-selected="false">
+                                                    <span><i class="material-icons-two-tone">local_offer</i>
+                                                        Promotions</span>
+                                                </a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a class="nav-link link-hover-info" id="pills-update-tab"
+                                                    data-bs-toggle="pill" href="#pills-update" role="tab"
+                                                    aria-controls="pills-update" aria-selected="false">
+                                                    <span><i class="material-icons-two-tone">backup</i> Update</span>
+                                                </a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a class="nav-link link-hover-warning" id="pills-forum-tab"
+                                                    data-bs-toggle="pill" href="#pills-forum" role="tab"
+                                                    aria-controls="pills-forum" aria-selected="false">
+                                                    <span><i class="material-icons-two-tone">forum</i> Forum</span>
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="tab-content" id="pills-tabContent">
+                                            <div class="tab-pane fade show active" id="pills-primary" role="tabpanel"
+                                                aria-labelledby="pills-primary-tab">
+                                                <div class="mail-body-content table-responsive">
+                                                    <table class="table">
+                                                        <tbody>
+                                                            <tr class="unread">
+                                                                <td>
+                                                                    <div class="d-flex align-items-center">
+                                                                        <div class="form-check">
+                                                                            <input class="form-check-input input-danger"
+                                                                                type="checkbox">
+                                                                        </div>
+                                                                        <a href="#"><i
+                                                                                class="feather icon-star ms-2"></i></a>
+                                                                    </div>
+                                                                </td>
+                                                                <td><a href="#!" class="email-name">John Doe</a></td>
+                                                                <td><a href="#!" class="email-name">Coming Up Next
+                                                                        Week</a></td>
+                                                                <td class="email-time">13:02 PM</td>
+                                                            </tr>
+                                                            <tr class="unread">
+                                                                <td>
+                                                                    <div class="d-flex align-items-center">
+                                                                        <div class="form-check">
+                                                                            <input class="form-check-input input-danger"
+                                                                                type="checkbox">
+                                                                        </div>
+                                                                        <a href="#"><i
+                                                                                class="feather icon-star-on text-warning ms-2"></i></a>
+                                                                    </div>
+                                                                </td>
+                                                                <td><a href="#!" class="email-name">Google Inc</a></td>
+                                                                <td>
+                                                                    <a href="#!" class="email-name">Lorem ipsum dolor
+                                                                        sit amet, consectetuer</a>
+                                                                    <div><a href="#!" class="mail-attach"><i
+                                                                                class="feather icon-image me-2"></i>user.png</a>
+                                                                        <a href="#!" class="mail-attach ms-2"><i
+                                                                                class="feather icon-file-text me-2"></i>file.doc</a>
+                                                                    </div>
+                                                                </td>
+
+                                                                <td class="email-time">12:01 AM</td>
+                                                            </tr>
+                                                            <tr class="read">
+                                                                <td>
+                                                                    <div class="d-flex align-items-center">
+                                                                        <div class="form-check">
+                                                                            <input class="form-check-input input-danger"
+                                                                                type="checkbox">
+                                                                        </div>
+                                                                        <a href="#"><i
+                                                                                class="feather icon-star ms-2"></i></a>
+                                                                    </div>
+                                                                </td>
+                                                                <td><a href="#!" class="email-name">Sara Soudein</a>
+                                                                </td>
+                                                                <td><a href="#!" class="email-name">SVG new updates
+                                                                        comes for you</a></td>
+                                                                <td class="email-time">00:05 AM</td>
+                                                            </tr>
+                                                            <tr class="read">
+                                                                <td>
+                                                                    <div class="d-flex align-items-center">
+                                                                        <div class="form-check">
+                                                                            <input class="form-check-input input-danger"
+                                                                                type="checkbox">
+                                                                        </div>
+                                                                        <a href="#"><i
+                                                                                class="feather icon-star ms-2"></i></a>
+                                                                    </div>
+                                                                </td>
+                                                                <td><a href="#!" class="email-name">Rinky Behl</a></td>
+                                                                <td><a href="#!" class="email-name">Photoshop updates
+                                                                        are available</a></td>
+                                                                <td class="email-time">10:01 AM</td>
+                                                            </tr>
+                                                            <tr class="read">
+                                                                <td>
+                                                                    <div class="d-flex align-items-center">
+                                                                        <div class="form-check">
+                                                                            <input class="form-check-input input-danger"
+                                                                                type="checkbox">
+                                                                        </div>
+                                                                        <a href="#"><i
+                                                                                class="feather icon-star-on text-warning ms-2"></i></a>
+                                                                    </div>
+                                                                </td>
+                                                                <td><a href="#!" class="email-name">Harry John</a></td>
+                                                                <td><a href="#!" class="email-name">New upcoming data
+                                                                        available</a></td>
+                                                                <td class="email-time">11:01 AM</td>
+                                                            </tr>
+                                                            <tr class="read">
+                                                                <td>
+                                                                    <div class="d-flex align-items-center">
+                                                                        <div class="form-check">
+                                                                            <input class="form-check-input input-danger"
+                                                                                type="checkbox">
+                                                                        </div>
+                                                                        <a href="#"><i
+                                                                                class="feather icon-star ms-2"></i></a>
+                                                                    </div>
+                                                                </td>
+                                                                <td><a href="#!" class="email-name">Hanry Joseph</a>
+                                                                </td>
+                                                                <td><a href="#!" class="email-name">SCSS current working
+                                                                        for new updates</a></td>
+                                                                <td class="email-time">12:01 PM</td>
+                                                            </tr>
+                                                            <tr class="read">
+                                                                <td>
+                                                                    <div class="d-flex align-items-center">
+                                                                        <div class="form-check">
+                                                                            <input class="form-check-input input-danger"
+                                                                                type="checkbox">
+                                                                        </div>
+                                                                        <a href="#"><i
+                                                                                class="feather icon-star ms-2"></i></a>
+                                                                    </div>
+                                                                </td>
+                                                                <td><a href="#!" class="email-name">Liu Koi Yan</a></td>
+                                                                <td><a href="#!" class="email-name">Charts waiting for
+                                                                        you</a>
+                                                                    <div><a href="#!" class="mail-attach"><i
+                                                                                class="feather icon-film me-2"></i>video</a>
+                                                                    </div>
+                                                                </td>
+                                                                <td class="email-time">07:15 AM</td>
+                                                            </tr>
+                                                            <tr class="read">
+                                                                <td>
+                                                                    <div class="d-flex align-items-center">
+                                                                        <div class="form-check">
+                                                                            <input class="form-check-input input-danger"
+                                                                                type="checkbox">
+                                                                        </div>
+                                                                        <a href="#"><i
+                                                                                class="feather icon-star-on text-warning ms-2"></i></a>
+                                                                    </div>
+                                                                </td>
+                                                                <td><a href="#!" class="email-name">Google Inc</a></td>
+                                                                <td><a href="#!" class="email-name">Lorem ipsum dolor
+                                                                        sit amet, consectetuer adipiscing elit</a></td>
+                                                                <td class="email-time">08:01 AM</td>
+                                                            </tr>
+                                                            <tr class="read">
+                                                                <td>
+                                                                    <div class="d-flex align-items-center">
+                                                                        <div class="form-check">
+                                                                            <input class="form-check-input input-danger"
+                                                                                type="checkbox">
+                                                                        </div>
+                                                                        <a href="#"><i
+                                                                                class="feather icon-star ms-2"></i></a>
+                                                                    </div>
+                                                                </td>
+                                                                <td><a href="#!" class="email-name">John Doe</a></td>
+                                                                <td><a href="#!" class="email-name">Coming Up Next
+                                                                        Week</a></td>
+                                                                <td class="email-time">13:02 PM</td>
+                                                            </tr>
+                                                            <tr class="read">
+                                                                <td>
+                                                                    <div class="d-flex align-items-center">
+                                                                        <div class="form-check">
+                                                                            <input class="form-check-input input-danger"
+                                                                                type="checkbox">
+                                                                        </div>
+                                                                        <a href="#"><i
+                                                                                class="feather icon-star ms-2"></i></a>
+                                                                    </div>
+                                                                </td>
+                                                                <td><a href="#!" class="email-name">Hanry Joseph</a>
+                                                                </td>
+                                                                <td><a href="#!" class="email-name">SCSS current working
+                                                                        for new updates</a>
+                                                                    <div><a href="#!" class="mail-attach"><i
+                                                                                class="feather icon-file-text me-2"></i>file.doc</a>
+                                                                    </div>
+                                                                </td>
+                                                                <td class="email-time">12:01 PM</td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                            <div class="tab-pane fade" id="pills-social" role="tabpanel"
+                                                aria-labelledby="pills-social-tab">
+                                                <div class="mail-body-content table-responsive">
+                                                    <table class="table">
+                                                        <tbody>
+                                                            <tr class="unread">
+                                                                <td>
+                                                                    <div class="d-flex align-items-center">
+                                                                        <div class="form-check">
+                                                                            <input class="form-check-input input-danger"
+                                                                                type="checkbox">
+                                                                        </div>
+                                                                        <a href="#"><i
+                                                                                class="feather icon-star-on text-warning ms-2"></i></a>
+                                                                    </div>
+                                                                </td>
+                                                                <td><a href="#!" class="email-name">Google Inc</a></td>
+                                                                <td>
+                                                                    <a href="#!" class="email-name">Lorem ipsum dolor
+                                                                        sit amet, consectetuer</a>
+                                                                    <div><a href="#!" class="mail-attach"><i
+                                                                                class="feather icon-image me-2"></i>user.png</a>
+                                                                        <a href="#!" class="mail-attach ms-2"><i
+                                                                                class="feather icon-file-text me-2"></i>file.doc</a>
+                                                                    </div>
+                                                                </td>
+                                                                <td class="email-time">12:01 AM</td>
+                                                            </tr>
+                                                            <tr class="unread">
+                                                                <td>
+                                                                    <div class="d-flex align-items-center">
+                                                                        <div class="form-check">
+                                                                            <input class="form-check-input input-danger"
+                                                                                type="checkbox">
+                                                                        </div>
+                                                                        <a href="#"><i
+                                                                                class="feather icon-star ms-2"></i></a>
+                                                                    </div>
+                                                                </td>
+                                                                <td><a href="#!" class="email-name">John Doe</a></td>
+                                                                <td><a href="#!" class="email-name">Coming Up Next
+                                                                        Week</a></td>
+                                                                <td class="email-time">13:02 PM</td>
+                                                            </tr>
+                                                            <tr class="unread">
+                                                                <td>
+                                                                    <div class="d-flex align-items-center">
+                                                                        <div class="form-check">
+                                                                            <input class="form-check-input input-danger"
+                                                                                type="checkbox">
+                                                                        </div>
+                                                                        <a href="#"><i
+                                                                                class="feather icon-star ms-2"></i></a>
+                                                                    </div>
+                                                                </td>
+                                                                <td><a href="#!" class="email-name">Sara Soudein</a>
+                                                                </td>
+                                                                <td><a href="#!" class="email-name">SVG new updates
+                                                                        comes for you</a></td>
+                                                                <td class="email-time">00:05 AM</td>
+                                                            </tr>
+                                                            <tr class="read">
+                                                                <td>
+                                                                    <div class="d-flex align-items-center">
+                                                                        <div class="form-check">
+                                                                            <input class="form-check-input input-danger"
+                                                                                type="checkbox">
+                                                                        </div>
+                                                                        <a href="#"><i
+                                                                                class="feather icon-star ms-2"></i></a>
+                                                                    </div>
+                                                                </td>
+                                                                <td><a href="#!" class="email-name">Rinky Behl</a></td>
+                                                                <td><a href="#!" class="email-name">Photoshop updates
+                                                                        are available</a></td>
+                                                                <td class="email-time">10:01 AM</td>
+                                                            </tr>
+                                                            <tr class="read">
+                                                                <td>
+                                                                    <div class="d-flex align-items-center">
+                                                                        <div class="form-check">
+                                                                            <input class="form-check-input input-danger"
+                                                                                type="checkbox">
+                                                                        </div>
+                                                                        <a href="#"><i
+                                                                                class="feather icon-star-on text-warning ms-2"></i></a>
+                                                                    </div>
+                                                                </td>
+                                                                <td><a href="#!" class="email-name">Harry John</a></td>
+                                                                <td><a href="#!" class="email-name">New upcoming data
+                                                                        available</a></td>
+                                                                <td class="email-time">11:01 AM</td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                            <div class="tab-pane fade" id="pills-Promotion" role="tabpanel"
+                                                aria-labelledby="pills-Promotion-tab">
+                                                <div class="mail-body-content table-responsive">
+                                                    <table class="table">
+                                                        <tbody>
+                                                            <tr class="unread">
+                                                                <td>
+                                                                    <div class="d-flex align-items-center">
+                                                                        <div class="form-check">
+                                                                            <input class="form-check-input input-danger"
+                                                                                type="checkbox">
+                                                                        </div>
+                                                                        <a href="#"><i
+                                                                                class="feather icon-star-on text-warning ms-2"></i></a>
+                                                                    </div>
+                                                                </td>
+                                                                <td><a href="#!" class="email-name">Google Inc</a></td>
+                                                                <td>
+                                                                    <a href="#!" class="email-name">Lorem ipsum dolor
+                                                                        sit amet, consectetuer</a>
+                                                                    <div><a href="#!" class="mail-attach"><i
+                                                                                class="feather icon-image me-2"></i>user.png</a>
+                                                                        <a href="#!" class="mail-attach ms-2"><i
+                                                                                class="feather icon-file-text me-2"></i>file.doc</a>
+                                                                    </div>
+                                                                </td>
+                                                                <td class="email-time">12:01 AM</td>
+                                                            </tr>
+                                                            <tr class="unread">
+                                                                <td>
+                                                                    <div class="d-flex align-items-center">
+                                                                        <div class="form-check">
+                                                                            <input class="form-check-input input-danger"
+                                                                                type="checkbox">
+                                                                        </div>
+                                                                        <a href="#"><i
+                                                                                class="feather icon-star ms-2"></i></a>
+                                                                    </div>
+                                                                </td>
+                                                                <td><a href="#!" class="email-name">John Doe</a></td>
+                                                                <td><a href="#!" class="email-name">Coming Up Next
+                                                                        Week</a></td>
+                                                                <td class="email-time">13:02 PM</td>
+                                                            </tr>
+                                                            <tr class="unread">
+                                                                <td>
+                                                                    <div class="d-flex align-items-center">
+                                                                        <div class="form-check">
+                                                                            <input class="form-check-input input-danger"
+                                                                                type="checkbox">
+                                                                        </div>
+                                                                        <a href="#"><i
+                                                                                class="feather icon-star ms-2"></i></a>
+                                                                    </div>
+                                                                </td>
+                                                                <td><a href="#!" class="email-name">Sara Soudein</a>
+                                                                </td>
+                                                                <td><a href="#!" class="email-name">SVG new updates
+                                                                        comes for you</a></td>
+                                                                <td class="email-time">00:05 AM</td>
+                                                            </tr>
+                                                            <tr class="read">
+                                                                <td>
+                                                                    <div class="d-flex align-items-center">
+                                                                        <div class="form-check">
+                                                                            <input class="form-check-input input-danger"
+                                                                                type="checkbox">
+                                                                        </div>
+                                                                        <a href="#"><i
+                                                                                class="feather icon-star ms-2"></i></a>
+                                                                    </div>
+                                                                </td>
+                                                                <td><a href="#!" class="email-name">Rinky Behl</a></td>
+                                                                <td><a href="#!" class="email-name">Photoshop updates
+                                                                        are available</a></td>
+                                                                <td class="email-time">10:01 AM</td>
+                                                            </tr>
+                                                            <tr class="read">
+                                                                <td>
+                                                                    <div class="d-flex align-items-center">
+                                                                        <div class="form-check">
+                                                                            <input class="form-check-input input-danger"
+                                                                                type="checkbox">
+                                                                        </div>
+                                                                        <a href="#"><i
+                                                                                class="feather icon-star-on text-warning ms-2"></i></a>
+                                                                    </div>
+                                                                </td>
+                                                                <td><a href="#!" class="email-name">Harry John</a></td>
+                                                                <td><a href="#!" class="email-name">New upcoming data
+                                                                        available</a></td>
+                                                                <td class="email-time">11:01 AM</td>
+                                                            </tr>
+                                                            <tr class="read">
+                                                                <td>
+                                                                    <div class="d-flex align-items-center">
+                                                                        <div class="form-check">
+                                                                            <input class="form-check-input input-danger"
+                                                                                type="checkbox">
+                                                                        </div>
+                                                                        <a href="#"><i
+                                                                                class="feather icon-star ms-2"></i></a>
+                                                                    </div>
+                                                                </td>
+                                                                <td><a href="#!" class="email-name">Hanry Joseph</a>
+                                                                </td>
+                                                                <td><a href="#!" class="email-name">SCSS current working
+                                                                        for new updates</a></td>
+                                                                <td class="email-time">12:01 PM</td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                            <div class="tab-pane fade" id="pills-update" role="tabpanel"
+                                                aria-labelledby="pills-update-tab">
+                                                <div class="mail-body-content table-responsive">
+                                                    <table class="table">
+                                                        <tbody>
+                                                            <tr class="unread">
+                                                                <td>
+                                                                    <div class="d-flex align-items-center">
+                                                                        <div class="form-check">
+                                                                            <input class="form-check-input input-danger"
+                                                                                type="checkbox">
+                                                                        </div>
+                                                                        <a href="#"><i
+                                                                                class="feather icon-star-on text-warning ms-2"></i></a>
+                                                                    </div>
+                                                                </td>
+                                                                <td><a href="#!" class="email-name">Google Inc</a></td>
+                                                                <td>
+                                                                    <a href="#!" class="email-name">Lorem ipsum dolor
+                                                                        sit amet, consectetuer</a>
+                                                                    <div><a href="#!" class="mail-attach"><i
+                                                                                class="feather icon-image me-2"></i>user.png</a>
+                                                                        <a href="#!" class="mail-attach ms-2"><i
+                                                                                class="feather icon-file-text me-2"></i>file.doc</a>
+                                                                    </div>
+                                                                </td>
+
+                                                                <td class="email-time">12:01 AM</td>
+                                                            </tr>
+                                                            <tr class="unread">
+                                                                <td>
+                                                                    <div class="d-flex align-items-center">
+                                                                        <div class="form-check">
+                                                                            <input class="form-check-input input-danger"
+                                                                                type="checkbox">
+                                                                        </div>
+                                                                        <a href="#"><i
+                                                                                class="feather icon-star ms-2"></i></a>
+                                                                    </div>
+                                                                </td>
+                                                                <td><a href="#!" class="email-name">John Doe</a></td>
+                                                                <td><a href="#!" class="email-name">Coming Up Next
+                                                                        Week</a></td>
+                                                                <td class="email-time">13:02 PM</td>
+                                                            </tr>
+                                                            <tr class="unread">
+                                                                <td>
+                                                                    <div class="d-flex align-items-center">
+                                                                        <div class="form-check">
+                                                                            <input class="form-check-input input-danger"
+                                                                                type="checkbox">
+                                                                        </div>
+                                                                        <a href="#"><i
+                                                                                class="feather icon-star ms-2"></i></a>
+                                                                    </div>
+                                                                </td>
+                                                                <td><a href="#!" class="email-name">Sara Soudein</a>
+                                                                </td>
+                                                                <td><a href="#!" class="email-name">SVG new updates
+                                                                        comes for you</a></td>
+                                                                <td class="email-time">00:05 AM</td>
+                                                            </tr>
+                                                            <tr class="unread">
+                                                                <td>
+                                                                    <div class="d-flex align-items-center">
+                                                                        <div class="form-check">
+                                                                            <input class="form-check-input input-danger"
+                                                                                type="checkbox">
+                                                                        </div>
+                                                                        <a href="#"><i
+                                                                                class="feather icon-star ms-2"></i></a>
+                                                                    </div>
+                                                                </td>
+                                                                <td><a href="#!" class="email-name">Rinky Behl</a></td>
+                                                                <td><a href="#!" class="email-name">Photoshop updates
+                                                                        are available</a></td>
+                                                                <td class="email-time">10:01 AM</td>
+                                                            </tr>
+                                                            <tr class="read">
+                                                                <td>
+                                                                    <div class="d-flex align-items-center">
+                                                                        <div class="form-check">
+                                                                            <input class="form-check-input input-danger"
+                                                                                type="checkbox">
+                                                                        </div>
+                                                                        <a href="#"><i
+                                                                                class="feather icon-star-on text-warning ms-2"></i></a>
+                                                                    </div>
+                                                                </td>
+                                                                <td><a href="#!" class="email-name">Harry John</a></td>
+                                                                <td><a href="#!" class="email-name">New upcoming data
+                                                                        available</a></td>
+                                                                <td class="email-time">11:01 AM</td>
+                                                            </tr>
+                                                            <tr class="read">
+                                                                <td>
+                                                                    <div class="d-flex align-items-center">
+                                                                        <div class="form-check">
+                                                                            <input class="form-check-input input-danger"
+                                                                                type="checkbox">
+                                                                        </div>
+                                                                        <a href="#"><i
+                                                                                class="feather icon-star ms-2"></i></a>
+                                                                    </div>
+                                                                </td>
+                                                                <td><a href="#!" class="email-name">Hanry Joseph</a>
+                                                                </td>
+                                                                <td><a href="#!" class="email-name">SCSS current working
+                                                                        for new updates</a></td>
+                                                                <td class="email-time">12:01 PM</td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                            <div class="tab-pane fade" id="pills-forum" role="tabpanel"
+                                                aria-labelledby="pills-forum-tab">
+                                                <div class="mail-body-content table-responsive">
+                                                    <table class="table">
+                                                        <tbody>
+                                                            <tr class="unread">
+                                                                <td>
+                                                                    <div class="d-flex align-items-center">
+                                                                        <div class="form-check">
+                                                                            <input class="form-check-input input-danger"
+                                                                                type="checkbox">
+                                                                        </div>
+                                                                        <a href="#"><i
+                                                                                class="feather icon-star-on text-warning ms-2"></i></a>
+                                                                    </div>
+                                                                </td>
+                                                                <td><a href="#!" class="email-name">Google Inc</a></td>
+                                                                <td>
+                                                                    <a href="#!" class="email-name">Lorem ipsum dolor
+                                                                        sit amet, consectetuer</a>
+                                                                    <div><a href="#!" class="mail-attach"><i
+                                                                                class="feather icon-image me-2"></i>user.png</a>
+                                                                        <a href="#!" class="mail-attach ms-2"><i
+                                                                                class="feather icon-file-text me-2"></i>file.doc</a>
+                                                                    </div>
+                                                                </td>
+
+                                                                <td class="email-time">12:01 AM</td>
+                                                            </tr>
+                                                            <tr class="unread">
+                                                                <td>
+                                                                    <div class="d-flex align-items-center">
+                                                                        <div class="form-check">
+                                                                            <input class="form-check-input input-danger"
+                                                                                type="checkbox">
+                                                                        </div>
+                                                                        <a href="#"><i
+                                                                                class="feather icon-star ms-2"></i></a>
+                                                                    </div>
+                                                                </td>
+                                                                <td><a href="#!" class="email-name">John Doe</a></td>
+                                                                <td><a href="#!" class="email-name">Coming Up Next
+                                                                        Week</a></td>
+                                                                <td class="email-time">13:02 PM</td>
+                                                            </tr>
+                                                            <tr class="unread">
+                                                                <td>
+                                                                    <div class="d-flex align-items-center">
+                                                                        <div class="form-check">
+                                                                            <input class="form-check-input input-danger"
+                                                                                type="checkbox">
+                                                                        </div>
+                                                                        <a href="#"><i
+                                                                                class="feather icon-star ms-2"></i></a>
+                                                                    </div>
+                                                                </td>
+                                                                <td><a href="#!" class="email-name">Sara Soudein</a>
+                                                                </td>
+                                                                <td><a href="#!" class="email-name">SVG new updates
+                                                                        comes for you</a></td>
+                                                                <td class="email-time">00:05 AM</td>
+                                                            </tr>
+                                                            <tr class="unread">
+                                                                <td>
+                                                                    <div class="d-flex align-items-center">
+                                                                        <div class="form-check">
+                                                                            <input class="form-check-input input-danger"
+                                                                                type="checkbox">
+                                                                        </div>
+                                                                        <a href="#"><i
+                                                                                class="feather icon-star ms-2"></i></a>
+                                                                    </div>
+                                                                </td>
+                                                                <td><a href="#!" class="email-name">Rinky Behl</a></td>
+                                                                <td><a href="#!" class="email-name">Photoshop updates
+                                                                        are available</a></td>
+                                                                <td class="email-time">10:01 AM</td>
+                                                            </tr>
+                                                            <tr class="read">
+                                                                <td>
+                                                                    <div class="d-flex align-items-center">
+                                                                        <div class="form-check">
+                                                                            <input class="form-check-input input-danger"
+                                                                                type="checkbox">
+                                                                        </div>
+                                                                        <a href="#"><i
+                                                                                class="feather icon-star-on text-warning ms-2"></i></a>
+                                                                    </div>
+                                                                </td>
+                                                                <td><a href="#!" class="email-name">Harry John</a></td>
+                                                                <td><a href="#!" class="email-name">New upcoming data
+                                                                        available</a></td>
+                                                                <td class="email-time">11:01 AM</td>
+                                                            </tr>
+                                                            <tr class="read">
+                                                                <td>
+                                                                    <div class="d-flex align-items-center">
+                                                                        <div class="form-check">
+                                                                            <input class="form-check-input input-danger"
+                                                                                type="checkbox">
+                                                                        </div>
+                                                                        <a href="#"><i
+                                                                                class="feather icon-star ms-2"></i></a>
+                                                                    </div>
+                                                                </td>
+                                                                <td><a href="#!" class="email-name">Hanry Joseph</a>
+                                                                </td>
+                                                                <td><a href="#!" class="email-name">SCSS current working
+                                                                        for new updates</a></td>
+                                                                <td class="email-time">12:01 PM</td>
+                                                            </tr>
+                                                            <tr class="read">
+                                                                <td>
+                                                                    <div class="d-flex align-items-center">
+                                                                        <div class="form-check">
+                                                                            <input class="form-check-input input-danger"
+                                                                                type="checkbox">
+                                                                        </div>
+                                                                        <a href="#"><i
+                                                                                class="feather icon-star ms-2"></i></a>
+                                                                    </div>
+                                                                </td>
+                                                                <td><a href="#!" class="email-name">Liu Koi Yan</a></td>
+                                                                <td><a href="#!" class="email-name">Charts waiting for
+                                                                        you</a>
+                                                                    <div><a href="#!" class="mail-attach"><i
+                                                                                class="feather icon-film me-2"></i>video</a>
+                                                                    </div>
+                                                                </td>
+                                                                <td class="email-time">07:15 AM</td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="tab-pane fade" id="v-pills-starred" role="tabpanel">
+                                    <div class="card-body">
+                                        <div class="tab-pane fade show active" id="pills-starred" role="tabpanel">
+                                            <div class="mail-body-content table-responsive">
+                                                <table class="table">
+                                                    <tbody>
+                                                        <tr class="unread">
+                                                            <td>
+                                                                <div class="d-flex align-items-center">
+                                                                    <div class="form-check">
+                                                                        <input class="form-check-input input-danger"
+                                                                            type="checkbox">
+                                                                    </div>
+                                                                    <a href="#"><i
+                                                                            class="feather icon-star ms-2"></i></a>
+                                                                </div>
+                                                            </td>
+                                                            <td><a href="#!" class="email-name">John Doe</a></td>
+                                                            <td><a href="#!" class="email-name">Coming Up Next Week</a>
+                                                            </td>
+                                                            <td class="email-time">13:02 PM</td>
+                                                        </tr>
+                                                        <tr class="unread">
+                                                            <td>
+                                                                <div class="d-flex align-items-center">
+                                                                    <div class="form-check">
+                                                                        <input class="form-check-input input-danger"
+                                                                            type="checkbox">
+                                                                    </div>
+                                                                    <a href="#"><i
+                                                                            class="feather icon-star-on text-warning ms-2"></i></a>
+                                                                </div>
+                                                            </td>
+                                                            <td><a href="#!" class="email-name">Google Inc</a></td>
+                                                            <td>
+                                                                <a href="#!" class="email-name">Lorem ipsum dolor sit
+                                                                    amet, consectetuer</a>
+                                                                <div><a href="#!" class="mail-attach"><i
+                                                                            class="feather icon-image me-2"></i>user.png</a>
+                                                                    <a href="#!" class="mail-attach ms-2"><i
+                                                                            class="feather icon-file-text me-2"></i>file.doc</a>
+                                                                </div>
+                                                            </td>
+
+                                                            <td class="email-time">12:01 AM</td>
+                                                        </tr>
+                                                        <tr class="unread">
+                                                            <td>
+                                                                <div class="d-flex align-items-center">
+                                                                    <div class="form-check">
+                                                                        <input class="form-check-input input-danger"
+                                                                            type="checkbox">
+                                                                    </div>
+                                                                    <a href="#"><i
+                                                                            class="feather icon-star ms-2"></i></a>
+                                                                </div>
+                                                            </td>
+                                                            <td><a href="#!" class="email-name">Sara Soudein</a></td>
+                                                            <td><a href="#!" class="email-name">SVG new updates comes
+                                                                    for you</a></td>
+                                                            <td class="email-time">00:05 AM</td>
+                                                        </tr>
+                                                        <tr class="unread">
+                                                            <td>
+                                                                <div class="d-flex align-items-center">
+                                                                    <div class="form-check">
+                                                                        <input class="form-check-input input-danger"
+                                                                            type="checkbox">
+                                                                    </div>
+                                                                    <a href="#"><i
+                                                                            class="feather icon-star ms-2"></i></a>
+                                                                </div>
+                                                            </td>
+                                                            <td><a href="#!" class="email-name">Rinky Behl</a></td>
+                                                            <td><a href="#!" class="email-name">Photoshop updates are
+                                                                    available</a></td>
+                                                            <td class="email-time">10:01 AM</td>
+                                                        </tr>
+                                                        <tr class="read">
+                                                            <td>
+                                                                <div class="d-flex align-items-center">
+                                                                    <div class="form-check">
+                                                                        <input class="form-check-input input-danger"
+                                                                            type="checkbox">
+                                                                    </div>
+                                                                    <a href="#"><i
+                                                                            class="feather icon-star-on text-warning ms-2"></i></a>
+                                                                </div>
+                                                            </td>
+                                                            <td><a href="#!" class="email-name">Harry John</a></td>
+                                                            <td><a href="#!" class="email-name">New upcoming data
+                                                                    available</a></td>
+                                                            <td class="email-time">11:01 AM</td>
+                                                        </tr>
+                                                        <tr class="read">
+                                                            <td>
+                                                                <div class="d-flex align-items-center">
+                                                                    <div class="form-check">
+                                                                        <input class="form-check-input input-danger"
+                                                                            type="checkbox">
+                                                                    </div>
+                                                                    <a href="#"><i
+                                                                            class="feather icon-star ms-2"></i></a>
+                                                                </div>
+                                                            </td>
+                                                            <td><a href="#!" class="email-name">Hanry Joseph</a></td>
+                                                            <td><a href="#!" class="email-name">SCSS current working for
+                                                                    new updates</a></td>
+                                                            <td class="email-time">12:01 PM</td>
+                                                        </tr>
+                                                        <tr class="read">
+                                                            <td>
+                                                                <div class="d-flex align-items-center">
+                                                                    <div class="form-check">
+                                                                        <input class="form-check-input input-danger"
+                                                                            type="checkbox">
+                                                                    </div>
+                                                                    <a href="#"><i
+                                                                            class="feather icon-star ms-2"></i></a>
+                                                                </div>
+                                                            </td>
+                                                            <td><a href="#!" class="email-name">Liu Koi Yan</a></td>
+                                                            <td><a href="#!" class="email-name">Charts waiting for
+                                                                    you</a>
+                                                                <div><a href="#!" class="mail-attach"><i
+                                                                            class="feather icon-film me-2"></i>video</a>
+                                                                </div>
+                                                            </td>
+                                                            <td class="email-time">07:15 AM</td>
+                                                        </tr>
+                                                        <tr class="read">
+                                                            <td>
+                                                                <div class="d-flex align-items-center">
+                                                                    <div class="form-check">
+                                                                        <input class="form-check-input input-danger"
+                                                                            type="checkbox">
+                                                                    </div>
+                                                                    <a href="#"><i
+                                                                            class="feather icon-star-on text-warning ms-2"></i></a>
+                                                                </div>
+                                                            </td>
+                                                            <td><a href="#!" class="email-name">Google Inc</a></td>
+                                                            <td><a href="#!" class="email-name">Lorem ipsum dolor sit
+                                                                    amet, consectetuer adipiscing elit</a></td>
+                                                            <td class="email-time">08:01 AM</td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="tab-pane fade" id="v-pills-draft" role="tabpanel">
+                                    <div class="card-body">
+                                        <div class="mail-body-content table-responsive">
+                                            <table class="table">
+                                                <tbody>
+                                                    <tr class="unread">
+                                                        <td>
+                                                            <div class="d-flex align-items-center">
+                                                                <div class="form-check">
+                                                                    <input class="form-check-input input-danger"
+                                                                        type="checkbox">
+                                                                </div>
+                                                                <a href="#"><i class="feather icon-star ms-2"></i></a>
+                                                            </div>
+                                                        </td>
+                                                        <td><a href="#!" class="email-name">John Doe</a></td>
+                                                        <td><a href="#!" class="email-name">Coming Up Next Week</a></td>
+                                                        <td class="email-time">13:02 PM</td>
+                                                    </tr>
+                                                    <tr class="unread">
+                                                        <td>
+                                                            <div class="d-flex align-items-center">
+                                                                <div class="form-check">
+                                                                    <input class="form-check-input input-danger"
+                                                                        type="checkbox">
+                                                                </div>
+                                                                <a href="#"><i
+                                                                        class="feather icon-star-on text-warning ms-2"></i></a>
+                                                            </div>
+                                                        </td>
+                                                        <td><a href="#!" class="email-name">Google Inc</a></td>
+                                                        <td>
+                                                            <a href="#!" class="email-name">Lorem ipsum dolor sit amet,
+                                                                consectetuer</a>
+                                                            <div><a href="#!" class="mail-attach"><i
+                                                                        class="feather icon-image me-2"></i>user.png</a>
+                                                                <a href="#!" class="mail-attach ms-2"><i
+                                                                        class="feather icon-file-text me-2"></i>file.doc</a>
+                                                            </div>
+                                                        </td>
+
+                                                        <td class="email-time">12:01 AM</td>
+                                                    </tr>
+                                                    <tr class="unread">
+                                                        <td>
+                                                            <div class="d-flex align-items-center">
+                                                                <div class="form-check">
+                                                                    <input class="form-check-input input-danger"
+                                                                        type="checkbox">
+                                                                </div>
+                                                                <a href="#"><i class="feather icon-star ms-2"></i></a>
+                                                            </div>
+                                                        </td>
+                                                        <td><a href="#!" class="email-name">Sara Soudein</a></td>
+                                                        <td><a href="#!" class="email-name">SVG new updates comes for
+                                                                you</a></td>
+                                                        <td class="email-time">00:05 AM</td>
+                                                    </tr>
+                                                    <tr class="read">
+                                                        <td>
+                                                            <div class="d-flex align-items-center">
+                                                                <div class="form-check">
+                                                                    <input class="form-check-input input-danger"
+                                                                        type="checkbox">
+                                                                </div>
+                                                                <a href="#"><i class="feather icon-star ms-2"></i></a>
+                                                            </div>
+                                                        </td>
+                                                        <td><a href="#!" class="email-name">Hanry Joseph</a></td>
+                                                        <td><a href="#!" class="email-name">SCSS current working for new
+                                                                updates</a></td>
+                                                        <td class="email-time">12:01 PM</td>
+                                                    </tr>
+                                                    <tr class="read">
+                                                        <td>
+                                                            <div class="d-flex align-items-center">
+                                                                <div class="form-check">
+                                                                    <input class="form-check-input input-danger"
+                                                                        type="checkbox">
+                                                                </div>
+                                                                <a href="#"><i class="feather icon-star ms-2"></i></a>
+                                                            </div>
+                                                        </td>
+                                                        <td><a href="#!" class="email-name">Liu Koi Yan</a></td>
+                                                        <td><a href="#!" class="email-name">Charts waiting for you</a>
+                                                            <div><a href="#!" class="mail-attach"><i
+                                                                        class="feather icon-film me-2"></i>video</a>
+                                                            </div>
+                                                        </td>
+                                                        <td class="email-time">07:15 AM</td>
+                                                    </tr>
+                                                    <tr class="read">
+                                                        <td>
+                                                            <div class="d-flex align-items-center">
+                                                                <div class="form-check">
+                                                                    <input class="form-check-input input-danger"
+                                                                        type="checkbox">
+                                                                </div>
+                                                                <a href="#"><i
+                                                                        class="feather icon-star-on text-warning ms-2"></i></a>
+                                                            </div>
+                                                        </td>
+                                                        <td><a href="#!" class="email-name">Google Inc</a></td>
+                                                        <td><a href="#!" class="email-name">Lorem ipsum dolor sit amet,
+                                                                consectetuer adipiscing elit</a></td>
+                                                        <td class="email-time">08:01 AM</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="tab-pane fade" id="v-pills-mail" role="tabpanel">
+                                    <div class="card-body">
+                                        <div class="mail-body-content table-responsive">
+                                            <table class="table">
+                                                <tbody>
+                                                    <tr class="unread">
+                                                        <td>
+                                                            <div class="d-flex align-items-center">
+                                                                <div class="form-check">
+                                                                    <input class="form-check-input input-danger"
+                                                                        type="checkbox">
+                                                                </div>
+                                                                <a href="#"><i
+                                                                        class="feather icon-star-on text-warning ms-2"></i></a>
+                                                            </div>
+                                                        </td>
+                                                        <td><a href="#!" class="email-name">Sara Soudein</a></td>
+                                                        <td><a href="#!" class="email-name">SVG new updates comes for
+                                                                you</a></td>
+                                                        <td class="email-time">00:05 AM</td>
+                                                    </tr>
+                                                    <tr class="read">
+                                                        <td>
+                                                            <div class="d-flex align-items-center">
+                                                                <div class="form-check">
+                                                                    <input class="form-check-input input-danger"
+                                                                        type="checkbox">
+                                                                </div>
+                                                                <a href="#"><i class="feather icon-star ms-2"></i></a>
+                                                            </div>
+                                                        </td>
+                                                        <td><a href="#!" class="email-name">Hanry Joseph</a></td>
+                                                        <td><a href="#!" class="email-name">SCSS current working for new
+                                                                updates</a></td>
+                                                        <td class="email-time">12:01 PM</td>
+                                                    </tr>
+                                                    <tr class="unread">
+                                                        <td>
+                                                            <div class="d-flex align-items-center">
+                                                                <div class="form-check">
+                                                                    <input class="form-check-input input-danger"
+                                                                        type="checkbox">
+                                                                </div>
+                                                                <a href="#"><i class="feather icon-star ms-2"></i></a>
+                                                            </div>
+                                                        </td>
+                                                        <td><a href="#!" class="email-name">John Doe</a></td>
+                                                        <td><a href="#!" class="email-name">Coming Up Next Week</a></td>
+                                                        <td class="email-time">13:02 PM</td>
+                                                    </tr>
+                                                    <tr class="unread">
+                                                        <td>
+                                                            <div class="d-flex align-items-center">
+                                                                <div class="form-check">
+                                                                    <input class="form-check-input input-danger"
+                                                                        type="checkbox">
+                                                                </div>
+                                                                <a href="#"><i
+                                                                        class="feather icon-star-on text-warning ms-2"></i></a>
+                                                            </div>
+                                                        </td>
+                                                        <td><a href="#!" class="email-name">Google Inc</a></td>
+                                                        <td>
+                                                            <a href="#!" class="email-name">Lorem ipsum dolor sit amet,
+                                                                consectetuer</a>
+                                                            <div><a href="#!" class="mail-attach"><i
+                                                                        class="feather icon-image me-2"></i>user.png</a>
+                                                                <a href="#!" class="mail-attach ms-2"><i
+                                                                        class="feather icon-file-text me-2"></i>file.doc</a>
+                                                            </div>
+                                                        </td>
+
+                                                        <td class="email-time">12:01 AM</td>
+                                                    </tr>
+                                                    <tr class="read">
+                                                        <td>
+                                                            <div class="d-flex align-items-center">
+                                                                <div class="form-check">
+                                                                    <input class="form-check-input input-danger"
+                                                                        type="checkbox">
+                                                                </div>
+                                                                <a href="#"><i class="feather icon-star ms-2"></i></a>
+                                                            </div>
+                                                        </td>
+                                                        <td><a href="#!" class="email-name">Liu Koi Yan</a></td>
+                                                        <td><a href="#!" class="email-name">Charts waiting for you</a>
+                                                            <div><a href="#!" class="mail-attach"><i
+                                                                        class="feather icon-film me-2"></i>video</a>
+                                                            </div>
+                                                        </td>
+                                                        <td class="email-time">07:15 AM</td>
+                                                    </tr>
+                                                    <tr class="read">
+                                                        <td>
+                                                            <div class="d-flex align-items-center">
+                                                                <div class="form-check">
+                                                                    <input class="form-check-input input-danger"
+                                                                        type="checkbox">
+                                                                </div>
+                                                                <a href="#"><i
+                                                                        class="feather icon-star-on text-warning ms-2"></i></a>
+                                                            </div>
+                                                        </td>
+                                                        <td><a href="#!" class="email-name">Google Inc</a></td>
+                                                        <td><a href="#!" class="email-name">Lorem ipsum dolor sit amet,
+                                                                consectetuer adipiscing elit</a></td>
+                                                        <td class="email-time">08:01 AM</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="tab-pane fade" id="v-pills-Trash" role="tabpanel">
+                                    <div class="card-body">
+                                        <div class="mail-body-content table-responsive">
+                                            <table class="table">
+                                                <tbody>
+                                                    <tr class="unread">
+                                                        <td>
+                                                            <div class="d-flex align-items-center">
+                                                                <div class="form-check">
+                                                                    <input class="form-check-input input-danger"
+                                                                        type="checkbox">
+                                                                </div>
+                                                                <a href="#"><i class="feather icon-star ms-2"></i></a>
+                                                            </div>
+                                                        </td>
+                                                        <td><a href="#!" class="email-name">Liu Koi Yan</a></td>
+                                                        <td><a href="#!" class="email-name">Charts waiting for you</a>
+                                                            <div><a href="#!" class="mail-attach"><i
+                                                                        class="feather icon-film me-2"></i>video</a>
+                                                            </div>
+                                                        </td>
+                                                        <td class="email-time">07:15 AM</td>
+                                                    </tr>
+                                                    <tr class="unread">
+                                                        <td>
+                                                            <div class="d-flex align-items-center">
+                                                                <div class="form-check">
+                                                                    <input class="form-check-input input-danger"
+                                                                        type="checkbox">
+                                                                </div>
+                                                                <a href="#"><i
+                                                                        class="feather icon-star-on text-warning ms-2"></i></a>
+                                                            </div>
+                                                        </td>
+                                                        <td><a href="#!" class="email-name">Google Inc</a></td>
+                                                        <td><a href="#!" class="email-name">Lorem ipsum dolor sit amet,
+                                                                consectetuer adipiscing elit</a></td>
+                                                        <td class="email-time">08:01 AM</td>
+                                                    </tr>
+                                                    <tr class="unread">
+                                                        <td>
+                                                            <div class="d-flex align-items-center">
+                                                                <div class="form-check">
+                                                                    <input class="form-check-input input-danger"
+                                                                        type="checkbox">
+                                                                </div>
+                                                                <a href="#"><i
+                                                                        class="feather icon-star-on text-warning ms-2"></i></a>
+                                                            </div>
+                                                        </td>
+                                                        <td><a href="#!" class="email-name">Sara Soudein</a></td>
+                                                        <td><a href="#!" class="email-name">SVG new updates comes for
+                                                                you</a></td>
+                                                        <td class="email-time">00:05 AM</td>
+                                                    </tr>
+                                                    <tr class="read">
+                                                        <td>
+                                                            <div class="d-flex align-items-center">
+                                                                <div class="form-check">
+                                                                    <input class="form-check-input input-danger"
+                                                                        type="checkbox">
+                                                                </div>
+                                                                <a href="#"><i class="feather icon-star ms-2"></i></a>
+                                                            </div>
+                                                        </td>
+                                                        <td><a href="#!" class="email-name">Hanry Joseph</a></td>
+                                                        <td><a href="#!" class="email-name">SCSS current working for new
+                                                                updates</a></td>
+                                                        <td class="email-time">12:01 PM</td>
+                                                    </tr>
+                                                    <tr class="read">
+                                                        <td>
+                                                            <div class="d-flex align-items-center">
+                                                                <div class="form-check">
+                                                                    <input class="form-check-input input-danger"
+                                                                        type="checkbox">
+                                                                </div>
+                                                                <a href="#"><i class="feather icon-star ms-2"></i></a>
+                                                            </div>
+                                                        </td>
+                                                        <td><a href="#!" class="email-name">John Doe</a></td>
+                                                        <td><a href="#!" class="email-name">Coming Up Next Week</a></td>
+                                                        <td class="email-time">13:02 PM</td>
+                                                    </tr>
+                                                    <tr class="read">
+                                                        <td>
+                                                            <div class="d-flex align-items-center">
+                                                                <div class="form-check">
+                                                                    <input class="form-check-input input-danger"
+                                                                        type="checkbox">
+                                                                </div>
+                                                                <a href="#"><i
+                                                                        class="feather icon-star-on text-warning ms-2"></i></a>
+                                                            </div>
+                                                        </td>
+                                                        <td><a href="#!" class="email-name">Google Inc</a></td>
+                                                        <td>
+                                                            <a href="#!" class="email-name">Lorem ipsum dolor sit amet,
+                                                                consectetuer</a>
+                                                            <div><a href="#!" class="mail-attach"><i
+                                                                        class="feather icon-image me-2"></i>user.png</a>
+                                                                <a href="#!" class="mail-attach ms-2"><i
+                                                                        class="feather icon-file-text me-2"></i>file.doc</a>
+                                                            </div>
+                                                        </td>
+                                                        <td class="email-time">12:01 AM</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- [ inbox-right section ] end -->
+                    </div>
+                </div>
+            </div>
+            <div class="pc-sideoverlay"></div>
+        </div>
+    </div>
+</div>
+<!-- Modal -->
+<div class="modal fade" id="examplesendmail" data-backdrop="static" tabindex="-1" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content mailsent-modal">
+            <div class="modal-header bg-dark">
+                <h5 class="modal-title text-white">New Message</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
+                    aria-label="Close"></button>
+            </div>
+            <div class="modal-body pb-2">
+                <form>
+                    <div class="form-group">
+                        <label class="form-label" for="exampleInputEmail1">To</label>
+                        <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Recipients">
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group m-0">
+                                <a data-bs-toggle="collapse" href="#collapsecc" role="button" aria-expanded="false"
+                                    aria-controls="collapsecc">
+                                    <label class="form-label text-body" for="exampleInputEmail2">Cc</label>
+                                </a>
+                                <div class="collapse" id="collapsecc">
+                                    <input type="email" class="form-control mb-3" id="exampleInputEmail2"
+                                        placeholder="Enter email">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group m-0">
+                                <a data-bs-toggle="collapse" href="#collapsebcc" role="button" aria-expanded="false"
+                                    aria-controls="collapsebcc">
+                                    <label class="form-label text-body" for="exampleInputEmail3">Bcc</label>
+                                </a>
+                                <div class="collapse" id="collapsebcc">
+                                    <input type="email" class="form-control mb-3" id="exampleInputEmail3"
+                                        placeholder="Enter email">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="exampleInputEmail4">Subject</label>
+                        <input type="email" class="form-control" id="exampleInputEmail4" placeholder="Subject">
+                    </div>
+                    <div id="pc-quil-1" style="height: 125px">
+                        <p>Put your things hear...</p>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer d-block">
+                <div class="row">
+                    <div class="col-md-9">
+                        <ul class="list-inline mb-3 mb-md-0">
+                            <li class="list-inline-item">
+                                <div class="btn-group">
+                                    <button type="button" class="btn btn-sm btn-primary">Send</button>
+                                    <button type="button"
+                                        class="btn btn-sm btn-primary dropdown-toggle dropdown-toggle-split"
+                                        data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span
+                                            class="sr-only">Toggle Dropdown</span></button>
+                                    <div class="dropdown-menu">
+                                        <a class="dropdown-item" href="#!">Schedule Send</a>
+                                        <a class="dropdown-item" href="#!">Saved to Draft</a>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="list-inline-item"><a href="#!" data-bs-toggle="tooltip" data-bs-placement="top"
+                                    title="Attach files" class="text-body"><i class="fas fa-paperclip"></i></a></li>
+                            <li class="list-inline-item"><a href="#!" data-bs-toggle="tooltip" data-bs-placement="top"
+                                    title="Insert photo" class="text-body"><i class="fas fa-images"></i></a></li>
+                            <li class="list-inline-item"><a href="#!" data-bs-toggle="tooltip" data-bs-placement="top"
+                                    title="Insert link‬" class="text-body"><i class="fas fa-link"></i></a></li>
+                            <li class="list-inline-item"><a href="#!" data-bs-toggle="tooltip" data-bs-placement="top"
+                                    title="Insert emoji" class="text-body"><i class="fas fa-smile"></i></a></li>
+                            <li class="list-inline-item"><a href="#!" data-bs-toggle="tooltip" data-bs-placement="top"
+                                    title="Insert files using Drive" class="text-body"><i
+                                        class="fab fa-google-drive"></i></a></li>
+                            <li class="list-inline-item"><a href="#!" data-bs-toggle="tooltip" data-bs-placement="top"
+                                    title="Insert signature" class="text-body"><i class="fas fa-pen-alt"></i></a></li>
+                        </ul>
+                    </div>
+                    <div class="col-md-3 text-md-end">
+                        <button type="button" class="btn btn-sm btn-light-secondary"
+                            data-bs-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+    <!-- Required Js -->
+    <script data-cfasync="false" src="../../cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script src="/static/js/plugins/popper.min.js"></script>
+    <script src="/static/js/plugins/perfect-scrollbar.min.js"></script>
+    <script src="/static/js/plugins/bootstrap.min.js"></script>
+    <script src="/static/js/plugins/feather.min.js"></script>
+    <script src="/static/js/pcoded.js"></script>
+
+
+
+    <script src='/static/js/plugins/quill.min.js'></script>
+
+
+<script>
+    (function () {
+        var quill = new Quill('#pc-quil-1', {
+            modules: {
+                toolbar: [
+                    [{
+                        header: [1, 2, false]
+                    }],
+                    ['bold', 'italic', 'underline'],
+                    ['image', 'code-block']
+                ]
+            },
+            placeholder: 'Type here...',
+            theme: 'snow'
+        });
+    })();
+</script>
+<script>
+    var tc = document.querySelectorAll('.email-name');
+    for (var t = 0; t < tc.length; t++) {
+        var c = tc[t];
+        c.addEventListener('click', function () {
+            slideDown(document.querySelector('.inbox-read'));
+            slideUp(document.querySelector('.inbox-right'));
+        });
+    }
+    document.querySelector('.back-inbox').addEventListener('click', function () {
+        console.log('123');
+        slideUp(document.querySelector('.inbox-read'));
+        slideDown(document.querySelector('.inbox-right'));
+    });
+    document.querySelector('.mail-search-toggle').addEventListener('click', function () {
+        slideDown(document.querySelector('.mail-search'));
+    });
+    document.querySelector('.search-close').addEventListener('click', function () {
+        slideUp(document.querySelector('.mail-search'));
+    });
+</script>
+
+
+<div class="pct-customizer">
+    <div class="pct-c-btn">
+        <button class="btn btn-light-danger" id="pct-toggler">
+            <i data-feather="settings"></i>
+        </button>
+        <button class="btn btn-light-primary" data-bs-toggle="tooltip" title="Document" data-placement="left">
+            <i data-feather="book"></i>
+        </button>
+        <button class="btn btn-light-success" data-bs-toggle="tooltip" title="Buy Now" data-placement="left">
+            <i data-feather="shopping-bag"></i>
+        </button>
+        <button class="btn btn-light-info" data-bs-toggle="tooltip" title="Support" data-placement="left">
+            <i data-feather="headphones"></i>
+        </button>
+    </div>
+    <div class="pct-c-content ">
+        <div class="pct-header bg-primary">
+            <h5 class="mb-0 text-white f-w-500">DashboardKit Customizer</h5>
+        </div>
+        <div class="pct-body">
+            <h6 class="mt-2"><i data-feather="credit-card" class="me-2"></i>Header settings</h6>
+            <hr class="my-2">
+            <div class="theme-color header-color">
+                <a href="#!" class="" data-value="bg-default"><span></span><span></span></a>
+                <a href="#!" class="" data-value="bg-primary"><span></span><span></span></a>
+                <a href="#!" class="" data-value="bg-danger"><span></span><span></span></a>
+                <a href="#!" class="" data-value="bg-warning"><span></span><span></span></a>
+                <a href="#!" class="" data-value="bg-info"><span></span><span></span></a>
+                <a href="#!" class="" data-value="bg-success"><span></span><span></span></a>
+                <a href="#!" class="" data-value="bg-dark"><span></span><span></span></a>
+            </div>
+            <h6 class="mt-4"><i data-feather="layout" class="me-2"></i>Sidebar settings</h6>
+            <hr class="my-2">
+            <div class="form-check form-switch">
+                <input type="checkbox" class="form-check-input" id="cust-sidebar">
+                <label class="form-check-label f-w-600 pl-1" for="cust-sidebar">Light Sidebar</label>
+            </div>
+            <div class="form-check form-switch mt-2">
+                <input type="checkbox" class="form-check-input" id="cust-sidebrand">
+                <label class="form-check-label f-w-600 pl-1" for="cust-sidebrand">Color Brand</label>
+            </div>
+            <div class="theme-color brand-color d-none">
+                <a href="#!" class="active" data-value="bg-primary"><span></span><span></span></a>
+                <a href="#!" class="" data-value="bg-danger"><span></span><span></span></a>
+                <a href="#!" class="" data-value="bg-warning"><span></span><span></span></a>
+                <a href="#!" class="" data-value="bg-info"><span></span><span></span></a>
+                <a href="#!" class="" data-value="bg-success"><span></span><span></span></a>
+                <a href="#!" class="" data-value="bg-dark"><span></span><span></span></a>
+            </div>
+            <h6 class="mt-4"><i data-feather="sun" class="me-2"></i>Layout settings</h6>
+            <hr class="my-2">
+            <div class="form-check form-switch mt-2">
+                <input type="checkbox" class="form-check-input" id="cust-darklayout">
+                <label class="form-check-label f-w-600 pl-1" for="cust-darklayout">Dark Layout</label>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    feather.replace();
+    var pctoggle = document.querySelector("#pct-toggler");
+    if (pctoggle) {
+        pctoggle.addEventListener('click', function () {
+            if (!document.querySelector(".pct-customizer").classList.contains('active')) {
+                document.querySelector(".pct-customizer").classList.add("active");
+            } else {
+                document.querySelector(".pct-customizer").classList.remove("active");
+            }
+        });
+    }
+
+    var custsidebrand = document.querySelector("#cust-sidebrand");
+    custsidebrand.addEventListener('click', function () {
+        if (custsidebrand.checked) {
+            document.querySelector(".m-header").classList.add("bg-dark");
+            document.querySelector(".theme-color.brand-color").classList.remove("d-none");
+        } else {
+            removeClassByPrefix(document.querySelector(".m-header"), 'bg-');
+            // document.querySelector(".m-header > .b-brand > .logo-lg").setAttribute('src', '/static/images/logo-dark.svg');
+            document.querySelector(".theme-color.brand-color").classList.add("d-none");
+        }
+    });
+
+
+    var brandcolor = document.querySelectorAll(".brand-color > a");
+    for (var t = 0; t < brandcolor.length; t++) {
+        var c = brandcolor[t];
+        c.addEventListener('click', function (event) {
+            var targetElement = event.target;
+            if (targetElement.tagName == "SPAN") {
+                targetElement = targetElement.parentNode;
+            }
+            var temp = targetElement.getAttribute('data-value');
+            if (temp == "bg-default") {
+                removeClassByPrefix(document.querySelector(".m-header"), 'bg-');
+            } else {
+                removeClassByPrefix(document.querySelector(".m-header"), 'bg-');
+                document.querySelector(".m-header > .b-brand > .logo-lg").setAttribute('src', '/static/images/logo.svg');
+                document.querySelector(".m-header").classList.add(temp);
+            }
+        });
+    }
+
+
+    var headercolor = document.querySelectorAll(".header-color > a");
+    for (var h = 0; h < headercolor.length; h++) {
+        var c = headercolor[h];
+
+        c.addEventListener('click', function (event) {
+            var targetElement = event.target;
+            if (targetElement.tagName == "SPAN") {
+                targetElement = targetElement.parentNode;
+            }
+            var temp = targetElement.getAttribute('data-value');
+            if (temp == "bg-default") {
+                removeClassByPrefix(document.querySelector(".pc-header:not(.pc-mob-header)"), 'bg-');
+            } else {
+                removeClassByPrefix(document.querySelector(".pc-header:not(.pc-mob-header)"), 'bg-');
+                document.querySelector(".pc-header:not(.pc-mob-header)").classList.add(temp);
+            }
+        });
+    }
+
+
+    var custside = document.querySelector("#cust-sidebar");
+    custside.addEventListener('click', function () {
+        if (custside.checked) {
+            document.querySelector(".pc-sidebar").classList.add("light-sidebar");
+            // document.querySelector(".pc-horizontal .topbar").classList.add("light-sidebar");
+        } else {
+            document.querySelector(".pc-sidebar").classList.remove("light-sidebar");
+            // document.querySelector(".pc-horizontal .topbar").classList.remove("light-sidebar");
+        }
+    });
+
+
+    var custdarklayout = document.querySelector("#cust-darklayout");
+    custdarklayout.addEventListener('click', function () {
+        if (custdarklayout.checked) {
+            document.querySelector("#main-style-link").setAttribute('href', '/static/css/style-dark.css');
+        } else {
+            document.querySelector("#main-style-link").setAttribute('href', '/static/css/style.css');
+        }
+    });
+    function removeClassByPrefix(node, prefix) {
+        for (let i = 0; i < node.classList.length; i++) {
+            let value = node.classList[i];
+            if (value.startsWith(prefix)) {
+                node.classList.remove(value);
+            }
+        }
+    }
+</script>
+</body>
+
+
+<!-- Mirrored from dashboardkit.io/bootstrap/apps/email-v2.html by HTTrack Website Copier/3.x [XR&CO'2014], Sun, 19 Jun 2022 14:35:06 GMT -->
+</html>

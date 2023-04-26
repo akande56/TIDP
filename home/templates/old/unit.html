@@ -1,0 +1,180 @@
+{% extends 'settings.html' %}
+{% load widget_tweaks %}
+
+{% block settings_content %}
+
+    <div class="page-content">
+        <div class="pc-head">
+            <div class="mail-search">
+                <form class="px-3 w-100 h-100 d-flex align-items-center">
+                    <div class="form-group mb-0 d-flex align-items-center w-100">
+                        <i data-feather="search"></i>
+                        <input type="search" class="form-control border-0 shadow-none" placeholder="Search here. . .">
+                        <a href="#!" class="search-close text-body"><i data-feather="x" class=""></i></a>
+                    </div>
+                </form>
+            </div>
+            <div class="pc-toggle-sidemenu">
+                <a href="#!"><i class="material-icons-two-tone">menu_open</i></a>
+            </div>
+        </div>
+        <div class="pc-body">
+            <div class="row">
+                <!-- page statustic card start -->
+                <div class="col-xl-4 col-md-6">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="row align-items-center">
+                                <div class="col-8">
+                                    <h4 class="text-success">{{ groups.count }}</h4>
+                                    <h6 class="text-muted m-b-0">Active User Group</h6>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-footer bg-success py-3">
+                            <div class="row align-items-center">
+                                <div class="col-9">
+                                    <p class="text-white m-b-0">Published User Group</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-4 col-md-6">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="row align-items-center">
+                                <div class="col-8">
+                                    <h4 class="text-danger">5</h4>
+                                    <h6 class="text-muted m-b-0">Inactive User Groups</h6>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-footer bg-danger py-3">
+                            <div class="row align-items-center">
+                                <div class="col-9">
+                                    <p class="text-white m-b-0">Unpublished User Group</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-4 col-md-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="row align-items-center">
+                                <div class="col-8">
+                                    <h4 class="text-primary">7</h4>
+                                    <h6 class="text-muted m-b-0">Total Groups</h6>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-footer bg-primary py-3">
+                            <div class="row align-items-center">
+                                <div class="col-9">
+                                    <p class="text-white m-b-0">Total User Groups</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+            <div class="col-lg-6">
+                <button type="button" href="#" data-bs-toggle="modal" data-bs-target="#add-group-model" class="btn btn-icon btn-warning">Add New Unit</button>
+            </div>
+            <div class="col-lg-12">
+                <hr/>
+                {% if messages %}
+                    {% for message in messages %}
+                        <div class="alert alert-{% if message.tags == 'error' %}danger{% else %}success{% endif %}" role="alert">
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                {% endif %}
+            </div>
+        </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="card user-profile-list">
+                    <div class="card-body p-0">
+                        
+                        <div class="dt-responsive table-responsive">
+                            
+                            <table id="user-list-table" class="table nowrap">
+                                <thead>
+                                    <tr>
+                                        <th>S/N</th>
+                                        <th>Name</th>
+                                        <th>Unit Type</th>
+                                        <th>Created On</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for unit in units %}
+                                        <tr>
+                                            <td>{{ forloop.counter }}</td>
+                                            <td>
+                                                <div class="d-inline-block align-middle">
+                                                    <div class="d-inline-block">
+                                                        <h6 class="m-b-0">{{ unit.name }}</h6>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td>{{ unit.unit_type }}</td>
+                                            <td>{{ unit.created }}</td>
+                                            <td>
+                                                <h5>Check Users</h5>
+                                                <div class="overlay-edit">
+                                                    <a href="{% url 'unit_detail'  unit.slug  %}">
+                                                        <button type="button" class="btn btn-icon btn-success">View</button>
+                                                    </a>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="pc-sideoverlay"></div>
+    </div>
+
+    
+    <!-- Modal -->
+    <div class="modal add-group-model fade" id="add-group-model" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <form method="post"> {% csrf_token %}
+                    <div class="modal-body">
+                        <button type="button" class="btn-close float-end" data-bs-dismiss="modal"
+                            aria-label="Close"></button>
+                        <div class="tab-content pt-4" id="pc-noti-tabContent">
+                            <h2>Create New Unit</h2>    
+                            <hr class="mb-4">
+                                <div class="media mb-3">
+                                    <div class="media-body ms-3 align-self-center">
+                                            <div class="form-group">
+                                                <label class="form-label" for="groupname">Unit Name</label>
+                                                {% render_field form.name class="form-control" id="groupname" aria-describedby="emailHelp" placeholder="Unit Name" %}
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="form-label" for="groupname">Unit Office</label>
+                                                {% render_field form.unit_type class="form-control" id="groupname" aria-describedby="emailHelp" placeholder="Group Name" %}
+                                            </div>
+                                    </div>
+                                </div>
+                            </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit"  class="btn btn-light-success btn-sm" >Add</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}

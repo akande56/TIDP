@@ -1,0 +1,435 @@
+{% extends 'correspondance.html' %}
+{% load widget_tweaks %}
+{% load static %}
+
+
+{% block correspondance %}
+<script type="text/javascript" src="{% static "ckeditor/ckeditor-init.js" %}"></script>
+<script type="text/javascript" src="{% static "ckeditor/ckeditor/ckeditor.js" %}"></script>
+   <!-- [ Main Content ] start -->
+<div class="pc-container sidebar-layouts">
+    <div class="pcoded-content">
+        <div class="page-sidebar">
+            <div class="mail-l-content">
+                <div class="p-3">
+                    <a href="{% url 'new_correspondance' %}" class="btn btn-light-secondary btn-block" ><i data-feather="plus"></i> New</a>
+                </div>
+                <ul class="mb-2 nav nav-tab flex-column nav-pills sidebar-links" id="v-pills-tab" role="tablist"
+                    aria-orientation="vertical">
+                    <li class="nav-item mail-section">
+                        <a class="nav-link  link-hover-danger active" id="v-pills-home-tab" data-bs-toggle="pill"
+                            href="#v-pills-home" role="tab" aria-controls="v-pills-home" aria-selected="false">
+                            <span><i class="material-icons-two-tone">move_to_inbox</i> Inbox</span>
+                            <span>{% if unread > 0 %}{{ unread }}{% endif %}</span>
+                        </a>
+                    </li>
+                    <li class="nav-item mail-section">
+                        <a class="nav-link  link-hover-info" id="v-pills-settings-tab" data-bs-toggle="pill"
+                            href="#v-pills-mail" role="tab">
+                            <span><i class="material-icons-two-tone">stars</i> Important</span>
+                            
+                        </a>
+                    </li>
+                    <li class="nav-item mail-section">
+                        <a class="nav-link  link-hover-success" id="v-pills-messages-tab" data-bs-toggle="pill"
+                            href="#v-pills-draft" role="tab">
+                            <span><i class="material-icons-two-tone">collections_bookmark</i> Drafts</span>
+                        </a>
+                    </li>
+                    <li class="nav-item mail-section">
+                        <a class="nav-link  link-hover-info" id="v-pills-settings-tab" data-bs-toggle="pill"
+                            href="#v-pills-mail" role="tab">
+                            <span><i class="material-icons-two-tone">send</i> Sent</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="page-content">
+            <div class="pc-head">
+                <div class="mail-search">
+                    <form class="px-3 w-100 h-100 d-flex align-items-center">
+                        <div class="form-group mb-0 d-flex align-items-center w-100">
+                            <i data-feather="search"></i>
+                            <input type="search" class="form-control border-0 shadow-none"
+                                placeholder="Search here. . .">
+                            <a href="#!" class="search-close text-body"><i data-feather="x" class=""></i></a>
+                        </div>
+                    </form>
+                </div>
+                <div class="pc-toggle-sidemenu">
+                    <a href="#!"><i class="material-icons-two-tone">menu_open</i></a>
+                </div>
+                <div class="pc-head-content">
+                    <ul class="list-inline m-0">
+                        <li class="list-inline-item">
+                            <a href="#!" class="mail-search-toggle"><i class="material-icons-two-tone">search</i></a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="pc-body">
+                <div class="card email-card">
+                    <div class="mail-body">
+                        <!-- [ inbox-right section ] start -->
+                        {% if messages %}
+                    {% for message in messages %}
+                        <div class="alert alert-{% if message.error %}danger{% else %}success{% endif %}" role="alert">
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                {% endif %}
+                        
+                        <div class="inbox-right">
+                            <div class="tab-content p-0" id="v-pills-tabContent">
+                                <div class="tab-pane fade show active" id="v-pills-home" role="tabpanel"
+                                    aria-labelledby="v-pills-home-tab">
+                                    <div class="card-header py-0">
+                                        <ul class="nav nav-pills nav-fill mb-0 border-none" id="pills-tab"
+                                            role="tablist">
+                                            <li class="nav-item">
+                                                <a class="nav-link link-hover-danger active" id="pills-primary-tab"
+                                                    data-bs-toggle="pill" href="#pills-primary" role="tab"
+                                                    aria-controls="pills-primary" aria-selected="true">
+                                                    <span><i class="material-icons-two-tone">move_to_inbox</i>
+                                                        All</span>
+                                                </a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a class="nav-link link-hover-primary" id="pills-social-tab"
+                                                    data-bs-toggle="pill" href="#pills-social" role="tab"
+                                                    aria-controls="pills-social" aria-selected="false">
+                                                    <span><i class="material-icons-two-tone">local_offer</i>
+                                                        Waiting</span>
+                                                </a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a class="nav-link link-hover-success" id="pills-Promotion-tab"
+                                                    data-bs-toggle="pill" href="#pills-Promotion" role="tab"
+                                                    aria-controls="pills-Promotion" aria-selected="false">
+                                                    <span><i class="material-icons-two-tone">backup</i>
+                                                        Approved</span>
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="tab-content" id="pills-tabContent">
+                                            <div class="tab-pane fade show active" id="pills-primary" role="tabpanel"
+                                                aria-labelledby="pills-primary-tab">
+                                                <div class="mail-body-content table-responsive">
+                                                    <table class="table">
+                                                        <tbody>
+                                                            {% for memo in memos %}    
+                                                                <tr class="{% if memo.viewed %}read{% else %}unread{% endif %}">
+                                                                    <td>
+                                                                        <div class="d-flex align-items-center">
+                                                                            <div class="form-check">
+                                                                                <input class="form-check-input input-danger"
+                                                                                    type="checkbox">
+                                                                            </div>
+                                                                            <a href="#">
+                                                                                <i class="feather {% if memo.stared %}icon-star-on text-warning {% else %}icon-star ms-2{% endif %} ms-2"></i>
+                                                                            </a>
+                                                                        </div>
+                                                                    </td>
+                                                                    <td><a href="{% url 'view_memo' memo.folder.id %}" class="email-name">{{ memo.forwarded_by.user.first_name }}</a></td>
+                                                                    <td><a href="{% url 'view_memo' memo.folder.id %}" class="email-name">{{ memo.folder.title }}</a></td>
+                                                                    <td class="email-time">{{ memo.created }}</td>
+                                                                </tr>
+                                                            {% endfor %}
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                            <div class="tab-pane fade" id="pills-social" role="tabpanel"
+                                                aria-labelledby="pills-social-tab">
+                                                <div class="mail-body-content table-responsive">
+                                                    <table class="table">
+                                                        <tbody>
+                                                            {% for memo in memos %}
+                                                                {% if not memo.approved %}
+                                                                    <tr class="{% if memo.viewed %}read{% else %}unread{% endif %}">
+                                                                        <td>
+                                                                            <div class="d-flex align-items-center">
+                                                                                <div class="form-check">
+                                                                                    <input class="form-check-input input-danger"
+                                                                                        type="checkbox">
+                                                                                </div>
+                                                                                <a href="#">
+                                                                                    <i class="feather {% if memo.stared %}icon-star-on text-warning {% else %}icon-star ms-2{% endif %} ms-2"></i>
+                                                                                </a>
+                                                                            </div>
+                                                                        </td>
+                                                                        <td><a href="{% url 'view_memo' memo.folder.id %}" class="email-name">{{ memo.forwarded_by.user.first_name }}</a></td>
+                                                                        <td><a href="{% url 'view_memo' memo.folder.id %}" class="email-name">{{ memo.folder.title }}</a></td>
+                                                                        <td class="email-time">{{ memo.created }}</td>
+                                                                    </tr>
+                                                                {% endif %}
+                                                            {% endfor %}
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                            <div class="tab-pane fade" id="pills-Promotion" role="tabpanel"
+                                                aria-labelledby="pills-Promotion-tab">
+                                                <div class="mail-body-content table-responsive">
+                                                    <table class="table">
+                                                        <tbody>
+                                                            {% for memo in memos %}
+                                                                {% if memo.approved %}
+                                                                    <tr class="{% if memo.viewed %}read{% else %}unread{% endif %}">
+                                                                        <td>
+                                                                            <div class="d-flex align-items-center">
+                                                                                <div class="form-check">
+                                                                                    <input class="form-check-input input-danger"
+                                                                                        type="checkbox">
+                                                                                </div>
+                                                                                <a href="#">
+                                                                                    <i class="feather {% if memo.stared %}icon-star-on text-warning {% else %}icon-star ms-2{% endif %} ms-2"></i>
+                                                                                </a>
+                                                                            </div>
+                                                                        </td>
+                                                                        <td><a href="{% url 'view_memo' memo.folder.id %}" class="email-name">{{ memo.forwarded_by.user.first_name }}</a></td>
+                                                                        <td><a href="{% url 'view_memo' memo.folder.id %}" class="email-name">{{ memo.folder.title }}</a></td>
+                                                                        <td class="email-time">{{ memo.created }}</td>
+                                                                    </tr>
+                                                                {% endif %}
+                                                            {% endfor %}
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="tab-pane fade" id="v-pills-starred" role="tabpanel">
+                                    <div class="card-body">
+                                        <div class="tab-pane fade show active" id="pills-starred" role="tabpanel">
+                                            <div class="mail-body-content table-responsive">
+                                                <table class="table">
+                                                    <tbody>
+                                                        {% for memo in memos %}
+                                                            {% if memo.folder.urgent %}
+                                                                <tr class="{% if memo.viewed %}read{% else %}unread{% endif %}">
+                                                                    <td>
+                                                                        <div class="d-flex align-items-center">
+                                                                            <div class="form-check">
+                                                                                <input class="form-check-input input-danger"
+                                                                                    type="checkbox">
+                                                                            </div>
+                                                                            <a href="#">
+                                                                                <i class="feather {% if memo.stared %}icon-star-on text-warning {% else %}icon-star ms-2{% endif %} ms-2"></i>
+                                                                            </a>
+                                                                        </div>
+                                                                    </td>
+                                                                    <td><a href="{% url 'view_memo' memo.folder.id %}" class="email-name">{{ memo.forwarded_by.user.first_name }}</a></td>
+                                                                    <td><a href="{% url 'view_memo' memo.folder.id %}" class="email-name">{{ memo.folder.title }}</a></td>
+                                                                    <td class="email-time">{{ memo.created }}</td>
+                                                                </tr>
+                                                            {% endif %}
+                                                        {% endfor %}
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="tab-pane fade" id="v-pills-draft" role="tabpanel">
+                                    <div class="card-body">
+                                        <div class="mail-body-content table-responsive">
+                                            <table class="table">
+                                                <tbody>
+                                                    {% for draft in drafts %}
+                                                        <tr class="unread">
+                                                            <td> {{ forloop.counter }} </td>
+                                                            <td><a href="{% url 'view_memo' draft.id %}" class="email-name">{{ draft.title }}</a></td>
+                                                            <td class="email-time">{{ draft.created }}</td>
+                                                        </tr>
+                                                    {% endfor %}
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="tab-pane fade" id="v-pills-mail" role="tabpanel">
+                                    <div class="card-body">
+                                        <div class="mail-body-content table-responsive">
+                                            <table class="table">
+                                                <tbody>
+                                                    {% for memo in send_memos %}
+                                                        <tr class="read">
+                                                            <td>
+                                                                <div class="d-flex align-items-center">
+                                                                    <div class="form-check">
+                                                                        <input class="form-check-input input-danger"
+                                                                            type="checkbox">
+                                                                    </div>
+                                                                    <a href="#">
+                                                                        <i class="feather {% if memo.stared %}icon-star-on text-warning {% else %}icon-star ms-2{% endif %} ms-2"></i>
+                                                                    </a>
+                                                                </div>
+                                                            </td>
+                                                            <td><a href="{% url 'view_memo' memo.folder.id %}" class="email-name">{{ memo.send_to.user.first_name }}</a></td>
+                                                            <td><a href="{% url 'view_memo' memo.folder.id %}" class="email-name">{{ memo.folder.title }}</a></td>
+                                                            <td class="email-time">{{ memo.created }}</td>
+                                                        </tr>
+                                                    {% endfor %}
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- [ inbox-right section ] end -->
+                    </div>
+                </div>
+            </div>
+            <div class="pc-sideoverlay"></div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+<!-- Modal -->
+<div class="modal fade" id="examplesendmail" data-backdrop="static" tabindex="-1" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <form method="post" encrypt="multipart/form-data"> {% csrf_token %}
+            <div class="modal-content mailsent-modal">
+                <div class="modal-header bg-dark">
+                    <h5 class="modal-title text-white">New Correspondance</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
+                        aria-label="Close"></button>
+                </div>
+                <div class="modal-body pb-2">
+                    
+                        <div class="form-group">
+                            <label class="form-label" for="exampleInputEmail1">To</label>
+                            {% render_field form.send_to class="form-control" id="exampleInputEmail1" %}
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label" for="exampleInputEmail4">Subject</label>
+                            {% render_field form.title class="form-control" id="exampleInputEmail1" placeholder="Subject" %}
+                        </div>
+
+                        
+                        {% render_field form.content %}
+                        <div class="form-group">
+                            <label class="form-label" for="exampleInputEmail4">Urgent</label>
+                            {% render_field form.urgent %}
+                        </div>
+                </div>
+                <div class="modal-footer d-block">
+                    <div class="row">
+                        <div class="col-md-9">
+                            <ul class="list-inline mb-3 mb-md-0">
+                                <li class="list-inline-item">
+                                    <div class="btn-group">
+                                        <button type="submit" class="btn btn-sm btn-primary">Send</button>
+                                        <button type="button"
+                                            class="btn btn-sm btn-primary dropdown-toggle dropdown-toggle-split"
+                                            data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span
+                                                class="sr-only">Toggle Dropdown</span></button>
+                                        <div class="dropdown-menu">
+                                            <a class="dropdown-item" href="#!">Saved to Draft</a>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="list-inline-item"><a href="#!" data-bs-toggle="tooltip" data-bs-placement="top"
+                                        title="Attach files" class="text-body"><i class="fas fa-paperclip"></i></a></li>
+                                <li class="list-inline-item"><a href="#!" data-bs-toggle="tooltip" data-bs-placement="top"
+                                        title="Insert photo" class="text-body"><i class="fas fa-images"></i></a></li>
+                            </ul>
+                        </div>
+                        <div class="col-md-3 text-md-end">
+                            <button type="button" class="btn btn-sm btn-light-secondary"
+                                data-bs-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div class="modal fade" id="pdfUPLOAD" data-backdrop="static" tabindex="-1" aria-labelledby="pdfUPLOADModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <form method="post" encrypt="multipart/form-data"> {% csrf_token %}
+            <div class="modal-content mailsent-modal">
+                <div class="modal-header bg-dark">
+                    <h5 class="modal-title text-white">New Correspondance</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
+                        aria-label="Close"></button>
+                </div>
+                <div class="modal-body pb-2">
+                    
+                        <div class="form-group">
+                            <label class="form-label" for="exampleInputEmail1">To</label>
+                            {% render_field form.send_to class="form-control" id="exampleInputEmail1" %}
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label" for="exampleInputEmail4">Subject</label>
+                            {% render_field form.title class="form-control" id="exampleInputEmail1" placeholder="Subject" %}
+                        </div>
+
+                        
+                        {% render_field form.content %}
+                        <div class="form-group">
+                            <label class="form-label" for="exampleInputEmail4">Urgent</label>
+                            {% render_field form.urgent %}
+                        </div>
+                </div>
+                <div class="modal-footer d-block">
+                    <div class="row">
+                        <div class="col-md-9">
+                            <ul class="list-inline mb-3 mb-md-0">
+                                <li class="list-inline-item">
+                                    <div class="btn-group">
+                                        <button type="submit" class="btn btn-sm btn-primary">Send</button>
+                                        <button type="button"
+                                            class="btn btn-sm btn-primary dropdown-toggle dropdown-toggle-split"
+                                            data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span
+                                                class="sr-only">Toggle Dropdown</span></button>
+                                        <div class="dropdown-menu">
+                                            <a class="dropdown-item" href="#!">Saved to Draft</a>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="list-inline-item"><a href="#!" data-bs-toggle="tooltip" data-bs-placement="top"
+                                        title="Attach files" class="text-body"><i class="fas fa-paperclip"></i></a></li>
+                                <li class="list-inline-item"><a href="#!" data-bs-toggle="tooltip" data-bs-placement="top"
+                                        title="Insert photo" class="text-body"><i class="fas fa-images"></i></a></li>
+                                <li class="list-inline-item"><a href="#!" data-bs-toggle="tooltip" data-bs-placement="top"
+                                        title="Insert link‬" class="text-body"><i class="fas fa-link"></i></a></li>
+                                <li class="list-inline-item"><a href="#!" data-bs-toggle="tooltip" data-bs-placement="top"
+                                        title="Insert emoji" class="text-body"><i class="fas fa-smile"></i></a></li>
+                                <li class="list-inline-item"><a href="#!" data-bs-toggle="tooltip" data-bs-placement="top"
+                                        title="Insert files using Drive" class="text-body"><i
+                                            class="fab fa-google-drive"></i></a></li>
+                                <li class="list-inline-item"><a href="#!" data-bs-toggle="tooltip" data-bs-placement="top"
+                                        title="Insert signature" class="text-body"><i class="fas fa-pen-alt"></i></a></li>
+                            </ul>
+                        </div>
+                        <div class="col-md-3 text-md-end">
+                            <button type="button" class="btn btn-sm btn-light-secondary"
+                                data-bs-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<div class="p-3">
+    <a href="#!" class="btn btn-light-secondary btn-block" data-bs-toggle="modal"
+        data-bs-target="#examplesendmail"><i data-feather="plus"></i> New</a>
+</div>
+{% endblock correspondance %}

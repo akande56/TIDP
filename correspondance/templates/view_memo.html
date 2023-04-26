@@ -1,0 +1,128 @@
+{% extends 'base.html' %}
+{% load widget_tweaks %}
+{% load static %}
+
+
+{% block content %}
+<script type="text/javascript" src="{% static "ckeditor/ckeditor-init.js" %}"></script>
+<script type="text/javascript" src="{% static "ckeditor/ckeditor/ckeditor.js" %}"></script>
+
+
+<!-- [ Main Content ] start -->
+<section class="pc-container">
+    <div class="pcoded-content">
+        <!-- [ breadcrumb ] start -->
+        <div class="page-header">
+            <div class="page-block">
+                <div class="row align-items-center">
+                    <div class="col-md-12">
+                        <div class="page-header-title">
+                            <h5 class="m-b-10">View Email</h5>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- [ breadcrumb ] end -->
+        <!-- [ Main Content ] start -->
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="card email-card">
+                    <div class="card-body">
+                        <div class="mail-body">
+                            <div class="row">
+                                {% if messages %}
+                                    {% for message in messages %}
+                                        <div class="alert alert-{% if message.error %}danger{% else %}success{% endif %}" role="alert">
+                                            {{ message }}
+                                        </div>
+                                    {% endfor %}
+                                {% endif %}
+                                <!-- [ email-left section ] start -->
+                                <div class="col-xl-2 col-md-3 mail-left">
+                                    <div class="mail-l-content">
+                                        <div class="mb-3">
+                                            <a href="{% url 'correspondance' %}" class="btn  btn-rounded btn-outline-primary">
+                                                Back
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- [ email-right section ] start -->
+                                
+                                    <div class="col-xl-10 col-md-9">
+                                        <div class="card">
+                                            <div class="card-header">
+                                                <h6 class="d-inline-block m-0">{{ folders.first.title }}</h6>
+                                                <p class="float-end m-0"><strong>{{ folders.first.created  }}</strong></p>
+                                            </div>
+                                            <div class="card-body">
+                                                <div class="email-read">
+                                                    {% comment %}
+                                                        <div class="photo-table m-r-10">
+                                                            <a href="#">
+                                                                <img class="media-object img-radius"
+                                                                    src="../assets/images/user/avatar-1.jpg" alt="E-mail user"
+                                                                    style="width:50px;">
+                                                            </a>
+                                                        </div>
+                                                    {% endcomment %}
+                                                    <div>
+                                                        <a href="#">
+                                                            <p class="user-name text-dark mb-1"><strong>From: </strong> {{ folders.first.created_by.user.first_name }}
+                                                            </p>
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                                <div class="m-b-10 m-l-10 p-l-5 email-contant"> 
+                                                    <div class="photo-contant">
+                                                        {% for folder in folders %}
+                                                            {% if forloop.counter > 1 %}
+                                                                <p class="float-end m-0"><strong>{{ folders.first.created  }}</strong></p>
+                                                            {% endif %}
+                                                            <div>
+                                                                {% if forloop.counter == 1 %}
+                                                                    <p class="user-name text-dark mb-1"><strong>{{ folder.title }}</strong></p>
+                                                                {% endif %}  
+                                                                <div class="email-content">
+                                                                    <p class="">
+                                                                        {{ folder.content |safe }}
+                                                                        {% if folder.file_set.all.count >= 1 %}Attachments <i class="fas fa-paperclip"></i>: {% endif %}
+                                                                        {% for file in folder.file_set.all %}
+                                                                            <a href="{% url 'download_file' file.id %}"> 
+                                                                                {{file.name }}
+                                                                            </a>
+                                                                        {% endfor %}
+                                                                    </p>
+                                                                    
+                                                                </div>
+                                                            </div> <hr/>  
+                                                        {% endfor %}
+                                                        <div class="m-t-15">
+                                                            <form class="form-material" method="post"> {% csrf_token %}
+                                                                <div class="form-group">
+                                                                    {% render_field form.content class="form-control" placeholder="Comment..." %}
+                                                                </div>
+
+                                                                <button class="nav-link  link-hover-info" id="v-pills-settings-tab" type="submit">
+                                                                    <span>Minute On <i class="material-icons-two-tone">send</i></span>
+                                                                </button>
+                                                            </form>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                <!-- [ email-right section ] start -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- [ Main Content ] end -->
+    </div>
+</section>
+
+{% endblock %}

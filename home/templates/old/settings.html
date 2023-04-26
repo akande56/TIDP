@@ -1,0 +1,78 @@
+{% extends 'base.html' %}
+{% load widget_tweaks %}
+
+
+{% load static %}
+{% block style %}
+    <link rel="stylesheet" href="/static/dashboard/css/layout-nested.css">
+{% endblock style %}
+{% block content %}
+    <div class="pc-container sidebar-layouts">
+        <div class="pcoded-content">
+            <div class="page-sidebar">
+                <div class="mail-l-content">
+                    <ul class="mb-2 nav nav-tab flex-column nav-pills sidebar-links">
+                        <li class="nav-item">
+                            <a class="nav-link {{ nav_persona }}" href="{% url "user_persona" %}">
+                                <span><i class="material-icons-two-tone">check</i> User Persona</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link {{ nav_user }}" href="{% url 'users_view' %}" >
+                                <span><i class="material-icons-two-tone">check</i> Users</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link {{ unit_nav }}" href="{% url 'units_view' %}" >
+                                <span><i class="material-icons-two-tone">check</i> Units</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link {{ landing_nav }}" href="{% url 'landing_info' %}">
+                                <span><i class="material-icons-two-tone">check</i> Important Informaton</span>
+                            </a>
+                        </li> 
+                    </ul>
+                    <div class="px-3">
+                    </div>
+                </div>
+            </div>
+            {% block settings_content %}
+            
+            {% endblock settings_content %}
+            
+        </div>
+    </div>
+
+
+    
+<!-- Modal -->
+<div class="modal add-group-model fade" id="add-group-model" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <form method="post"> {% csrf_token %}
+                <div class="modal-body">
+                    <button type="button" class="btn-close float-end" data-bs-dismiss="modal"
+                        aria-label="Close"></button>
+                    <div class="tab-content pt-4" id="pc-noti-tabContent">
+                        <h2>User Persona</h2>    
+                        <hr class="mb-4">
+                            <div class="media mb-3">
+                                <div class="media-body ms-3 align-self-center">
+                                    <h6 class="mb-0 d-inline-block">Create User User Persona </h6>
+                                        <div class="form-group">
+                                            <label class="form-label" for="groupname">User Persona Name</label>
+                                            {% render_field form.name class="form-control" id="groupname" aria-describedby="emailHelp" placeholder="User Persona Name" %}
+                                        </div>
+                                </div>
+                            </div>
+                        </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit"  class="btn btn-light-success btn-sm" >Add</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

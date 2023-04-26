@@ -1,0 +1,211 @@
+{% load pwa %}
+{% progressive_web_app_meta %}
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Dastboard | RecordDigita</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="description" content="RecordDigita."/>
+    <meta name="keywords" content="RecordDigita"/>
+    <meta name="author" content="RecordDigita" />
+
+    <!-- Favicon icon -->
+    <link rel="icon" href="" type="image/x-icon">
+    {% block up_style %}{% endblock up_style %} 
+    <!-- font css -->
+    <link rel="stylesheet" href="/static/dashboard/fonts/tabler-icons.min.css">
+    <link rel="stylesheet" href="/static/dashboard/fonts/feather.css">
+    <link rel="stylesheet" href="/static/dashboard/fonts/fontawesome.css">
+    <link rel="stylesheet" href="/static/dashboard/fonts/material.css">
+
+    <!-- vendor css -->
+    <link rel="stylesheet" href="/static/dashboard/css/style.css" id="main-style-link">
+    <link rel="stylesheet" href="/static/dashboard/css/customizer.css">
+    <link rel="stylesheet" href="/static/css/my-task.style.min.css">
+    {% block style %}{% endblock style %}
+    
+</head>
+<body class="">
+	<!-- [ Pre-loader ] start -->
+	<div class="loader-bg">
+		<div class="loader-track">
+			<div class="loader-fill"></div>
+		</div>
+	</div>
+	<!-- [ Pre-loader ] End -->
+
+
+	<!-- [ Mobile header ] -->
+	{% include "mobile_header.html" %}
+
+	<!-- [ navigation menu ] start -->
+
+	{% include "navigation.html" %}
+	
+	<!-- [ Header ] start -->
+	{% include "header.html" %}
+    <!-- [ Main Content ] start -->
+        {% block content %}
+        
+        {% endblock content %}    
+    <!--[if lt IE 11]>
+        <div class="ie-warning">
+            <h1>Warning!!</h1>
+            <p>You are using an outdated version of Internet Explorer, please upgrade
+            <br/>to any of the following web browsers to access this website.
+            </p>
+            <div class="iew-container">
+                <ul class="iew-download">
+                    <li>
+                        <a href="http://www.google.com/chrome/">
+                            <img src="/static/dashboard/images/browser/chrome.png" alt="Chrome">
+                            <div>Chrome</div>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://www.mozilla.org/en-US/firefox/new/">
+                            <img src="/static/dashboard/images/browser/firefox.png" alt="Firefox">
+                            <div>Firefox</div>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="http://www.opera.com">
+                            <img src="/static/dashboard/images/browser/opera.png" alt="Opera">
+                            <div>Opera</div>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://www.apple.com/safari/">
+                            <img src="/static/dashboard/images/browser/safari.png" alt="Safari">
+                            <div>Safari</div>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="http://windows.microsoft.com/en-us/internet-explorer/download-ie">
+                            <img src="/static/dashboard/images/browser/ie.png" alt="">
+                            <div>IE (11 & above)</div>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <p>Sorry for the inconvenience!</p>
+        </div>
+    <![endif]--> 
+    <!-- Warning Section Ends -->
+    <!-- Required Js -->
+    <script src="/static/dashboard/js/plugins/popper.min.js"></script>
+    <script src="/static/dashboard/js/plugins/perfect-scrollbar.min.js"></script>
+    <script src="/static/dashboard/js/plugins/bootstrap.min.js"></script>
+    <script src="/static/dashboard/js/plugins/feather.min.js"></script>
+    <script src="/static/dashboard/js/pcoded.js"></script>
+
+<!-- Apex Chart -->
+<script src="/static/dashboard/js/plugins/apexcharts.min.js"></script>
+<script src="/static/dashboard/js/pages/dashboard-sale.js"></script>
+
+<script>
+    feather.replace();
+    var pctoggle = document.querySelector("#pct-toggler");
+    if (pctoggle) {
+        pctoggle.addEventListener('click', function () {
+            if (!document.querySelector(".pct-customizer").classList.contains('active')) {
+                document.querySelector(".pct-customizer").classList.add("active");
+            } else {
+                document.querySelector(".pct-customizer").classList.remove("active");
+            }
+        });
+    }
+
+    var custsidebrand = document.querySelector("#cust-sidebrand");
+    custsidebrand.addEventListener('click', function () {
+        if (custsidebrand.checked) {
+            document.querySelector(".m-header").classList.add("bg-dark");
+            document.querySelector(".theme-color.brand-color").classList.remove("d-none");
+        } else {
+            removeClassByPrefix(document.querySelector(".m-header"), 'bg-');
+            // document.querySelector(".m-header > .b-brand > .logo-lg").setAttribute('src', '/static/dashboard/images/logo-dark.svg');
+            document.querySelector(".theme-color.brand-color").classList.add("d-none");
+        }
+    });
+
+
+    var brandcolor = document.querySelectorAll(".brand-color > a");
+    for (var t = 0; t < brandcolor.length; t++) {
+        var c = brandcolor[t];
+        c.addEventListener('click', function (event) {
+            var targetElement = event.target;
+            if (targetElement.tagName == "SPAN") {
+                targetElement = targetElement.parentNode;
+            }
+            var temp = targetElement.getAttribute('data-value');
+            if (temp == "bg-default") {
+                removeClassByPrefix(document.querySelector(".m-header"), 'bg-');
+            } else {
+                removeClassByPrefix(document.querySelector(".m-header"), 'bg-');
+                document.querySelector(".m-header > .b-brand > .logo-lg").setAttribute('src', 'bootstrap/assets/images/logo.svg');
+                document.querySelector(".m-header").classList.add(temp);
+            }
+        });
+    }
+
+
+    var headercolor = document.querySelectorAll(".header-color > a");
+    for (var h = 0; h < headercolor.length; h++) {
+        var c = headercolor[h];
+
+        c.addEventListener('click', function (event) {
+            var targetElement = event.target;
+            if (targetElement.tagName == "SPAN") {
+                targetElement = targetElement.parentNode;
+            }
+            var temp = targetElement.getAttribute('data-value');
+            if (temp == "bg-default") {
+                removeClassByPrefix(document.querySelector(".pc-header:not(.pc-mob-header)"), 'bg-');
+            } else {
+                removeClassByPrefix(document.querySelector(".pc-header:not(.pc-mob-header)"), 'bg-');
+                document.querySelector(".pc-header:not(.pc-mob-header)").classList.add(temp);
+            }
+        });
+    }
+
+
+    var custside = document.querySelector("#cust-sidebar");
+    custside.addEventListener('click', function () {
+        if (custside.checked) {
+            document.querySelector(".pc-sidebar").classList.add("light-sidebar");
+            // document.querySelector(".pc-horizontal .topbar").classList.add("light-sidebar");
+        } else {
+            document.querySelector(".pc-sidebar").classList.remove("light-sidebar");
+            // document.querySelector(".pc-horizontal .topbar").classList.remove("light-sidebar");
+        }
+    });
+
+
+    var custdarklayout = document.querySelector("#cust-darklayout");
+    custdarklayout.addEventListener('click', function () {
+        if (custdarklayout.checked) {
+            document.querySelector("#main-style-link").setAttribute('href', '/static/dashboard/css/style-dark.css');
+        } else {
+            document.querySelector("#main-style-link").setAttribute('href', '/static/dashboard/css/style.css');
+        }
+    });
+    function removeClassByPrefix(node, prefix) {
+        for (let i = 0; i < node.classList.length; i++) {
+            let value = node.classList[i];
+            if (value.startsWith(prefix)) {
+                node.classList.remove(value);
+            }
+        }
+    }
+</script>
+</body>
+
+
+<!-- Mirrored from dashboardkit.io/bootstrap/navigation/ by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 05 May 2022 13:20:34 GMT -->
+</html>

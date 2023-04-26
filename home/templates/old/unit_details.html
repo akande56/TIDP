@@ -1,0 +1,108 @@
+{% extends 'settings.html' %}
+{% load widget_tweaks %}
+
+{% block settings_content %}
+
+    <div class="page-content">
+        <div class="pc-head">
+            <div class="mail-search">
+                <form class="px-3 w-100 h-100 d-flex align-items-center">
+                    <div class="form-group mb-0 d-flex align-items-center w-100">
+                        <i data-feather="search"></i>
+                        <input type="search" class="form-control border-0 shadow-none" placeholder="Search here. . .">
+                        <a href="#!" class="search-close text-body"><i data-feather="x" class=""></i></a>
+                    </div>
+                </form>
+            </div>
+            <div class="pc-toggle-sidemenu">
+                <a href="#!"><i class="material-icons-two-tone">menu_open</i></a>
+            </div>
+        </div>
+        <div class="pc-body">
+            <div class="row">
+            </br> <hr/> <h2> {{ unit.name }} </h2>
+                <!-- page statustic card start -->
+                <div class="col-lg-6">
+                    <button type="button" href="#" data-bs-toggle="modal" data-bs-target="#add-group-model" class="btn btn-icon btn-success">Add User to Unit</button>
+                </div> 
+                {% if messages %}
+                    {% for message in messages %}
+                        <div class="alert alert-{% if message.tags == 'error' %}danger{% else %}success{% endif %}" role="alert">
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                {% endif %}
+                <div class="col-xl-12 col-md-6">
+                    <div class="card user-profile-list">
+                        <div class="card-body p-0">
+                            
+                            <div class="dt-responsive table-responsive">
+                                
+                                <table id="user-list-table" class="table nowrap">
+                                    <thead>
+                                        <tr>
+                                            <th>S/N</th>
+                                            <th>Staff ID</th>
+                                            <th>Staff Name</th>
+                                            <th>Account Persona</th>
+                                            <th>Last Login</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for staff in unit.users.select_related %}
+                                            <tr>
+                                                <td>{{ forloop.counter }}</td>
+                                                <td>
+                                                    <div class="d-inline-block align-middle">
+                                                        <div class="d-inline-block">
+                                                            <h6 class="m-b-0">{{ staff.user.username }}</h6>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td>{{ staff.user.first_name }}</td>
+                                                <td>{{ staff.user_persona }}</td>
+                                                <td>{{ staff.user.last_login }}</td>
+                                            </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+        <div class="pc-sideoverlay"></div>
+    </div>
+
+    
+    <!-- Modal -->
+    <div class="modal add-group-model fade" id="add-group-model" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <form method="post"> {% csrf_token %}
+                    <div class="modal-body">
+                        <button type="button" class="btn-close float-end" data-bs-dismiss="modal"
+                            aria-label="Close"></button>
+                        <div class="tab-content pt-4" id="pc-noti-tabContent">
+                            <h2>Add User to Unit</h2>    
+                            <hr class="mb-4">
+                                <div class="media mb-3">
+                                    <div class="media-body ms-3 align-self-center">
+                                            <div class="form-group">
+                                                <label class="form-label" for="groupname">Select User</label>
+                                                {% render_field form.staff class="form-control" id="groupname" aria-describedby="emailHelp" placeholder="Unit Name" %}
+                                            </div>
+                                    </div>
+                                </div>
+                            </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit"  class="btn btn-light-success btn-sm" >Add User</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}

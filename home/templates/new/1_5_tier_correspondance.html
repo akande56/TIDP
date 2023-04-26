@@ -1,0 +1,212 @@
+<div class="row clearfix g-3">
+    <div class="col-xl-3 col-lg-12 col-md-12">
+        <div class="inner-sidebar ">
+            <div class="mail-l-content">
+                <div class="p-3">
+                    <a href="{% url 'new_mail' %}" class="btn btn-light-secondary btn-block">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-plus">
+                            <line x1="12" y1="5" x2="12" y2="19"></line>
+                            <line x1="5" y1="12" x2="19" y2="12"></line>
+                        </svg> 
+                        New Correspondance
+                    </a>
+                </div>
+                <ul class="mb-2 nav nav-tab flex-column nav-pills sidebar-links" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+                    <li class="nav-item mail-section">
+                        <a class="nav-link link-hover-danger active" id="v-pills-home-tab" data-bs-toggle="pill" href="#v-pills-home" role="tab" aria-controls="v-pills-home" aria-selected="false">
+                            <span><i class="fa fa-inbox"></i> Incoming Mails</span>
+                            <span></span>
+                        </a>
+                    </li>
+                    <li class="nav-item mail-section">
+                        <a class="nav-link link-hover-info " id="v-pills-settings-tab" data-bs-toggle="pill" href="#v-pills-mail" role="tab" aria-selected="true">
+                            <span><i class="fa fa-star"></i> Important</span>
+                            
+                        </a>
+                    </li>
+                    <li class="nav-item mail-section">
+                        <a class="nav-link  link-hover-success" id="v-pills-messages-tab" data-bs-toggle="pill" href="#v-pills-draft" role="tab">
+                            <span><i class="fa fa-bookmark"></i> Drafts</span>
+                        </a>
+                    </li>
+                    <li class="nav-item mail-section">
+                        <a class="nav-link  link-hover-info" id="v-pills-settings-tab" data-bs-toggle="pill" href="#v-pills-mail" role="tab">
+                            <span><i class="fa fa-"></i> Outgoing Mails</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="col-xl-9 col-lg-12 col-md-12">
+        <div class="page-content"> 
+            <div class="pc-body">
+                <div class="card email-card">
+                    <div class="mail-body">
+                        <!-- [ inbox-right section ] start -->
+                        <div class="inbox-right">
+                            <div class="tab-content p-0" id="v-pills-tabContent">
+                                <div class="tab-pane fade active show" id="v-pills-home" role="tabpanel" aria-labelledby="v-pills-home-tab">
+                                    <div class="card-header py-0">
+                                        <ul class="nav nav-pills nav-fill mb-0 border-none" id="pills-tab" role="tablist">
+                                            <li class="nav-item">
+                                                <a class="nav-link link-hover-danger active" id="pills-primary-tab" data-bs-toggle="pill" href="#pills-primary" role="tab" aria-controls="pills-primary" aria-selected="false">
+                                                    <span><i class="fa fa-message"></i>
+                                                        All</span>
+                                                </a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a class="nav-link link-hover-primary" id="pills-social-tab" data-bs-toggle="pill" href="#pills-social" role="tab" aria-controls="pills-social" aria-selected="false">
+                                                    <span><i class=""></i>
+                                                        Waiting</span>
+                                                </a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a class="nav-link link-hover-success " id="pills-Promotion-tab" data-bs-toggle="pill" href="#pills-Promotion" role="tab" aria-controls="pills-Promotion" aria-selected="true">
+                                                    <span><i class=""></i>
+                                                        Approved</span>
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="tab-content" id="pills-tabContent">
+                                            <div class="tab-pane fade  active show" id="pills-primary" role="tabpanel" aria-labelledby="pills-primary-tab">
+                                                <div class="mail-body-content table-responsive">
+                                                    <table class="table">
+                                                        <thead>
+                                                            <tr>
+                                                                <th></th>
+                                                                <th>Recieved From Unit </th>
+                                                                <th>Title </th>
+                                                                <th>Time </th>
+                                                                {% if account.user_persona.persona_tier == 6 %}
+                                                                <th>Action <th>
+                                                                {% endif %}
+                                                            </tr>
+                                                        <tbody>
+                                                            <tbody> 
+                                                                {% for memo in incoming_mails %}
+                                                                    <tr class="read">
+                                                                        <td>{{ memo.last }}
+                                                                            <div class="d-flex align-items-center">
+                                                                                <div class="form-check">
+                                                                                    <input class="form-check-input input-danger" type="checkbox">
+                                                                                </div>
+                                                                                <a href="#">
+                                                                                    <i class="feather icon-star ms-2 ms-2"></i>
+                                                                                </a>
+                                                                            </div>
+                                                                        </td>
+                                                                        <td><a href="{% url 'correspondance_details'  memo.id  %}" class="email-name">{{ memo.intended_unit.name }}</a></td>
+                                                                        <td><a href="{% url 'correspondance_details'  memo.id  %}" class="email-name">{{ memo.folder.title }}</a></td>
+                                                                        <td class="email-time">{{ memo.created }}</td>
+                                                                    </tr>
+                                                                {% endfor %}
+                                                            </tbody>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                            <div class="tab-pane fade" id="pills-social" role="tabpanel" aria-labelledby="pills-social-tab">
+                                                <div class="mail-body-content table-responsive">
+                                                    <table class="table">
+                                                        <tbody>
+                                                            
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                            <div class="tab-pane fade" id="pills-Promotion" role="tabpanel" aria-labelledby="pills-Promotion-tab">
+                                                <div class="mail-body-content table-responsive">
+                                                    <table class="table">
+                                                        <tbody>
+                                                            
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="tab-pane fade" id="v-pills-starred" role="tabpanel">
+                                    <div class="card-body">
+                                        <div class="tab-pane fade show active" id="pills-starred" role="tabpanel">
+                                            <div class="mail-body-content table-responsive">
+                                                <table class="table">
+                                                    <tbody>
+                                                        
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="tab-pane fade" id="v-pills-draft" role="tabpanel">
+                                    <div class="card-body">
+                                        <div class="mail-body-content table-responsive">
+                                            <table class="table">
+                                                <tbody>
+                                                    
+                                                        <tr class="unread">
+                                                            <td> 1 </td>
+                                                            <td><a href="/correspondance/4/view/" class="email-name">Popo</a></td>
+                                                            <td class="email-time">Dec. 21, 2022, 9:58 a.m.</td>
+                                                        </tr>
+                                                    
+                                                        <tr class="unread">
+                                                            <td> 2 </td>
+                                                            <td><a href="/correspondance/6/view/" class="email-name">Created</a></td>
+                                                            <td class="email-time">Dec. 21, 2022, 10:04 a.m.</td>
+                                                        </tr>
+                                                    
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="tab-pane fade" id="v-pills-mail" role="tabpanel">
+                                    <div class="card-body">
+                                        <div class="mail-body-content table-responsive">
+                                            <table class="table">
+                                                <thead>
+                                                    <tr>
+                                                        <th></th>
+                                                        <th>Send To </th>
+                                                        <th>Title </th>
+                                                        <th>Time </th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    {% for memo in send_memos %}
+                                                        <tr class="read">
+                                                            <td>
+                                                                <div class="d-flex align-items-center">
+                                                                    <div class="form-check">
+                                                                        <input class="form-check-input input-danger" type="checkbox">
+                                                                    </div>
+                                                                    <a href="#">
+                                                                        <i class="feather icon-star ms-2 ms-2"></i>
+                                                                    </a>
+                                                                </div>
+                                                            </td>
+                                                            <td><a href="{% url 'correspondance_details'  memo.id  %}" class="email-name">{{ memo.intended_unit.name }}</a></td>
+                                                            <td><a href="{% url 'correspondance_details'  memo.id  %}" class="email-name">{{ memo.folder.title }}</a></td>
+                                                            <td class="email-time">{{ memo.created }}</td>
+                                                        </tr>
+                                                    {% endfor %}
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- [ inbox-right section ] end -->
+                    </div>
+                </div>
+            </div>
+            <div class="pc-sideoverlay"></div>
+        </div>
+    </div>
+</div>

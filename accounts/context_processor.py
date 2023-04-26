@@ -9,6 +9,7 @@ def user(request):
     values = {
         'today': datetime.datetime.now()
     }
+    
     if request.user.is_authenticated:
         if Account.objects.filter(user__username=request.user.username).exists():
             values['account'] = Account.objects.get(user__username=request.user.username)

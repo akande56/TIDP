@@ -1,0 +1,329 @@
+<header class="pc-header ">
+    <div class="header-wrapper">
+        <div class="me-auto pc-mob-drp">
+            <ul class="list-unstyled">
+                <li class="dropdown pc-h-item">
+                    <a class="pc-head-link active dropdown-toggle arrow-none me-0" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
+                        Settings
+                    </a>
+                    <div class="dropdown-menu pc-h-dropdown">
+                        <a href="#!" class="dropdown-item">
+                            <i class="material-icons-two-tone">account_circle</i>
+                            <span>My Account</span>
+                        </a>
+                        <a href="#!" class="dropdown-item">
+                            <i class="material-icons-two-tone">settings</i>
+                            <span>Settings</span>
+                        </a>
+                        <a href="#!" class="dropdown-item">
+                            <i class="material-icons-two-tone">support</i>
+                            <span>Support</span>
+                        </a>
+                        <a href="#!" class="dropdown-item">
+                            <i class="material-icons-two-tone">https</i>
+                            <span>Lock Screen</span>
+                        </a>
+                        <div class="pc-level-menu">
+                            <a href="#!" class="dropdown-item">
+                                <i class="material-icons-two-tone">list_alt</i>
+                                <span class="float-end"><i data-feather="chevron-right" class="me-0"></i></span>
+                                <span>More</span>
+                            </a>
+                            <div class="dropdown-menu pc-h-dropdown">
+                                <a href="#!" class="dropdown-item">
+                                    <i class="fas fa-circle"></i>
+                                    <span>Help</span>
+                                </a>
+                                <a href="#!" class="dropdown-item">
+                                    <i class="fas fa-circle"></i>
+                                    <span>Deactivate my Account</span>
+                                </a>
+                            </div>
+                        </div>
+                        <a href="{% url 'logout' %}" class="dropdown-item">
+                            <i class="material-icons-two-tone">chrome_reader_mode</i>
+                            <span>Logout</span>
+                        </a>
+                    </div>
+                </li>
+                <li class="dropdown pc-h-item pc-mega-menu">
+                    <a class="pc-head-link dropdown-toggle arrow-none me-0" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
+                        MORE
+                    </a>
+                    <div class="dropdown-menu pc-h-dropdown pc-mega-dmenu">
+                        <div class="row g-0">
+                            <div class="col">
+                                <h6 class="mega-title">CORRESPONDANCE</h6>
+                                <ul class="pc-mega-list">
+                                    <li><a href="#!" class="dropdown-item"><i class="material-icons-two-tone">account_circle</i><span>Outgoing Mail</span></a></li>
+                                    <li><a href="#!" class="dropdown-item"><i class="material-icons-two-tone">settings</i><span>Incoming Mail</span></a></li>
+                                    <li><a href="#!" class="dropdown-item"><i class="material-icons-two-tone">support</i><span>Send mail</span></a></li>
+                                </ul>
+                            </div>
+                            <div class="col">
+                                <h6 class="mega-title">Document</h6>
+                                <ul class="pc-mega-list">
+                                    <li><a href="#!" class="dropdown-item"><i class="fas fa-circle"></i> Write From Template</a></li>
+                                    <li><a href="#!" class="dropdown-item"><i class="fas fa-circle"></i> Create Template</a></li>
+                                    <li><a href="#!" class="dropdown-item"><i class="fas fa-circle"></i> Upload Files</a></li>
+                                    <li><a href="#!" class="dropdown-item"><i class="fas fa-circle"></i> Folders</a></li>
+                                </ul>
+                            </div>
+                            <div class="col">
+                                <h6 class="mega-title">Meeting</h6>
+                                <ul class="pc-mega-list">
+                                    <li><a href="#!" class="dropdown-item"><i class="fas fa-circle"></i> Scheule Meeting</a></li>
+                                    <li><a href="#!" class="dropdown-item"><i class="fas fa-circle"></i> Existing Meetings</a></li>
+                                    <li><a href="#!" class="dropdown-item"><i class="fas fa-circle"></i> Ongoing Target</a></li>
+                                    <li><a href="#!" class="dropdown-item"><i class="fas fa-circle"></i> Plan Meeting</a></li>
+                                    <li><a href="#!" class="dropdown-item"><i class="fas fa-circle"></i> Personal Data and Progress</a></li>
+                                </ul>
+                            </div>
+                            <div class="col">
+                                <h6 class="mega-title">Performance</h6>
+                                <ul class="pc-mega-list">
+                                    <li><a href="#!" class="dropdown-item"><i class="fas fa-circle"></i> Send Chat</a></li>
+                                    <li><a href="#!" class="dropdown-item"><i class="fas fa-circle"></i> Messages</a></li>
+                                    <li><a href="#!" class="dropdown-item"><i class="fas fa-circle"></i> Tasks</a></li>
+                                    <li><a href="#!" class="dropdown-item"><i class="fas fa-circle"></i> Notification</a></li>
+                                    <li><a href="#!" class="dropdown-item"><i class="fas fa-circle"></i> Notes</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+        <div class="ms-auto">
+            <ul class="list-unstyled">
+                <li class="dropdown pc-h-item">
+                    <a class="pc-head-link dropdown-toggle arrow-none me-0" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
+                        <i class="material-icons-two-tone">search</i>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-end pc-h-dropdown drp-search">
+                        <form class="px-3">
+                            <div class="form-group mb-0 d-flex align-items-center">
+                                <i data-feather="search"></i>
+                                <input type="search" class="form-control border-0 shadow-none" placeholder="Search here. . .">
+                            </div>
+                        </form>
+                    </div>
+                </li>
+                <li class="pc-h-item">
+                    <a class="pc-head-link me-0" href="#" data-bs-toggle="modal" data-bs-target="#notification-modal">
+                        <i class="material-icons-two-tone">notifications_active</i>
+                        <span class="bg-danger pc-h-badge dots"><span class="sr-only"></span></span>
+                    </a>
+                </li>
+                <li class="dropdown pc-h-item">
+                    <a class="pc-head-link dropdown-toggle arrow-none me-0" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
+                        <img src="/static/img/me.jpg" alt="user-image" class="user-avtar">
+                        <span>
+                            <span class="user-name">{{ account.user.first_name }}</span>
+                            <span class="user-desc">{{ account.user_persona.name }}</span>
+                        </span>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-end pc-h-dropdown">
+                        <a href="#" class="dropdown-item">
+                            <i class="material-icons-two-tone">account_circle</i>
+                            <span>Profile</span>
+                        </a>
+
+                        <a href="#" class="dropdown-item">
+                            <i class="material-icons-two-tone">https</i>
+                            <span>Lock Screen</span>
+                        </a>
+                        <a href="{% url 'logout'%}" class="dropdown-item">
+                            <i class="material-icons-two-tone">chrome_reader_mode</i>
+                            <span>Logout</span>
+                        </a>
+                    </div>
+                </li>
+            </ul>
+        </div>
+
+    </div>
+</header>
+
+<!-- Modal -->
+<div class="modal notification-modal fade" id="notification-modal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-body">
+                <button type="button" class="btn-close float-end" data-bs-dismiss="modal"
+                    aria-label="Close"></button>
+                <ul class="nav nav-pill tabs-light mb-3" id="pc-noti-tab" role="tablist">
+                    <li class="nav-item">
+                        <a class="nav-link active" id="pc-noti-home-tab" data-bs-toggle="pill" href="#pc-noti-home"
+                            role="tab" aria-controls="pc-noti-home" aria-selected="true">Notification</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="pc-noti-news-tab" data-bs-toggle="pill" href="#pc-noti-news"
+                            role="tab" aria-controls="pc-noti-news" aria-selected="false">Meetings<span
+                                class="badge bg-danger ms-2 d-none d-sm-inline-block">4</span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="pc-noti-settings-tab" data-bs-toggle="pill" href="#pc-noti-settings"
+                            role="tab" aria-controls="pc-noti-settings" aria-selected="false">Motes<span
+                                class="badge bg-success ms-2 d-none d-sm-inline-block">Update</span></a>
+                    </li>
+                </ul>
+                <div class="tab-content pt-4" id="pc-noti-tabContent">
+                    <div class="tab-pane fade show active" id="pc-noti-home" role="tabpanel"
+                        aria-labelledby="pc-noti-home-tab">
+                        <div class="media">
+                            <img src="/static/img/me.jpg" alt="images" class="img-fluid avtar avtar-l">
+                            <div class="media-body ms-3 align-self-center">
+                                <div class="float-end">
+                                    <div class="btn-group card-option">
+                                        <button type="button"
+                                            class="btn shadow-none px-0 dropdown-toggle arrow-none"
+                                            data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            <i data-feather="more-horizontal"></i>
+                                        </button>
+                                        <div class="dropdown dropdown-menu dropdown-menu-end">
+                                            <a class="dropdown-item" href="#!"><i data-feather="refresh-cw"></i>
+                                                reload</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <h6 class="mb-0 d-inline-block">Haruna Tijjani Zango</h6>
+                                <p class="mb-0 d-inline-block f-12 text-muted"> • 06/20/2022 at 6:43 PM </p>
+                                <p class="my-3">Well recieved I would acting on this document.</p>
+                                <div class="p-3 border rounded">
+                                    <div class="media align-items-center">
+                                        <div class="media-body">
+                                            <h6 class="mb-1 f-14">Death Star original maps and blueprint.pdf</h6>
+                                            <p class="mb-0 text-muted">by<a href="#!"> Director Of Assesment </a>.</p>
+                                        </div>
+                                        <div class="btn-group d-none d-sm-inline-flex">
+                                            <button type="button" class="btn shadow-none">
+                                                <i data-feather="download-cloud"></i>
+                                            </button>
+                                            <button type="button"
+                                                class="btn shadow-none px-0 dropdown-toggle arrow-none"
+                                                data-bs-toggle="dropdown" aria-haspopup="true"
+                                                aria-expanded="false">
+                                                <i data-feather="more-horizontal"></i>
+                                            </button>
+                                            <div class="dropdown dropdown-menu dropdown-menu-end">
+                                                <a class="dropdown-item" href="#!"><i data-feather="refresh-cw"></i>
+                                                    View</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <hr class="mb-4">
+                        <div class="media">
+                            <img src="/static/img/me.jpg" alt="images" class="img-fluid avtar avtar-l">
+                            <div class="media-body ms-3 align-self-center">
+                                <div class="float-end">
+                                    <div class="btn-group card-option">
+                                        <button type="button"
+                                            class="btn shadow-none px-0 dropdown-toggle arrow-none"
+                                            data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            <i data-feather="more-horizontal"></i>
+                                        </button>
+                                        <div class="dropdown dropdown-menu dropdown-menu-end">
+                                            <a class="dropdown-item" href="#!"><i data-feather="refresh-cw"></i>
+                                                reload</a>
+                                            <a class="dropdown-item" href="#!"><i data-feather="trash"></i>
+                                                remove</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <h6 class="mb-0 d-inline-block">Hauna Tijjani Zango.</h6>
+                                <p class="mb-0 d-inline-block  f-12 text-muted"> • 06/20/2022 at 6:43 PM </p>
+                                <p class="my-3">Hay check out these images.</p>
+                                <img src="/static/dashboard/images/slider/img-slide-3.jpg" alt="images"
+                                    class="img-fluid wid-90 rounded m-r-10 m-b-10">
+                                <img src="/static/dashboard/images/slider/img-slide-7.jpg" alt="images"
+                                    class="img-fluid wid-90 rounded m-r-10 m-b-10">
+                            </div>
+                        </div>
+                        <hr class="mb-4">
+                        <div class="media mb-3">
+                            <img src="/static/img/me.jpg" alt="images" class="img-fluid avtar avtar-l">
+                            <div class="media-body ms-3 align-self-center">
+                                <h6 class="mb-0 d-inline-block">{{ account.user.first_name }}</h6>
+                                <p class="mb-0 d-inline-block  f-12 <text-muted></text-muted>"> • 06/20/2019 at 6:43
+                                    PM </p>
+                                <p class="my-3">hay whatsup with our discussion.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="pc-noti-news" role="tabpanel" aria-labelledby="pc-noti-news-tab">
+                        <div class="pb-3 border-bottom mb-3 media">
+                            <div class="media-body ms-3">
+                                <p class="float-end mb-0 text-success"><small>now</small></p>
+                                <a href="#!">
+                                    <h6>Stakeholders Meeting</h6>
+                                </a>
+                                <p class="mb-2">The director has invited you to join the stakeolders meeting on 23/2/2022.</p>
+                            </div>
+                        </div>
+                        <div class="pb-3 border-bottom mb-3 media">
+                            <div class="media-body ms-3">
+                                <p class="float-end mb-0 text-muted"><small>3 mins ago</small></p>
+                                <a href="#!">
+                                    <h6>10 Minutes to go</h6>
+                                </a>
+                                <p class="mb-2">Annual Directors meeting is starting in 10 minutes, get prefered.
+                                </p>
+                                <a href="#" class="bg-light">Office Of The Director</a>
+                            </div>
+                        </div>
+                        <div class="pb-3 border-bottom mb-3 media">
+                            <div class="media-body ms-3">
+                                <p class="float-end mb-0 text-muted"><small>5 mins ago</small></p>
+                                <a href="#!">
+                                    <h6>Your scheduled meeting with DRF is starting in 5 minute, get prefered the XYZ ready</h6>
+                                </a>
+                                <a href="#" class="bg-light">On Zoom</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="pc-noti-settings" role="tabpanel"
+                        aria-labelledby="pc-noti-settings-tab">
+                        <h6 class="mt-2"><i data-feather="monitor" class="me-2"></i>New Note</h6>
+                        <hr>
+                        <div class="custom-control custom-switch">
+                            <input type="text" class="custom-control-input" id="pcsetting1">
+                        </div>
+                        <h6 class="mb-0 mt-5"><i data-feather="save" class="me-2"></i>Saved Notes</h6>
+                        <hr>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-light-danger btn-sm" data-bs-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-light-primary btn-sm">Save changes</button>
+                        </div>
+                        {% comment "" %}
+                            <div class="custom-control custom-switch">
+                                <input type="checkbox" class="custom-control-input" id="pcsetting3">
+                                <label class="custom-control-label f-w-600 pl-1" for="pcsetting3">Backup Storage</label>
+                            </div>
+                            <p class="text-muted mb-4 ms-5">Automaticaly take backup as par schedule</p>
+                            <div class="custom-control custom-switch">
+                                <input type="checkbox" class="custom-control-input" id="pcsetting4">
+                                <label class="custom-control-label f-w-600 pl-1" for="pcsetting4">Allow guest to print
+                                    file</label>
+                            </div>
+                            <h6 class="mb-0 mt-5"><i data-feather="cpu" class="me-2"></i>System settings</h6>
+                            <hr>
+                            <div class="custom-control custom-switch">
+                                <input type="checkbox" class="custom-control-input" id="pcsetting5" checked>
+                                <label class="custom-control-label f-w-600 pl-1" for="pcsetting5">View other user
+                                    chat</label>
+                            </div>
+                            <p class="text-muted ms-5">Allow to show public user message</p>
+                        {% endcomment %}
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-light-danger btn-sm" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>

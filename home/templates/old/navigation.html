@@ -1,0 +1,88 @@
+<nav class="pc-sidebar ">
+    <div class="navbar-wrapper">
+        <div class="m-header">
+            <a href="index-2.html" class="b-brand">
+                <!-- ========   change your logo hear   ============ -->
+                <img src="/static/img/" alt="" class="logo logo-lg">
+            </a>
+        </div>
+        <div class="navbar-content">
+            <ul class="pc-navbar">
+                <li class="pc-item pc-caption">
+                    <label>Options</label>
+                </li>
+                <li class="pc-item pc-hasmenu">
+                    <a href="{% url 'dashboard' %}" class="pc-link "><span class="pc-micon"><i class="material-icons-two-tone">home</i></span><span
+                            class="pc-mtext">Dashboard</span></a>
+                </li>
+                {% if account.user_persona.persona_tier <= 5 %}
+                    <li class="pc-item pc-hasmenu">
+                        <a href="{% url 'old_correspondance' %}" class="pc-link "><span class="pc-micon">
+                            <i class="material-icons-two-tone">add</i>
+                        </span><span
+                                class="pc-mtext">Correspondance / Memos</span></a>
+                    </li>
+                    <li class="pc-item pc-hasmenu">
+                        <a href="{% url 'meeting' %}" class="pc-link "><span class="pc-micon"><i
+                                    class="material-icons-two-tone">business_center</i></span><span class="pc-mtext">Meet</span></a>
+                    </li>
+                    <li class="pc-item pc-caption">
+                        <label>Folder</label>
+                        <span>Main Folders</span>
+                    </li>
+                    <li class="pc-item pc-hasmenu">
+                        <a href="#!" class="pc-link "><span class="pc-micon"><i
+                                    class="material-icons-two-tone">business_center</i></span><span class="pc-mtext">Folders</span><span
+                                class="pc-arrow"><i data-feather="chevron-right"></i></span></a>
+                        <ul class="pc-submenu">
+                            <li class="pc-item"><a class="pc-link" href="">Folder Name</a></li>
+                        </ul>
+                    </li>
+                    <li class="pc-item pc-caption">
+                        <label>Others</label>
+                        <span>Templates, Notification and more</span>
+                    </li>
+                {% endif %}
+                {% if account.user_persona.persona_tier == 6 %}
+                    <li class="pc-item pc-hasmenu">
+                        <a href="{% url 'clearical_files' %}" class="pc-link "><span class="pc-micon">
+                            <i class="material-icons-two-tone">add</i>
+                        </span><span
+                                class="pc-mtext">Files</span></a>
+                    </li>
+                {% endif %}
+                {% if account.user_persona.persona_tier == 7 %}
+                    <li class="pc-item pc-hasmenu">
+                        <a href="{% url 'correspondance' %}" class="pc-link "><span class="pc-micon">
+                            <i class="material-icons-two-tone">add</i>
+                        </span><span
+                                class="pc-mtext">Correspondance / Memos</span></a>
+                    </li>
+                    <li class="pc-item pc-hasmenu">
+                        <a href="{% url 'meeting' %}" class="pc-link "><span class="pc-micon"><i
+                                    class="material-icons-two-tone">business_center</i></span><span class="pc-mtext">Meet</span></a>
+                    </li>
+                {% endif %}
+                {% if account.user_persona.persona_tier == 8 %}
+                    <li class="pc-item pc-hasmenu">
+                        <a href="{% url 'user_persona' %}" class="pc-link "><span class="pc-micon"><i
+                                    class="material-icons-two-tone">business_center</i></span><span class="pc-mtext">System Settings</span></a>
+                    </li>
+                {% elif account.user_persona.persona_tier == 10 and account.user.is_staff %}
+                    <li class="pc-item pc-hasmenu">
+                        <a href="{% url 'user_persona' %}" class="pc-link ">
+                            <span class="pc-micon">
+                                <i class="material-icons-two-tone">business_center</i>
+                            </span>
+                            <span class="pc-mtext">System Settings</span>
+                        </a>
+                    </li>
+                {% endif %}
+                <li class="pc-item pc-hasmenu">
+                    <a href="#!" class="pc-link "><span class="pc-micon"><i
+                                class="material-icons-two-tone">business_center</i></span><span class="pc-mtext">Profile</span></a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>

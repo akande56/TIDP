@@ -1,0 +1,138 @@
+{% extends 'correspondance.html' %}
+{% load widget_tweaks %}
+{% load static %}
+
+
+{% block correspondance %}
+<script type="text/javascript" src="{% static "ckeditor/ckeditor-init.js" %}"></script>
+<script type="text/javascript" src="{% static "ckeditor/ckeditor/ckeditor.js" %}"></script>
+   <!-- [ Main Content ] start -->
+
+   <section class="pc-container">
+    <div class="pcoded-content">
+        <!-- [ Main Content ] start -->
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="card email-card">
+                    <div class="card-body">
+                        <div class="mail-body">
+                            <div class="row">
+                                <!-- [ email-left section ] start -->
+                                <div class="col-xl-2 col-md-3 mail-left">
+                                    <div class="mail-l-content">
+                                        <ul class="mb-2 nav nav-tab flex-column nav-pills">
+                                            <li class="nav-item mail-section">
+                                                <a class="nav-link  active" href="{% url 'correspondance' %}">
+                                                    <span><i class="feather icon-arrow-left"></i> BACK</span>
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <!-- [ email-right section ] start -->
+                                <div class="col-xl-10 col-md-9">
+                                    <div class="tab-content" id="v-pills-tabContent">
+                                        <div class="mail-body-content">
+                                            <form class="form-material" method="post"> {% csrf_token %} 
+                                                <div class="form-group">
+                                                    <label class="form-label" for="exampleInputEmail1">To</label>
+                                                    {% render_field form.send_to class="form-control" id="exampleInputEmail1" %}
+                                                </div>
+                                                
+                                                <div class="form-group">
+                                                    <label class="form-label" for="exampleInputEmail4">Subject</label>
+                                                    {% render_field form.title class="form-control" id="exampleInputEmail1" placeholder="Subject" %}
+                                                </div>
+                        
+                                                
+                                                {% render_field form.content %}
+                                                <div class="row">
+                                                    <div class="col-md-9">
+                                                        <ul class="list-inline mb-3 mb-md-0">
+                                                            <li class="list-inline-item">
+                                                                <a href="#!" data-bs-toggle="modal" data-bs-target="#pdfUPLOAD" data-bs-toggle="tooltip" data-bs-placement="top" title="Attach files" class="text-body">
+                                                                    Attachment <i class="fas fa-paperclip"></i>
+                                                                </a>
+                                                            </li>
+                                                            {% for item in request.session.attachment %}
+                                                                {% if not forloop.counter|divisibleby:2 %}
+                                                                    <li>
+                                                                        {{ item }} 
+                                                                        <a href="{{ item }}" title="Delete Attachment" class="text-body">
+                                                                            <i class="fas fa-trash"></i>
+                                                                        </a>
+                                                                    </li>
+                                                                {% endif %}
+                                                            {% endfor %}
+                                                        </ul>
+                                                    </div>
+                                                </div> <hr/>
+                                                <div class="form-group">
+                                                    <label class="form-label" for="exampleInputEmail4">Urgent</label>
+                                                    {% render_field form.urgent %}
+                                                </div>
+                                                <div class="float-end mt-3">
+                                                    <button type="button" class="btn  btn-secondary">Save as draft</button>
+                                                    <button type="submit" class="btn  btn-primary">Send</button>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- [ email-right section ] end -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- [ Main Content ] end -->
+    </div>
+</section>
+
+
+
+
+
+
+<div class="modal fade" id="pdfUPLOAD" data-backdrop="static" tabindex="-1" aria-labelledby="pdfUPLOADModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <form method="post" enctype="multipart/form-data"> {% csrf_token %}
+            <div class="modal-content mailsent-modal">
+                <div class="modal-header bg-dark">
+                    <h5 class="modal-title text-white">New Correspondance</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
+                        aria-label="Close"></button>
+                </div>
+                <div class="modal-body pb-2">
+                    
+                    <div class="form-group">
+                        <label class="form-label" for="exampleInputEmail1">To</label>
+                        {% render_field upload_form.media class="form-control" id="exampleInputEmail1" %}
+                    </div>
+
+                </div>
+                <div class="modal-footer d-block">
+                    <div class="row">
+                        <div class="col-md-9">
+                            <ul class="list-inline mb-3 mb-md-0">
+                                <li class="list-inline-item">
+                                    <div class="btn-group">
+                                        <button type="submit" class="btn btn-sm btn-primary">Attach</button>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="col-md-3 text-md-end">
+                            <button type="button" class="btn btn-sm btn-light-secondary"
+                                data-bs-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+{% endblock correspondance %}
