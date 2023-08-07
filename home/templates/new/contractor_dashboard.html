@@ -54,34 +54,44 @@
                                   <thead>
                                       <tr>
                                           <th>#</th>
-                                          <th>Project Awarded</th> 
-                                          <th>Date</th> 
-                                          <th>Timeline</th>   
-                                          <th>Actions</th>  
+                                          <th>Project Name</th> 
+                                          <th>Category</th> 
+                                          <th>Tender type</th>   
+                                          <th>Start date</th>
+                                          <th>End date</th>
+                                          <th>View</th>  
                                       </tr>
                                   </thead>
                                   <tbody>
+                                      {% for precurement in precurements %}
                                       <tr>
-                                          <td>
-                                              <span class="fw-bold">2</span>
-                                          </td>
-                                          <td>
-                                              <img class="avatar rounded-circle" src="assets/images/xs/avatar2.jpg" alt="">
-                                              <span class="fw-bold ms-1">Ryan	Randall</span>
-                                          </td>
-                                          <td>
-                                              Accounts
-                                          </td>
-                                          <td>
-                                              48
-                                          </td>
-                                           <td>
-                                               <div class="btn-group" role="group" aria-label="Basic outlined example">
-                                                   <button type="button" class="btn btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#depedit"><i class="icofont-edit text-success"></i></button>
-                                                 {% comment "" %}  <button type="button" class="btn btn-outline-secondary deleterow"><i class="icofont-ui-delete text-danger"></i></button>{% endcomment %}
-                                               </div>
-                                           </td>
-                                       </tr>
+                                        <td>
+                                            <span class="fw-bold"></span>
+                                        </td>
+                                        <td>
+                                            <span class="fw-bold ms-1"> {{precurement.title}} </span>
+                                        </td>
+                                        <td>
+                                            {{precurement.category}}
+                                        </td>
+                                        <td>
+                                            {{precurement.tender_type}}
+                                        </td>
+                                         <td>
+                                             <!-- <div class="btn-group" role="group" aria-label="Basic outlined example">
+                                                 <button type="button" class="btn btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#depedit"><i class="icofont-edit text-success"></i></button>
+                                               {% comment "" %}  <button type="button" class="btn btn-outline-secondary deleterow"><i class="icofont-ui-delete text-danger"></i></button>{% endcomment %}
+                                             </div> -->
+                                             {{precurement.start_date}}
+                                         </td>
+                                         <td>
+                                            {{precurement.end_date}}
+                                         </td>
+                                         <td>
+                                            
+                                         </td>
+                                     </tr>
+                                      {% endfor %}
                                        
                                   </tbody>
                               </table>
@@ -96,7 +106,8 @@
 
 
 <div class="modal fade" id="addUser" tabindex="-1" aria-labelledby="addUserLabel" aria-hidden="true">
-    <form method="post"> {% csrf_token %}
+    <form method="post" action="{% url 'create_contractor_document' %}"> 
+        {% csrf_token %}
         <div class="modal-dialog modal-dialog-centered modal-md modal-dialog-scrollable">
             <div class="modal-content">
                 <div class="modal-header">
@@ -105,16 +116,13 @@
                 </div>
                 <div class="modal-body">
                     <div class="mb-3">
-                        <label for="sub1" class="form-label">Company Name</label>
-                        {% render_field form.name class="form-control" id="groupname" aria-describedby="emailHelp" placeholder="E.g Minister" %}
+                        <label for="sub1" class="form-label">Title</label>
+                        {% render_field form.title class="form-control" id="groupname" aria-describedby="emailHelp" placeholder="E.g Minister" %}
                     </div>
+                    
                     <div class="mb-3">
-                        <label for="sub1" class="form-label">Address</label>
-                        {% render_field form.address class="form-control" id="groupname" aria-describedby="emailHelp" placeholder="E.g Minister" %}
-                    </div>
-                    <div class="mb-3">
-                        <label for="sub1" class="form-label">Business Profile</label>
-                        {% render_field form.business_profile type="text" class="form-control" id="groupname" aria-describedby="emailHelp" placeholder="E.g Minister" %}
+                        <label for="sub1" class="form-label">File</label>
+                        <input type="file" name="file" class="form-control" id="groupname">
                     </div>
                 </div>
                 <div class="modal-footer">

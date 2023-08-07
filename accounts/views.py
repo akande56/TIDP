@@ -5,11 +5,13 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db import transaction
 
-from accounts.models import Account
-from accounts.forms import (
-    UserRegistrationForm,
+
+from accounts.models import Account, UserPersona, Contractors
+from .forms import (
+    # UserRegistrationForm,
     UserLoginForm,
 )
+
 
 
 def login_(request):
@@ -40,3 +42,8 @@ def login_(request):
         'form': form
     }
     return render(request, "authentication.html", context)
+
+
+
+
+

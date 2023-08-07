@@ -47,10 +47,11 @@
                     <div class="col-lg-6 d-flex justify-content-center align-items-center border-0 rounded-lg auth-h100">
                         <div class="w-100 p-3 p-md-5 card border-0 bg-dark text-light" style="max-width: 32rem;">
                             <!-- Form -->
-                            <form method="post" class="row">{% csrf_token %}
+                            <form method="post" class="row">
+                                {% csrf_token %}
 
                                 <div class="col-12 text-center mb-4">
-                                    <span class="dividers text-muted mt-4">Sign Up</span>
+                                    <span class="dividers text-muted mt-4">Contractor Sign Up</span>
                                 </div>
                                 
                                 {% if messages %}
@@ -73,10 +74,18 @@
                                     <div class="mb-2">
                                         <div class="form-label">
                                             <span class="d-flex justify-content-between align-items-center">
-                                                Full Name
+                                                Full name
                                             </span>
                                         </div>
                                         {% render_field form.full_name class="form-control form-control-lg" placeholder="Full Name"  %}
+                                    </div>
+                                    <div class="mb-2">
+                                        <div class="form-label">
+                                            <span class="d-flex justify-content-between align-items-center">
+                                                username
+                                            </span>
+                                        </div>
+                                        {% render_field form.username class="form-control form-control-lg" placeholder="Username"  %}
                                     </div>
                                 </div>
                                 <div class="col-12">
@@ -87,6 +96,14 @@
                                             </span>
                                         </div>
                                         {% render_field form.company_name class="form-control form-control-lg" placeholder="Company Name"  %}
+                                    </div>
+                                    <div class="mb-2">
+                                        <div class="form-label">
+                                            <span class="d-flex justify-content-between align-items-center">
+                                                Category
+                                            </span>
+                                        </div>
+                                        {% render_field form.category class="form-control form-control-lg" placeholder="Category"  %}
                                     </div>
                                 </div>
                                 <div class="col-12">

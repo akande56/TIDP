@@ -29,68 +29,74 @@
                             <div class="tab-pane fade show active" id="All-list">
                                 <div class="row g-3 gy-5 py-3 row-deck">
                                     <div class="col-xxl-4 col-xl-4 col-lg-4 col-md-6 col-sm-6">
-                                        <div class="card">
-                                            <div class="card-body">
-                                                <div class="d-flex align-items-center justify-content-between mt-5">
-                                                    <div class="lesson_name">
-                                                        <div class="project-block light-info-bg">
-                                                            <i class="icofont-paint"></i>
-                                                        </div>
-                                                        <span class="small text-muted project_name fw-bold"> Construction </span>
-                                                        <h6 class="mb-0 fw-bold  fs-6  mb-2">New Quater Developement</h6>
+                                     
+                                     {% for precurement in precurements %}
+                                     <br>
+                                     <br>
+                                     <div class="card">
+                                        <div class="card-body">
+                                            <div class="d-flex align-items-center justify-content-between mt-5">
+                                                <div class="lesson_name">
+                                                    <div class="project-block light-info-bg">
+                                                        <i class="icofont-paint"></i>
                                                     </div>
-                                                    <div class="btn-group" role="group" aria-label="Basic outlined example">
-                                                        <button type="button" class="btn btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#editproject"><i class="icofont-edit text-success"></i></button>
-                                                        <button type="button" class="btn btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#deleteproject"><i class="icofont-ui-delete text-danger"></i></button>
-                                                    </div>
+                                                    <span class="small text-muted project_name fw-bold"> {{precurement.category}} </span>
+                                                    <h6 class="mb-0 fw-bold  fs-6  mb-2"> {{precurement.title}} </h6>
                                                 </div>
-                                                <div class="d-flex align-items-center">
-                                                    <div class="avatar-list avatar-list-stacked pt-2">
-                                                        <span class="avatar rounded-circle text-center pointer sm" data-bs-toggle="modal" data-bs-target="#addUser"><i class="icofont-ui-add"></i></span>
-                                                    </div>
-                                                </div>
-                                                <div class="row g-2 pt-4">
-                                                    <div class="col-6">
-                                                        <div class="d-flex align-items-center">
-                                                            <i class="icofont-paper-clip"></i>
-                                                            <span class="ms-2">5 Attach</span>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-6">
-                                                        <div class="d-flex align-items-center">
-                                                            <i class="icofont-sand-clock"></i>
-                                                            <span class="ms-2">4 Month</span>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-6">
-                                                        <div class="d-flex align-items-center">
-                                                            <i class="icofont-group-students "></i>
-                                                            <span class="ms-2">5 Members</span>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-6">
-                                                        <div class="d-flex align-items-center">
-                                                            <i class="icofont-ui-text-chat"></i>
-                                                            <span class="ms-2">10</span>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="dividers-block"></div>
-                                                <div class="d-flex align-items-center justify-content-between mb-2">
-                                                    <h4 class="small fw-bold mb-0">Progress</h4>
-                                                    <span class="small light-danger-bg  p-1 rounded"><i class="icofont-ui-clock"></i> 35 Days Left</span>
-                                                </div>
-                                                <div class="progress" style="height: 8px;">
-                                                    <div class="progress-bar bg-secondary" role="progressbar" style="width: 25%" aria-valuenow="15" aria-valuemin="0" aria-valuemax="100"></div>
-                                                    <div class="progress-bar bg-secondary ms-1" role="progressbar" style="width: 25%" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100"></div>
-                                                    <div class="progress-bar bg-secondary ms-1" role="progressbar" style="width: 10%" aria-valuenow="10" aria-valuemin="0" aria-valuemax="100"></div>
+                                                <div class="btn-group" role="group" aria-label="Basic outlined example">
+                                                    <button type="button" class="btn btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#editproject"><i class="icofont-edit text-success"></i></button>
+                                                    <button type="button" class="btn btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#deleteproject"><i class="icofont-ui-delete text-danger"></i></button>
                                                 </div>
                                             </div>
+                                            <!-- <div class="d-flex align-items-center">
+                                                <div class="avatar-list avatar-list-stacked pt-2">
+                                                    <span class="avatar rounded-circle text-center pointer sm" data-bs-toggle="modal" data-bs-target="#addUser"><i class="icofont-ui-add"></i></span>
+                                                </div>
+                                            </div> -->
+                                            <div class="row g-2 pt-4">
+                                                <div class="col-6">
+                                                    <div class="d-flex align-items-center">
+                                                        <i class="icofont-paper-clip">start date</i>
+                                                        <span class="ms-2">{{precurement.start_date}}</span>
+                                                    </div>
+                                                </div>
+                                                <div class="col-6">
+                                                    <div class="d-flex align-items-center">
+                                                        <i class="icofont-sand-clock">end date</i>
+                                                        <span class="ms-2"> {{precurement.end_date}} </span>
+                                                    </div>
+                                                </div>
+                                                <div class="col-6">
+                                                    <div class="d-flex align-items-center">
+                                                        <i class="icofont-group-students ">audience</i>
+                                                        <span class="ms-2">10</span>
+                                                    </div>
+                                                </div>
+                                                <!-- <div class="col-6">
+                                                    <div class="d-flex align-items-center">
+                                                        <i class="icofont-ui-text-chat"></i>
+                                                        <span class="ms-2">10</span>
+                                                    </div>
+                                                </div> -->
+                                            </div>
+                                            <div class="dividers-block"></div>
+                                            <!-- <div class="d-flex align-items-center justify-content-between mb-2">
+                                                <h4 class="small fw-bold mb-0">Progress</h4>
+                                                <span class="small light-danger-bg  p-1 rounded"><i class="icofont-ui-clock"></i> 35 Days Left</span>
+                                            </div> -->
+                                            <!-- <div class="progress" style="height: 8px;">
+                                                <div class="progress-bar bg-secondary" role="progressbar" style="width: 25%" aria-valuenow="15" aria-valuemin="0" aria-valuemax="100"></div>
+                                                <div class="progress-bar bg-secondary ms-1" role="progressbar" style="width: 25%" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100"></div>
+                                                <div class="progress-bar bg-secondary ms-1" role="progressbar" style="width: 10%" aria-valuenow="10" aria-valuemin="0" aria-valuemax="100"></div>
+                                            </div> -->
                                         </div>
+                                     {% endfor %}
+                                            
                                     </div>
                                 </div>
                             </div>
-                            <div class="tab-pane fade" id="Started-list">
+                        </div>
+                            <!-- <div class="tab-pane fade" id="Started-list">
                                 <div class="row g-3 gy-5 py-3 row-deck">
                                     <div class="col-xxl-4 col-xl-4 col-lg-4 col-md-6 col-sm-6">
                                         <div class="card">
@@ -616,8 +622,8 @@
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="tab-pane fade" id="Approval-list">
+                            </div> -->
+                            <!-- <div class="tab-pane fade" id="Approval-list">
                                 <div class="row g-3 gy-5 py-3 row-deck">
                                     <div class="col-xxl-4 col-xl-4 col-lg-4 col-md-6 col-sm-6">
                                         <div class="card">
@@ -1149,8 +1155,8 @@
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="tab-pane fade" id="Completed-list">
+                            </div> -->
+                            <!-- <div class="tab-pane fade" id="Completed-list">
                                 <div class="row g-3 gy-5 py-3 row-deck">
                                     <div class="col-xxl-4 col-xl-4 col-lg-4 col-md-6 col-sm-6">
                                         <div class="card">
@@ -1934,7 +1940,7 @@
                                         </div>
                                     </div>
                                 </div>
-                            </div>
+                            </div> -->
                         </div>
                     </div>
                 </div>
@@ -1942,7 +1948,7 @@
         </div>
 
         <!-- Modal Members-->
-        <div class="modal fade" id="addUser" tabindex="-1" aria-labelledby="addUserLabel" aria-hidden="true">
+        <!-- <div class="modal fade" id="addUser" tabindex="-1" aria-labelledby="addUserLabel" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
@@ -2075,10 +2081,114 @@
                 </div>
             </div>
             </div>
-        </div>
+        </div> -->
 
-        <!-- Create Project-->
+        <!-- Create Project/precurement-->
         <div class="modal fade" id="createproject" tabindex="-1"  aria-hidden="true">
+            <form action="{% url 'precurement_create' %}" method="POST">
+                {% csrf_token %}
+                <div class="modal-dialog modal-dialog-centered modal-md modal-dialog-scrollable">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title  fw-bold" id="createprojectlLabel"> Create Project</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="mb-3">
+                                <label for="{{form.title.id_for_label}}" class="form-label">Project Title</label>
+                                <input type="text" class="form-control" id="{{form.title.id_for_label}}"  name="{{ form.title.html_name }}" placeholder="Explain what the Project Name">
+                                {% if form.title.errors %}
+                                    <ul class="errorlist">
+                                        {% for error in form.title.errors %}
+                                            <li>{{ error }}</li>
+                                        {% endfor %}
+                                    </ul>
+                                {% endif %}
+                            </div>
+                            <div class="deadline-form">
+                                <div class="row g-3 mb-3">
+                                    <div class="col">
+                                        <label for="{{form.category.id_for_label}}" class="form-label">Category</label>
+                                        <select class="form-select" id="{{ form.category.id_for_label }}" name="{{ form.category.html_name }}">
+                                            {% for choice in form.category.field.choices %}
+                                              {% if choice.0 %}
+                                                <option value="{{ choice.0 }}" {% ifequal choice.0 form.category.value %}selected{% endifequal %}>{{ choice.1 }}</option>
+                                              {% endif %}
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                    <div class="col">
+                                        <label for="{{form.responsibilty.id_for_label}}" class="form-label">Responsibilty</label>
+                                        <input type="text" class="form-control" id="{{form.responsibilty.id_for_label}}"  name="{{ form.responsibilty.html_name }}">
+                                    </div>
+                                </div>
+                                <div class="row g-3 mb-3">
+                                    <div class="col">
+                                        <label for="{{form.start_date.id_for_label}}" class="form-label">Project Start Date</label>
+                                        <input type="date" class="form-control" id="{{form.start_date.id_for_label}}"  name="{{ form.start_date.html_name }}">
+                                    </div>
+                                    <div class="col">
+                                        <label for="{{form.end_date.id_for_label}}" class="form-label">Project End Date</label>
+                                        <input type="date" class="form-control" id="datepickerdedone"  name="{{ form.end_date.html_name }}">
+                                    </div>
+                                </div>
+                                <div class="row g-3 mb-3">
+                                    <div class="col">
+                                        <label for="{{form.tender_type.id_for_label}}" class="form-label">Tender type</label>
+                                        <select class="form-select tender_type_me" id="{{ form.tender_type.id_for_label }}" name="{{ form.tender_type.html_name }}">
+                                            {% for choice in form.tender_type.field.choices %}
+                                              {% if choice.0 %}
+                                                <option value="{{ choice.0 }}" {% ifequal choice.0 form.tender_type.value %}selected{% endifequal %}>{{ choice.1 }}</option>
+                                              {% endif %}
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                    <div class="col contractor-field">
+                                        <label for="{{form.contractor.id_for_label}}" class="form-label">Contractors</label>
+                                        <select class="form-select" id="{{ form.contractor.id_for_label }}" name="{{ form.contractor.html_name }}" >
+                                            {% for choice in form.contractor.field.queryset %}
+                                                {% if choice.pk %}
+                                                    <option value="{{ choice.pk }}" {% ifequal choice.pk form.contractor.value %}selected{% endifequal %}>{{ choice.company_name }}</option>
+                                                {% endif %}
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="{{form.description.id_for_label}}" class="form-label">Description</label>
+                                    <textarea  name="{{ form.description.html_name }}" class="form-control" id="{{form.description.id_for_label}}" rows="3" placeholder="Add any extra details about the request"></textarea>
+                                </div>
+                                <div class="row g-3 mb-3">
+                                    <div class="col">
+                                        <label for="{{form.budget.id_for_label}}" class="form-label">Budget</label>
+                                        <input type="text" class="form-control" id="{{form.budget.id_for_label}}"  name="{{ form.budget.html_name }}">
+                                    </div>
+                                    <div class="col">
+                                        <label for="{{form.priority.id_for_label}}" class="form-label">Priority</label>
+                                        <select class="form-select" id="{{ form.priority.id_for_label }}" name="{{ form.priority.html_name }}">
+                                            {% for choice in form.priority.field.choices %}
+                                              {% if choice.0 %}
+                                                <option value="{{ choice.0 }}" {% ifequal choice.0 form.priority.value %}selected{% endifequal %}>{{ choice.1 }}</option>
+                                              {% endif %}
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                    
+                                </div>
+                                <div class="modal-footer">
+                                    <!-- <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Done</button> -->
+                                    <button type="submit" class="btn btn-primary">Create</button>
+                                </div>
+
+                            </div>
+                            
+                        </div>
+                    </div>
+
+                </div>
+            </form>
+        </div>
+        <!-- <div class="modal fade" id="createproject" tabindex="-1"  aria-hidden="true">
             <form method="post"> {% csrf_token %}
                 <div class="modal-dialog modal-dialog-centered modal-md modal-dialog-scrollable">
                     <div class="modal-content">
@@ -2120,7 +2230,32 @@
                                             <label for="formFileMultipleone" class="form-label">Contractor</label>
                                             <select class="form-select" multiple aria-label="Default select Priority">
                                                 {% for contractor in contractors %} 
-                                                    <option selected>contractor</option>
+                                                <div class="card mb-3">
+                                                    <div class="card-header py-3  bg-transparent border-bottom-0">
+                                                        <button type="button" href="#" data-bs-toggle="modal" data-bs-target="#add-user-model" class="btn btn-icon btn-warning">Create User</button> 
+                                                    </div>
+                                                    <div class="card-body">
+                                                        <table id="patient-table" class="table table-hover align-middle mb-0" style="width: 100%;">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th>Title</th>
+                                                                    <th></th>
+                                                                    
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                {% for contractor in contractors %}
+                                                                    <tr>
+                                                                        <td>{{ forloop.counter}}</td>
+                                                                        <td>{{ contractor.account.user.name }}</td>
+                                                                        <td>{{ contractor.company_name }}</td>
+                                                
+                                                                    </tr>
+                                                                {% endfor %}
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
                                                 {% endfor %}
                                             </select>
                                         </div>
@@ -2154,10 +2289,10 @@
                     </div>
                 </div>
             </form>
-        </div>
-
+        </div> -->
+        
         <!-- Edit Project-->
-        <div class="modal fade" id="editproject" tabindex="-1"  aria-hidden="true">
+        <!-- <div class="modal fade" id="editproject" tabindex="-1"  aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered modal-md modal-dialog-scrollable">
             <div class="modal-content">
                 <div class="modal-header">
@@ -2248,7 +2383,7 @@
                 </div>
             </div>
             </div>
-        </div>
+        </div> -->
 
         <!-- Modal  Delete Folder/ File-->
         <div class="modal fade" id="deleteproject" tabindex="-1"  aria-hidden="true">
@@ -2270,3 +2405,59 @@
             </div>
         </div>
 {% endblock %}
+{% block scripts %}
+<!-- Add this script within the <head> section of your HTML template -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+      $(document).ready(function() {
+        // Function to update the contractors select field based on the tender type
+        function updateContractorsSelect() {
+          var tenderType = $('.tender_type_me').val(); // Get the selected tender type
+          var contractorsSelect = $('#{{ form.contractor.id_for_label }}');
+          var currentContractorValue = contractorsSelect.val(); // Save the current contractor field value
+    
+          if (tenderType === 'selective tender') {
+            // If the tender type is 'selective tender', make an AJAX request to fetch all contractors
+            $.ajax({
+              url: '{% url 'fetch_contractors' %}',
+              type: 'GET',
+              success: function(response) {
+                // On success, update the contractors select field with the fetched contractors
+                contractorsSelect.empty(); // Empty the select field
+                $.each(response.contractors, function(index, contractor) {
+                  // Add options for each contractor
+                  contractorsSelect.append('<option value="' + contractor.pk + '">' + contractor.company_name + '</option>');
+                });
+    
+                // Restore the original contractor field value if it was previously set
+                if (currentContractorValue) {
+                  contractorsSelect.val(currentContractorValue);
+                }
+              },
+              error: function() {
+                console.log('Error occurred while fetching contractors.');
+              }
+            });
+          } else {
+            // If the tender type is not 'selective tender', clear the contractors select field
+            contractorsSelect.empty();
+    
+            // Restore the original contractor field value if it was previously set
+            if (currentContractorValue) {
+              contractorsSelect.append('<option value="' + currentContractorValue + '" selected>' + currentContractorValue + '</option>');
+            }
+          }
+        }
+    
+        // Call the updateContractorsSelect function on initial page load
+        updateContractorsSelect();
+    
+        // Call the updateContractorsSelect function whenever the tender type select field value changes
+        $('.tender_type_me').change(function() {
+          updateContractorsSelect();
+        });
+      });
+    </script>
+    
+
+{% endblock scripts %}

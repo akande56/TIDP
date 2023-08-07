@@ -5,6 +5,7 @@ from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db import transaction
 from django.views.generic import View
+from django.contrib.auth.models import User
 from accounts.models import Account, UserPersona
 from accounts.forms import (
     CreateUserForm,
@@ -18,7 +19,8 @@ from .forms import (
     CreatePersonaForm,
     UnitForm
 )
-from django.contrib.auth.models import User
+from procurement.models import Precurement, Precurement_contractors
+from procurement.forms import ContractorDocumentForm
 # Create your views here.
 def home(request):
     return render(request, "landing.html")
@@ -36,12 +38,19 @@ class Dashboard(LoginRequiredMixin, View):
     
     def get(self, request, **kwargs):
         context = {
-            'value': 1
+            'value': 1,
+            # 'form': BusinessInfoForm,
+            'form': ContractorDocumentForm,
         }
         user = Account.objects.get(user=request.user)
         print(user.user_persona.persona_tier)
         if user.user_persona.persona_tier == 11:
-            
+            #list of concerned precurement... @abdul
+            precurements_contractor = Precurement_contractors.objects.filter(invite = request.user)
+            precurements = [contractor.precurement for contractor in precurements_contractor]
+            context['precurements'] = precurements
+
+
             return render(request, "new/contractor_dashboard.html", context)
         return render(request, "new/dashboard.html", context)
 
