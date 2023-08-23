@@ -2,13 +2,17 @@
 {% load widget_tweaks %}
 {% load static %}
 
+{% block meta %}
+<meta http-equiv="Content-Disposition" content="inline">
+{% endblock meta %}
+
 {% block content %}
 <ul>
     {% for document in documents %}
       <li>
         <strong>Title:</strong> {{ document.title }}<br>
         <strong>Status:</strong> {{ document.status }}<br>
-        <strong>Document:</strong> <a href="{{ document.file.url }}">{{ document.file.name }}</a><br>
+        <strong>Document:</strong> <a href="{{ document.file.url }}"  target="_blank">{{ document.file.name }}</a><br>
       </li>
     {% empty %}
       <li>No documents found.</li>

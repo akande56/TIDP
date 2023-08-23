@@ -111,24 +111,37 @@ class PrecurementListView(View):
     
 
 ### update contractor status
-class ContractorsUpdateView(View):
-    def post(self, request, pk):
-        contractor = Contractors.objects.get(pk=pk)
-        print(contractor)
-        status = request.POST.get('status')
+# class ContractorsUpdateView(request, contractor_id):
+#         contractor = Contractors.objects.get(pk=pk)
+#         print(contractor)
+#         status = request.POST.get('status')
 
-        # Update the status
-        contractor.status = status
-        contractor.save()
+#         # Update the status
+#         contractor.status = status
+#         contractor.save()
 
-        data = {
-            'success': True,
-            'message': 'Status updated successfully.',
-        }
-        return JsonResponse(data)
-
-
+#     return render(data)
 # contractor document list
+
+def update_contractor_status(request, contractor_id):
+    if request.method == 'POST' and request.is_ajax():
+        new_status = request.POST.get('status')
+
+        try:
+            contractor = Contractors.objects.get(id=contractor_id)
+            valid_statuses = [choice[0] for choice in Contractors._meta.get_field('status').choices]
+            
+            if new_status in valid_statuses:
+                contractor.status = new_status
+                contractor.save()
+                return JsonResponse({'success': True})
+            else:
+                return JsonResponse({'success': False, 'error': 'Invalid status choice'})
+        except Contractors.DoesNotExist:
+            return JsonResponse({'success': False, 'error': 'Contractor not found'})
+
+    return JsonResponse({'success': False, 'error': 'Invalid request'})
+
 
 def contractor_document_list(request, contractor_id):
     documents = ContractorDocument.objects.filter(contractor=contractor_id)
@@ -142,45 +155,26 @@ def create_contractor_document(request):
         user = request.user
         account = Account.objects.get(user=user)
         contractor= Contractors.objects.get(account=account)
-        print('ddddddddd')
-        print(user)
-        print(account)
-        print(contractor)
     except AttributeError:
         # If the user does not have a contractor persona, return an error message
         messages.error(request, "You do not have permission to add contractor documents.")
         return redirect('dashboard')  # Redirect to home or any other page as per your app's design
 
-    # if contractor_persona.persona_tier != 11:
-    #     # Check if the user's persona tier is not 11 (contractors)
-    #     messages.error(request, "You do not have permission to add contractor documents.")
-    #     return redirect('dashboard')  # Redirect to home or any other page as per your app's design
-
     if request.method == 'POST':
-        # Process the form data and create the contractor document
         form = ContractorDocumentForm(request.POST, request.FILES)
         if form.is_valid():
-            document = form.save(commit=False)
-            document.contractor = contractor
-            print(form)
-            document.save(commit=True)
+            contractor_document = form.save(commit=False)
+            contractor_document.contractor = contractor  # Replace 'contractor' with your actual contractor instance
+            contractor_document.save()
             messages.success(request, "Contractor document added successfully.")
-            form = ContractorDocumentForm()
-            request.session['form'] = form
-            print("Form is invalid. Errors:")
-            for field, errors in form.errors.items():
-                for error in errors:
-                    print(f"{field}: {error}")
             return redirect('dashboard')  # Redirect to home or any other page after successful form submission
         else:
             print("Form is invalid. Errors:")
-            print(form)
             for field, errors in form.errors.items():
                 for error in errors:
                     print(f"{field}: {error}")
     else:
         form = ContractorDocumentForm()
-        request.session['form'] = form
 
     return redirect('dashboard')
 
@@ -197,7 +191,7 @@ class PrecurementCreateView(CreateView):
         print("MyModelCreateView is being accessed!")  # Add this line for debugging
         return super().dispatch(request, *args, **kwargs)
 
-    def form_valid(self, form):
+    def form_valid(self, form): 
         # Save the form and return the result
         precurement = form.save(commit=True)
         #Get the selected tender type from the form
@@ -205,7 +199,7 @@ class PrecurementCreateView(CreateView):
 
         #Send notification to users based on the tender type i.e in tender list
         if tender_type == 'open tender':
-            recipients = User.objects.all()  # Modify this query to select the appropriate recipients
+            recipients = User.objects.all()  
         elif tender_type == 'selective tender':
             contractors = form.cleaned_data.get('contractor')
             recipients = [contractor.account.user for contractor in contractors]
@@ -235,6 +229,3 @@ def fetch_contractors(request):
   contractors = Contractors.objects.all().values('pk', 'company_name')
   
   return JsonResponse({'contractors': list(contractors)})
-
-
-

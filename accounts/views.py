@@ -42,8 +42,3 @@ def login_(request):
         'form': form
     }
     return render(request, "authentication.html", context)
-
-
-
-
-

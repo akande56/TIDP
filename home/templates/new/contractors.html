@@ -2,9 +2,10 @@
 {% load widget_tweaks %}
 {% load static %}
 
+{% block meta %}
+{% csrf_token %}
+{% endblock meta %}
 {% block content %}
-
-
 <div class="card mb-3">
     <!-- <div class="card-header py-3  bg-transparent border-bottom-0">
         <button type="button" href="#" data-bs-toggle="modal" data-bs-target="#add-user-model" class="btn btn-icon btn-warning">Create User</button> 
@@ -27,21 +28,22 @@
                     <tr>
                         <td>{{ forloop.counter}}</td>
                         <td>{{ contractor.company_name }}</td>
-                        <td></td>
-                        <td>{{contractor.account.email}} </td>
-                        <td>{{contractor.account.date_joined}}</td>
-                        <td> {{contractor.status}} </td>
+                        <td>{{contractor.category}} </td>
+                        <td>{{contractor.account.user.email}} </td>
+                        <td>{{contractor.account.user.date_joined}}</td>
+                        <td id="status-{{ contractor.id }}"> {{contractor.status}} </td>
                         <td><a href="{% url 'contractor_document_list' contractor_id=contractor.id %}" class="btn btn-secondary">Check</a></td>
-                        <!-- <td>
-                            <form id="update-form" data-pk="{{ contractor.pk }}" action="{% url 'contractor_update' contractor_pk=contractor.pk %}">
-                                {% csrf_token %}
-                                <select id="status-select">
-                                  <option value="verified">Verified</option>
-                                  <option value="pending">Pending</option>
-                                </select>
-                                <button class="btn btn-primary"  type="button" id="update-btn">Update Status</button>
-                              </form>                    
-                        </td> -->
+                        <td>
+                          <div class="dropdown">
+                            <button class="btn btn-secondary dropdown-toggle status-update-btn" data-contractor-id="{{ contractor.id }}" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Update Status
+                            </button>
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                <a class="dropdown-item update-status-option" data-new-status="verified">Verified</a>
+                                <a class="dropdown-item update-status-option" data-new-status="pending">Pending</a>
+                            </div>
+                        </div>
+                        </td>
                     </tr>
                 {% endfor %}
             </tbody>
@@ -53,31 +55,37 @@
 {% block scripts %}
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
-    $(document).ready(function() {
-      $('#update-btn').on('click', function() {
-        var status = $('#status-select').val();
-        var pk = $('#update-form').data('pk');
-  
-        $.ajax({
-          url: '/contractors/' + pk + '/update',
-          type: 'POST',
-          data: {
-            status: status,
-            csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val()
-          },
-          success: function(response) {
-            alert(response.message);
-            // Perform any additional actions upon success
-            location.reload(); // Reload the page upon success
-          },
-          error: function(xhr, errmsg, err) {
-            alert(err);
-            console.log(err)
-          }
-        });
+  $(document).ready(function() {
+      // Set the CSRF token for AJAX requests
+      $.ajaxSetup({
+          headers: { "X-CSRFToken": "{{ csrf_token }}" }
       });
-    });
-  </script>
-    
-  
+
+      $('.update-status-option').on('click', function(event) {
+          event.preventDefault();
+          var contractorId = $(this).closest('.dropdown').find('.status-update-btn').data('contractor-id');
+          var newStatus = $(this).data('new-status');
+
+          $.ajax({
+              url: '{% url "update_contractor_status" 0 %}'.replace('0', contractorId),
+              type: 'POST',
+              data: { status: newStatus },
+              dataType: 'json',
+              success: function(response) {
+                  if (response.success) {
+                      // Update the UI to reflect the new status
+                      $('#status-' + contractorId).text(newStatus);
+                      
+                  } else {
+                      console.log('Update failed: ' + response.error);
+                  }
+              },
+              error: function(error) {
+                  console.log('Error:', error);
+              }
+          });
+      });
+  });
+</script>
+
 {% endblock scripts %}

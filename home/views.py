@@ -6,7 +6,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db import transaction
 from django.views.generic import View
 from django.contrib.auth.models import User
-from accounts.models import Account, UserPersona
+from accounts.models import Account, UserPersona, Contractors
 from accounts.forms import (
     CreateUserForm,
     UserRegistrationForm,
@@ -45,10 +45,14 @@ class Dashboard(LoginRequiredMixin, View):
         user = Account.objects.get(user=request.user)
         print(user.user_persona.persona_tier)
         if user.user_persona.persona_tier == 11:
+            # get contractor status
+            contractor = Contractors.objects.get(account=user)
             #list of concerned precurement... @abdul
             precurements_contractor = Precurement_contractors.objects.filter(invite = request.user)
+            print(precurements_contractor)
             precurements = [contractor.precurement for contractor in precurements_contractor]
             context['precurements'] = precurements
+            context['status'] = contractor.status
 
 
             return render(request, "new/contractor_dashboard.html", context)

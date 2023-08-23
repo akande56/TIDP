@@ -82,7 +82,6 @@ class Contractors(models.Model):
         return str(self.company_name)
 
 
-
 class ContractorDocument(models.Model):
     """Model definition for ContractorDocument."""
     title = models.CharField(max_length=50)

@@ -3,6 +3,7 @@
 
 
 {% block content %}
+
 <!-- Body: Body -->
 <div class="body d-flex py-3">
     <div class="container-xxl">
@@ -32,16 +33,20 @@
                         <div class="card mb-3">
                             <div class="card-body">
                                 <div class="d-flex align-items-center flex-fill">
-                                    <span class="avatar lg light-success-bg rounded-circle text-center d-flex align-items-center justify-content-center">
-                                        <i class="icofont-check-alt fs-5"></i></span>
-                                    <div class="d-flex flex-column ps-3  flex-fill">
+                                    <span class="avatar lg rounded-circle text-center d-flex align-items-center justify-content-center
+                                                {% if status == 'pending' %}light-danger-bg{% elif status == 'verified' %}light-success-bg{% endif %}">
+                                        <i class="icofont-check-alt fs-5"></i>
+                                    </span>
+                                    <div class="d-flex flex-column ps-3 flex-fill">
                                         <h6 class="fw-bold mb-0 fs-4">Verification</h6>
                                         <span class="text-muted">
-                                            Pending
+                                            {{status}}
                                         </span>
                                     </div>
                                 </div>
                             </div>
+                            
+                            
                         </div>
                     </div>
                 </div>
@@ -73,6 +78,7 @@
                                         </td>
                                         <td>
                                             {{precurement.category}}
+                                            
                                         </td>
                                         <td>
                                             {{precurement.tender_type}}
@@ -106,23 +112,23 @@
 
 
 <div class="modal fade" id="addUser" tabindex="-1" aria-labelledby="addUserLabel" aria-hidden="true">
-    <form method="post" action="{% url 'create_contractor_document' %}"> 
+    <form method="post" action="{% url 'create_contractor_document' %}" enctype="multipart/form-data"> 
         {% csrf_token %}
         <div class="modal-dialog modal-dialog-centered modal-md modal-dialog-scrollable">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title  fw-bold" id="add-group-modelLabel"> Upload Business INformation</h5>
+                    <h5 class="modal-title fw-bold" id="add-group-modelLabel"> Upload Business Information</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
                     <div class="mb-3">
-                        <label for="sub1" class="form-label">Title</label>
-                        {% render_field form.title class="form-control" id="groupname" aria-describedby="emailHelp" placeholder="E.g Minister" %}
+                        <label for="title" class="form-label">Title</label>
+                        {{ form.title|add_class:"form-control" }}
                     </div>
                     
                     <div class="mb-3">
-                        <label for="sub1" class="form-label">File</label>
-                        <input type="file" name="file" class="form-control" id="groupname">
+                        <label for="file" class="form-label">File</label>
+                        {{ form.file|add_class:"form-control" }}
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -132,6 +138,7 @@
             </div>
         </div>
     </form>
+    
 </div>
 
 {% endblock content %}
