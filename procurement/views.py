@@ -204,7 +204,12 @@ class PrecurementCreateView(CreateView):
             contractors = form.cleaned_data.get('contractor')
             recipients = [contractor.account.user for contractor in contractors]
         elif tender_type == 'internal labour':
-            recipients = User.objects.exclude(user_persona__name='contractor')
+            exclude_list = []
+            # recipients = User.objects.exclude(user_persona__name='contractor')
+            exclude = Contractors.objects.all()
+            for con in exclude:
+                exclude_list.append(con.account.user)
+            recipients = User.objects.exclude(pk__in=[instance.pk for instance in exclude_list])
         for recipient in recipients:
             Precurement_contractors.objects.create(
                 invite = recipient,

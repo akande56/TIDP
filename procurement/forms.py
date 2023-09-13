@@ -36,10 +36,7 @@ class ContractorFormSignUp(forms.Form):
 
 
 class PrecurmentCreateForm(forms.ModelForm):
-    def __init__(self, *args, **kwargs):
-        super(PrecurmentCreateForm, self).__init__(*args, **kwargs)
-        self.initial['contractor'] = None
-
+        
     class Meta:
         model = Precurement
         fields = '__all__'
@@ -52,7 +49,11 @@ class PrecurmentCreateForm(forms.ModelForm):
     widget=forms.TextInput(
         attrs={'placeholder': 'Role in Project'}
     ))
-    contractor = forms.ModelChoiceField(queryset=Contractors.objects.all())
+    contractors = forms.ModelMultipleChoiceField(
+        queryset=Contractors.objects.all(),
+        widget=forms.CheckboxSelectMultiple,
+        required=False
+    )
     start_date = forms.DateField(widget=forms.DateInput(attrs={'type': 'date'}))
     end_date = forms.DateField(widget=forms.DateInput(attrs={'type': 'date'}))
     tender_type = forms.ChoiceField(choices=Tender)
