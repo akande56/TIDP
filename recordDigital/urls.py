@@ -35,7 +35,7 @@ urlpatterns = [
     path('correspondance/', include("correspondance.urls")),
     path('ckeditor', include("ckeditor_uploader.urls")),
     path('', include('pwa.urls')),
-    path('__debug__/', include('debug_toolbar.urls')),
+    # path('__debug__/', include('debug_toolbar.urls')),
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
