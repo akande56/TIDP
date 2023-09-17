@@ -46,8 +46,8 @@ DATABASES = {
         "DATABASE_URL",
     ),
 }
-DATABASES["default"]["ATOMIC_REQUESTS"] = True
-DATABASES["default"]["CONN_MAX_AGE"] = env.int("CONN_MAX_AGE", default=60)  # noqa: F405
+# DATABASES["default"]["ATOMIC_REQUESTS"] = True
+# DATABASES["default"]["CONN_MAX_AGE"] = env.int("CONN_MAX_AGE", default=60)  # noqa: F405
 
 # URLS
 # ------------------------------------------------------------------------------
@@ -81,6 +81,7 @@ LOCAL_APPS = [
     'config',
     'meeting',
     'procurement',
+    
 ]
 
 INSTALLED_APPS += LOCAL_APPS
@@ -95,6 +96,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    
 ]
 
 
