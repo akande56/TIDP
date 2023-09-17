@@ -42,7 +42,7 @@ ALLOWED_HOSTS = env.list("DJANGO_ALLOWED_HOSTS", default=["recorddigita.onrender
 # DATABASES
 # ------------------------------------------------------------------------------
 DATABASES = {
-    "default": env.db(
+    "default": env(
         "DATABASE_URL",
     ),
 }
@@ -81,7 +81,6 @@ LOCAL_APPS = [
     'config',
     'meeting',
     'procurement',
-    
 ]
 
 INSTALLED_APPS += LOCAL_APPS
@@ -96,7 +95,6 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    
 ]
 
 
