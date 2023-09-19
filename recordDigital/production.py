@@ -192,7 +192,7 @@ SERVER_EMAIL = env("DJANGO_SERVER_EMAIL", default=DEFAULT_FROM_EMAIL)
 # https://docs.djangoproject.com/en/dev/ref/settings/#email-subject-prefix
 EMAIL_SUBJECT_PREFIX = env(
     "DJANGO_EMAIL_SUBJECT_PREFIX",
-    default="[swiftservice]",
+    default="[recorddigita]",
 )
 
 # ADMIN
@@ -207,9 +207,13 @@ ADMIN_URL = env("DJANGO_ADMIN_URL")
 # https://docs.djangoproject.com/en/dev/ref/settings/#email-backend
 # https://anymail.readthedocs.io/en/stable/installation/#anymail-settings-reference
 # https://anymail.readthedocs.io/en/stable/esps
-EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+EMAIL_BACKEND = env(
+    "DJANGO_EMAIL_BACKEND",
+    default="django.core.mail.backends.smtp.EmailBackend",
+)
 ANYMAIL = {}
-
+# https://django-allauth.readthedocs.io/en/latest/configuration.html
+ACCOUNT_EMAIL_VERIFICATION = "None"
 
 # LOGGING
 # ------------------------------------------------------------------------------
@@ -275,7 +279,7 @@ MEDIA_URL = '/media/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-LOGIN_URL = '/login'
+LOGIN_URL = '/account/login/'
 LOGOUT_REDIRECT_URL = '/'
 LOGIN_REDIRECT_URL = '/dashboard'
 

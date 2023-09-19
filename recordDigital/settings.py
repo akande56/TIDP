@@ -51,8 +51,7 @@ LOCAL_APPS = [
     'correspondance',
     'config',
     'meeting',
-    'procurement',
-    
+    'procurement',    
 ]
 
 INSTALLED_APPS += LOCAL_APPS
