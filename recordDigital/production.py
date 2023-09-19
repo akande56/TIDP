@@ -42,10 +42,13 @@ ALLOWED_HOSTS = env.list("DJANGO_ALLOWED_HOSTS", default=["recorddigita.onrender
 # DATABASES
 # ------------------------------------------------------------------------------
 DATABASES = {
-    "default": env(
+    "default": env.db(
         "DATABASE_URL",
+        default="postgres://postgres:abdul52.@127.0.0.1:5432/voteme",
     ),
 }
+DATABASES["default"]["ATOMIC_REQUESTS"] = True
+DATABASES["default"]["CONN_MAX_AGE"] = env.int("CONN_MAX_AGE", default=60)  # noqa: F405
 
 # URLS
 # ------------------------------------------------------------------------------
@@ -302,9 +305,6 @@ CKEDITOR_CONFIGS = {
     }
 }
 
-LOGIN_URL = '/account/login/'
-LOGOUT_REDIRECT_URL = '/'
-LOGIN_REDIRECT_URL = '/'
 
 PWA_SERVICE_WORKER_PATH = os.path.join(
     BASE_DIR, "home/static/js/", "serviceworker.js")
