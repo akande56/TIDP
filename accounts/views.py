@@ -22,7 +22,8 @@ def login_(request):
         password = form.cleaned_data['password']
         try:
             user = Account.objects.get(user__username=username)
-            if user.user.is_active:
+            print(user)
+            if user:
                 user = authenticate(username=username, password=password)
                 if user:
                     login(request, user)
