@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'widget_tweaks',
     'ckeditor',
     'ckeditor_uploader',
+    # 'pwa',
     "debug_toolbar",
 ]
 
