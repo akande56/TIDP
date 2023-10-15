@@ -60,7 +60,7 @@ class RegisterContractor(View):
                 messages.error(request, "Error Contact Support")
                 return redirect('login')
 
-        messages.success(request, "A Verification link Has been sent to your email kindly verify")
+        messages.success(request, "Registration succssfull, please login to access dashboard")
         return redirect('login')
 
 

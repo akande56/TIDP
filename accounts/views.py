@@ -23,6 +23,7 @@ def login_(request):
         try:
             user = Account.objects.get(user__username=username)
             print(user)
+            print('sssssssssssssssssssssssssssssssssssssss')
             if user:
                 user = authenticate(username=username, password=password)
                 if user:
