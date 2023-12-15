@@ -75,7 +75,7 @@ contractor_category = (
 
 class Contractors(models.Model):
     account = models.ForeignKey(Account, on_delete=models.CASCADE, related_name='contractor_account') #added related name abduls
-    company_name  = models.CharField(max_length=20, default='default: company name') #added company name.. Abduls
+    company_name  = models.CharField(max_length=60, default='default: company name') #added company name.. Abduls
     status = models.CharField(max_length=50, choices=status, default='pending') 
     category = models.CharField (max_length=50, choices=contractor_category, default='Software')
     def __str__(self):
