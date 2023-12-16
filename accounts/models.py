@@ -52,10 +52,10 @@ class Account(models.Model):
 
     def get_activation_url(self):
         return reverse('account_activation', args=[self.user.id])
-    #to ensure no admin instance is any of persona instance
-    def clean(self):
-        if self.user.is_superuser:
-            raise ValidationError("Admin users cannot be associated with UserPersona instances.")
+    # #to ensure no admin instance is any of persona instance
+    # def clean(self):
+    #     if self.user.is_superuser:
+    #         raise ValidationError("Admin users cannot be associated with UserPersona instances.")
         
     def save(self, *args, **kwargs):
         self.full_clean()
