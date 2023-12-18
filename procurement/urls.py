@@ -9,6 +9,7 @@ from .views import (
     contractor_document_list,
     create_contractor_document,
     fetch_contractors,
+    PrecurementDetailView
 )
 
 urlpatterns = [
@@ -21,6 +22,5 @@ urlpatterns = [
     # path('contractors/<int:contractor_pk>/update/', ContractorsUpdateView.as_view(), name='contractor_update'),
     path('contractor/update_status/<int:contractor_id>/', update_contractor_status, name='update_contractor_status'),
     path('fetch-contractors/', fetch_contractors, name='fetch_contractors'),
-    
+    path('procurement/<int:pk>/', PrecurementDetailView.as_view(), name='precurement_detail'),
 ]
-

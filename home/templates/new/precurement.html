@@ -2085,7 +2085,7 @@
 
         <!-- Create Project/precurement-->
         <div class="modal fade" id="createproject" tabindex="-1"  aria-hidden="true">
-            <form action="{% url 'precurement_create' %}" method="POST">
+            <form action="{% url 'precurement_create' %}" method="POST" enctype="multipart/form-data">
                 {% csrf_token %}
                 <div class="modal-dialog modal-dialog-centered modal-md modal-dialog-scrollable">
                     <div class="modal-content">
@@ -2157,6 +2157,15 @@
                                 <div class="mb-3">
                                     <label for="{{form.description.id_for_label}}" class="form-label">Description</label>
                                     <textarea  name="{{ form.description.html_name }}" class="form-control" id="{{form.description.id_for_label}}" rows="3" placeholder="Add any extra details about the request"></textarea>
+                                </div>
+                                <div class="mb-3">
+                                    <div class="row g-3 mb-3">
+                                        <div class="col">
+                                            <label for="{{form.project_file.id_for_label}}" class="form-label">Project File</label>
+                                            <input type="file" class="form-control" id="{{form.project_file.id_for_label}}" name="{{ form.project_file.html_name }}">
+                                        </div>
+                                    </div>
+                                    
                                 </div>
                                 <div class="row g-3 mb-3">
                                     <div class="col">
@@ -2409,54 +2418,60 @@
 <!-- Add this script within the <head> section of your HTML template -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
-      $(document).ready(function() {
-        // Function to update the contractors select field based on the tender type
-        function updateContractorsSelect() {
-          var tenderType = $('.tender_type_me').val(); // Get the selected tender type
-          var contractorsSelect = $('#{{ form.contractor.id_for_label }}');
-          var currentContractorValue = contractorsSelect.val(); // Save the current contractor field value
+        $(document).ready(function () {
+            // Function to update the contractors select field based on the tender type
+            function updateContractorsSelect() {
+                var tenderType = $('.tender_type_me').val(); // Get the selected tender type
+                var contractorsSelect = $('#{{ form.contractor.id_for_label }}');
+                var currentContractorValue = contractorsSelect.val(); // Save the current contractor field value
     
-          if (tenderType === 'selective tender') {
-            // If the tender type is 'selective tender', make an AJAX request to fetch all contractors
-            $.ajax({
-              url: '{% url 'fetch_contractors' %}',
-              type: 'GET',
-              success: function(response) {
-                // On success, update the contractors select field with the fetched contractors
-                contractorsSelect.empty(); // Empty the select field
-                $.each(response.contractors, function(index, contractor) {
-                  // Add options for each contractor
-                  contractorsSelect.append('<option value="' + contractor.pk + '">' + contractor.company_name + '</option>');
-                });
+                if (tenderType === 'selective tender') {
+                    // If the tender type is 'selective tender', set the multiple attribute
+                    contractorsSelect.prop('multiple', true);
     
-                // Restore the original contractor field value if it was previously set
-                if (currentContractorValue) {
-                  contractorsSelect.val(currentContractorValue);
+                    // Make an AJAX request to fetch all contractors
+                    $.ajax({
+                        url: '{% url 'fetch_contractors' %}',
+                        type: 'GET',
+                        success: function (response) {
+                            // On success, update the contractors select field with the fetched contractors
+                            contractorsSelect.empty(); // Empty the select field
+                            $.each(response.contractors, function (index, contractor) {
+                                // Add options for each contractor
+                                contractorsSelect.append('<option value="' + contractor.pk + '">' + contractor.company_name + '</option>');
+                            });
+    
+                            // Restore the original contractor field value if it was previously set
+                            if (currentContractorValue) {
+                                contractorsSelect.val(currentContractorValue);
+                            }
+                        },
+                        error: function () {
+                            console.log('Error occurred while fetching contractors.');
+                        }
+                    });
+                } else {
+                    // If the tender type is not 'selective tender', remove the multiple attribute
+                    contractorsSelect.prop('multiple', false);
+    
+                    // Clear the contractors select field
+                    contractorsSelect.empty();
+    
+                    // Restore the original contractor field value if it was previously set
+                    if (currentContractorValue) {
+                        contractorsSelect.append('<option value="' + currentContractorValue + '" selected>' + currentContractorValue + '</option>');
+                    }
                 }
-              },
-              error: function() {
-                console.log('Error occurred while fetching contractors.');
-              }
-            });
-          } else {
-            // If the tender type is not 'selective tender', clear the contractors select field
-            contractorsSelect.empty();
-    
-            // Restore the original contractor field value if it was previously set
-            if (currentContractorValue) {
-              contractorsSelect.append('<option value="' + currentContractorValue + '" selected>' + currentContractorValue + '</option>');
             }
-          }
-        }
     
-        // Call the updateContractorsSelect function on initial page load
-        updateContractorsSelect();
+            // Call the updateContractorsSelect function on initial page load
+            updateContractorsSelect();
     
-        // Call the updateContractorsSelect function whenever the tender type select field value changes
-        $('.tender_type_me').change(function() {
-          updateContractorsSelect();
+            // Call the updateContractorsSelect function whenever the tender type select field value changes
+            $('.tender_type_me').change(function () {
+                updateContractorsSelect();
+            });
         });
-      });
     </script>
     
 

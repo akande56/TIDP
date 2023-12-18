@@ -3,7 +3,8 @@ from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db import transaction
-from django.views.generic import View,CreateView
+from django.db.models.query import QuerySet
+from django.views.generic import View,CreateView, DetailView
 from django.contrib.auth.models import User
 from django.urls import reverse_lazy
 from .forms import (
@@ -201,20 +202,31 @@ class PrecurementCreateView(CreateView):
         if tender_type == 'open tender':
             recipients = User.objects.all()  
         elif tender_type == 'selective tender':
-            contractors = form.cleaned_data.get('contractor')
+            contractors = form.cleaned_data.get('contractor', [])
+            if not isinstance(contractors, QuerySet):
+                contractors = list(contractors)
+            contractor_ids = [contractor.id for contractor in contractors]
+            precurement.contractor.set(contractor_ids)
             recipients = [contractor.account.user for contractor in contractors]
-        elif tender_type == 'internal labour':
+        elif tender_type == 'direct labour':
             exclude_list = []
             # recipients = User.objects.exclude(user_persona__name='contractor')
             exclude = Contractors.objects.all()
-            for con in exclude:
-                exclude_list.append(con.account.user)
+            exclude_list = [con.account.user for con in exclude]
             recipients = User.objects.exclude(pk__in=[instance.pk for instance in exclude_list])
+        #project file
+        project_file = self.request.FILES.get('project_file')
+        if project_file:
+            precurement.project_file = project_file
+            precurement.save(commit=True)
+        #recipient
         for recipient in recipients:
             Precurement_contractors.objects.create(
                 invite = recipient,
                 precurement = precurement
             )
+        messages.success(self.request, "New procurement added succesfully")
+        
         return super().form_valid(form)
 
     def form_invalid(self, form):
@@ -234,3 +246,10 @@ def fetch_contractors(request):
   contractors = Contractors.objects.all().values('pk', 'company_name')
   
   return JsonResponse({'contractors': list(contractors)})
+
+
+
+class PrecurementDetailView(DetailView):
+    model = Precurement
+    template_name = 'new/precurement_detail.html'
+    context_object_name = 'precurement'

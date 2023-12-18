@@ -6,10 +6,14 @@
 {% csrf_token %}
 {% endblock meta %}
 {% block content %}
+<a href="javascript:history.back()" style="display: inline-block; margin-top: 10px; margin-bottom: 10px; margin-left: 30px;">
+    <i class="fa fa-arrow-left" aria-hidden="true"></i>
+</a>
 <div class="card mb-3">
     <!-- <div class="card-header py-3  bg-transparent border-bottom-0">
         <button type="button" href="#" data-bs-toggle="modal" data-bs-target="#add-user-model" class="btn btn-icon btn-warning">Create User</button> 
     </div> -->
+    
     <div class="card-body">
         <table id="patient-table" class="table table-hover align-middle mb-0" style="width: 100%;">
             <thead>

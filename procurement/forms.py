@@ -7,7 +7,7 @@ from .models import Precurement
 Tender = (
     ('open tender', 'open tender'),
     ('selective tender', 'selective tender'),
-    ('internal labour', 'internal labour')
+    ('direct labour', 'direct labour')
 )
 Priority = (
    ('HIGHEST', 'HIGHEST'),
@@ -44,7 +44,13 @@ class PrecurmentCreateForm(forms.ModelForm):
     title = forms.CharField(max_length=20, required=True, widget=forms.TextInput(
         attrs={'placeholder': 'Project Name'}
     ))
-    category = forms.ChoiceField(choices=Tender)
+    category_choices = [
+        ('Software', 'Software'),
+        ('Telecommunication', 'Telecommunication'),
+        ('Construction', 'Construction'),
+        ('Others', 'Others'),
+    ]
+    category = forms.ChoiceField(choices=category_choices)
     responsibilty = forms.CharField(max_length=20, required=True, 
     widget=forms.TextInput(
         attrs={'placeholder': 'Role in Project'}
@@ -63,7 +69,8 @@ class PrecurmentCreateForm(forms.ModelForm):
     ))
     budget = forms.CharField(max_length=20)
     priority = forms.ChoiceField(choices=Priority)
-
+    project_file = forms.FileField(required=False)
+    
   
     
 class ContractorDocumentForm(forms.ModelForm):
