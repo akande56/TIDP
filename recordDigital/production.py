@@ -341,7 +341,7 @@ CKEDITOR_CONFIGS = {
 # PWA_APP_LANG = 'en-US'
 
 # CLOUDINARY
-DEFAULT_FILE_STORAGE = 'django_storage_supabase.supabase    '
+DEFAULT_FILE_STORAGE = 'django_storage_supabase.supabase'
     
 SUPABASE_API_KEY = env('API_KEY')
 SUPABASE_URL = env('SUPA_URL')
