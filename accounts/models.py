@@ -85,7 +85,7 @@ class Contractors(models.Model):
 class ContractorDocument(models.Model):
     """Model definition for ContractorDocument."""
     title = models.CharField(max_length=50)
-    file = models.FileField(upload_to='uploads/', validators=[FileExtensionValidator(['txt', 'pdf'])])
+    file = models.ImageField(upload_to='contractor_docs/')
     contractor = models.ForeignKey(Contractors, on_delete=models.CASCADE,null=True,default=None ,related_name='contractor_document')
 
     class Meta:
