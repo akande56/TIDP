@@ -71,7 +71,6 @@ INSTALLED_APPS = [
     'widget_tweaks',
     'ckeditor',
     'ckeditor_uploader',
-    
 ]
 
 LOCAL_APPS = [
@@ -81,7 +80,6 @@ LOCAL_APPS = [
     'config',
     'meeting',
     'procurement',
-    
 ]
 
 INSTALLED_APPS += LOCAL_APPS
