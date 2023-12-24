@@ -195,6 +195,18 @@ class PrecurementCreateView(CreateView):
     def form_valid(self, form):
         # Save the form and return the result
         precurement = form.save(commit=False)
+        
+        # Project file
+        project_file = self.request.FILES.get('project_file')
+        if not project_file:
+            return HttpResponseBadRequest('No file provided.')
+
+        # Additional validation if needed, e.g., check if it's an image
+        if not project_file.content_type.startswith('image'):
+            return HttpResponseBadRequest('Invalid file type. Please upload an image.')
+
+        precurement.project_file = project_file
+        precurement.save()
 
         # Get the selected tender type from the form
         tender_type = form.cleaned_data.get('tender_type')
@@ -215,18 +227,7 @@ class PrecurementCreateView(CreateView):
             exclude_list = [con.account.user for con in exclude]
             recipients = User.objects.exclude(pk__in=[instance.pk for instance in exclude_list])
 
-        # Project file
-        project_file = self.request.FILES.get('project_file')
-        if not project_file:
-            return HttpResponseBadRequest('No file provided.')
-
-        # Additional validation if needed, e.g., check if it's an image
-        if not project_file.content_type.startswith('image'):
-            return HttpResponseBadRequest('Invalid file type. Please upload an image.')
-
-        precurement.project_file = project_file
-        precurement.save()
-
+        
         # Recipient
         for recipient in recipients:
             Precurement_contractors.objects.create(
