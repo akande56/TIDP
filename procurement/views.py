@@ -1,4 +1,4 @@
-from django.http import JsonResponse, request
+from django.http import JsonResponse, request, HttpResponseBadRequest
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -187,20 +187,21 @@ class PrecurementCreateView(CreateView):
     template_name = 'new/precurement.html'
     success_url = reverse_lazy('precurement_list')
     context_object_name = 'form'
-    
+
     def dispatch(self, request, *args, **kwargs):
-        print("MyModelCreateView is being accessed!")  # Add this line for debugging
+        print("PrecurementCreateView is being accessed!")  # Add this line for debugging
         return super().dispatch(request, *args, **kwargs)
 
-    def form_valid(self, form): 
+    def form_valid(self, form):
         # Save the form and return the result
-        precurement = form.save(commit=True)
-        #Get the selected tender type from the form
+        precurement = form.save(commit=False)
+
+        # Get the selected tender type from the form
         tender_type = form.cleaned_data.get('tender_type')
 
-        #Send notification to users based on the tender type i.e in tender list
+        # Send notification to users based on the tender type i.e in tender list
         if tender_type == 'open tender':
-            recipients = User.objects.all()  
+            recipients = User.objects.all()
         elif tender_type == 'selective tender':
             contractors = form.cleaned_data.get('contractor', [])
             if not isinstance(contractors, QuerySet):
@@ -210,35 +211,36 @@ class PrecurementCreateView(CreateView):
             recipients = [contractor.account.user for contractor in contractors]
         elif tender_type == 'direct labour':
             exclude_list = []
-            # recipients = User.objects.exclude(user_persona__name='contractor')
             exclude = Contractors.objects.all()
             exclude_list = [con.account.user for con in exclude]
             recipients = User.objects.exclude(pk__in=[instance.pk for instance in exclude_list])
-        #project file
+
+        # Project file
         project_file = self.request.FILES.get('project_file')
-        if project_file:
-            precurement.project_file = project_file
-            precurement.save()
-        #recipient
+        if not project_file:
+            return HttpResponseBadRequest('No file provided.')
+
+        # Additional validation if needed, e.g., check if it's an image
+        if not project_file.content_type.startswith('image'):
+            return HttpResponseBadRequest('Invalid file type. Please upload an image.')
+
+        precurement.project_file = project_file
+        precurement.save()
+
+        # Recipient
         for recipient in recipients:
             Precurement_contractors.objects.create(
-                invite = recipient,
-                precurement = precurement
+                invite=recipient,
+                precurement=precurement
             )
-        messages.success(self.request, "New procurement added succesfully")
-        
+
+        messages.success(self.request, "New procurement added successfully!")
         return super().form_valid(form)
 
     def form_invalid(self, form):
-        # Print form errors to the terminal for debugging
-
-        # form._errors['contractor'] = None
-        
-        print("Form is invalid. Errors:")
-        for field, errors in form.errors.items():
-            for error in errors:
-                print(f"{field}: {error}")
-        return super().form_invalid(form)
+        response = super().form_invalid(form)
+        errors = {field: form.errors[field] for field in form.errors}
+        return JsonResponse({'errors': errors}, status=400)
     
     
 
