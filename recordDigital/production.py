@@ -342,3 +342,12 @@ CKEDITOR_CONFIGS = {
 # ]
 # PWA_APP_DIR = 'ltr'
 # PWA_APP_LANG = 'en-US'
+
+# CLOUDINARY
+DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
+    
+CLOUDINARY_STORAGE = {
+    'CLOUD_NAME': env("CLOUD_NAME"),
+     'API_KEY': env("API_KEY"),
+     'API_SECRET': env("API_SECRET"),	
+}

@@ -1,5 +1,5 @@
 from django.http import JsonResponse, request
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db import transaction
@@ -218,7 +218,7 @@ class PrecurementCreateView(CreateView):
         project_file = self.request.FILES.get('project_file')
         if project_file:
             precurement.project_file = project_file
-            precurement.save(commit=True)
+            precurement.save()
         #recipient
         for recipient in recipients:
             Precurement_contractors.objects.create(
@@ -253,3 +253,30 @@ class PrecurementDetailView(DetailView):
     model = Precurement
     template_name = 'new/precurement_detail.html'
     context_object_name = 'precurement'
+
+
+def procurement_edit(request, pk):
+    precurement = get_object_or_404(Precurement, pk=pk)
+    
+    if request.method == 'POST':
+        form = PrecurmentCreateForm(request.POST, instance=precurement)
+        if form.is_valid():
+            form.save(commit=True)
+            messages.success(request, "Procurement updated successfully!")
+            return redirect('precurement_detail', pk=precurement.pk)
+    else:
+        form = PrecurmentCreateForm(instance=precurement)
+
+    return redirect ('precurement_list')
+
+
+def procurement_delete(request, pk):
+    precurement = get_object_or_404(Precurement, pk=pk)
+    print('dellllll')
+
+    
+    print('post.....')
+    precurement.delete()
+    messages.success(request, "Procurement deleted successfully!")
+    return redirect('precurement_list')
+

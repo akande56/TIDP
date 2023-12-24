@@ -1,31 +1,38 @@
 {% extends 'new/base.html' %}
 
 {% block content %}
-  <div class="container mt-4 offset-1">
-    <h2 class="mb-2">{{ precurement.title }}</h2>
-    <p><strong>Category:</strong> {{ precurement.category }}</p>
-    <p><strong>Responsibility:</strong> {{ precurement.responsibility }}</p>
-    <p><strong>Start Date:</strong> {{ precurement.start_date }}</p>
-    <p><strong>End Date:</strong> {{ precurement.end_date }}</p>
-    <p><strong>Tender Type:</strong> {{ precurement.get_tender_type_display }}</p>
-    
-    {% if precurement.contractor.count > 0 %}
-      <p><strong>Contractors:</strong></p>
-      <ul>
-        {% for contractor in precurement.contractor.all %}
-          <li>{{ contractor.company_name }}</li>
-        {% endfor %}
-      </ul>
-    {% else %}
-      <p><strong>No Contractors Assigned</strong></p>
-    {% endif %}
-    
-    <p><strong>Description:</strong> {{ precurement.description }}</p>
-    <p><strong>Budget:</strong> {{ precurement.budget }}</p>
-    <p><strong>Priority:</strong> {{ precurement.get_priority_display }}</p>
-    {% if precurement.project_file %}
-    <p>Project File: <a href="{{ precurement.project_file.url }}" target="_blank">{{ precurement.project_file.name }}</a></p>
-{% endif %}
-    
-  </div>
+<a href="javascript:history.back()"
+  style="display: inline-block; margin-top: 10px; margin-bottom: 10px; margin-left: 30px;">
+  <i class="fa fa-arrow-left" aria-hidden="true"></i>
+</a>
+<div class="container mt-4 offset-1">
+  <h2 class="mb-2">{{ precurement.title }}</h2>
+  <p><strong>Category:</strong> {{ precurement.category }}</p>
+  <p><strong>Responsibility:</strong> {{ precurement.responsibility }}</p>
+  <p><strong>Start Date:</strong> {{ precurement.start_date }}</p>
+  <p><strong>End Date:</strong> {{ precurement.end_date }}</p>
+  <p><strong>Tender Type:</strong> {{ precurement.get_tender_type_display }}</p>
+
+  {% if precurement.contractor.count > 0 %}
+  <p><strong>Contractors:</strong></p>
+  <ul>
+    {% for contractor in precurement.contractor.all %}
+    <li>{{ contractor.company_name }}</li>
+    {% endfor %}
+  </ul>
+  {% else %}
+  <p><strong>No Contractors Assigned</strong></p>
+  {% endif %}
+
+  <p><strong>Description:</strong> {{ precurement.description }}</p>
+  <p><strong>Budget:</strong> {{ precurement.budget }}</p>
+  <p><strong>Priority:</strong> {{ precurement.get_priority_display }}</p>
+  {% if precurement.project_file %}
+  <p>Project File: <a href="{{ precurement.project_file.url }}" target="_blank">{{ precurement.project_file.name }}</a>
+  </p>
+  {% endif %}
+` {% if account.user_persona.persona_tier == 11 %}
+  <a href="#" class="btn btn-primary">Show interest</a>
+  {% endif %}
+</div>
 {% endblock %}

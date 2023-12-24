@@ -9,7 +9,9 @@ from .views import (
     contractor_document_list,
     create_contractor_document,
     fetch_contractors,
-    PrecurementDetailView
+    PrecurementDetailView,
+    procurement_edit,
+    procurement_delete,
 )
 
 urlpatterns = [
@@ -23,4 +25,6 @@ urlpatterns = [
     path('contractor/update_status/<int:contractor_id>/', update_contractor_status, name='update_contractor_status'),
     path('fetch-contractors/', fetch_contractors, name='fetch_contractors'),
     path('procurement/<int:pk>/', PrecurementDetailView.as_view(), name='precurement_detail'),
+    path('procurement/<int:pk>/edit/', procurement_edit, name='precurement_edit'),
+    path('delete/<int:pk>/', procurement_delete, name='precurement_delete'),
 ]
