@@ -10,7 +10,8 @@ from django.urls import reverse_lazy
 from .forms import (
     ContractorFormSignUp, 
     PrecurmentCreateForm,
-    ContractorDocumentForm
+    ContractorDocumentForm,
+    PrecurmentEditForm,
 )
 from .models import Precurement, Precurement_contractors
 from accounts.models import UserPersona, Account, Contractors,ContractorDocument
@@ -97,8 +98,9 @@ class PrecurementListView(View):
     form_class = PrecurmentCreateForm
 
     def get(self, request):
-        precurements_contractor = Precurement_contractors.objects.filter(invite = request.user)
-        precurements = [contractor.precurement for contractor in precurements_contractor]
+        # precurements_contractor = Precurement_contractors.objects.filter(invite = request.user)
+        # precurements = [contractor.precurement for contractor in precurements_contractor]
+        precurements = Precurement.objects.all()
         form = self.form_class()
         return render(request, self.template_name, {'precurements': precurements, 'form': form})
 
@@ -262,16 +264,45 @@ def procurement_edit(request, pk):
     precurement = get_object_or_404(Precurement, pk=pk)
     
     if request.method == 'POST':
-        form = PrecurmentCreateForm(request.POST, request.FILES,instance=precurement)
+        form = PrecurmentEditForm(request.POST, request.FILES, instance=precurement)
         if form.is_valid():
-            form.save(commit=True)
+            precurement = form.save(commit=True)
+        
+            tender_type = precurement.tender_type
+
+            # Send notification to users based on the tender type, i.e., update/create Precurment_contractors
+            if tender_type == 'open tender':
+                recipients = User.objects.all()  
+            elif tender_type == 'selective tender':
+                
+                contractors = form.cleaned_data.get('contractor', [])
+                
+                if not isinstance(contractors, QuerySet):
+                    contractors = list(contractors)
+                contractor_ids = [contractor.id for contractor in contractors]
+                precurement.contractor.set(contractor_ids)
+                recipients = [contractor.account.user for contractor in contractors]
+            elif tender_type == 'direct labour':
+                exclude_list = []
+                exclude = Contractors.objects.all()
+                exclude_list = [con.account.user for con in exclude]
+                recipients = User.objects.exclude(pk__in=[instance.pk for instance in exclude_list])
+            precurement.save()
+            print(precurement.contractor)
+
+            # Update or create Precurment_contractors objects for the recipients
+            for recipient in recipients:
+                Precurement_contractors.objects.update_or_create(
+                    invite=recipient,
+                    precurement=precurement
+                )
+
             messages.success(request, "Procurement updated successfully!")
             return redirect('precurement_detail', pk=precurement.pk)
     else:
-        form = PrecurmentCreateForm(instance=precurement)
+        form = PrecurmentEditForm(instance=precurement)
 
-    return redirect ('precurement_list')
-
+    return redirect('precurement_list')
 
 def procurement_delete(request, pk):
     precurement = get_object_or_404(Precurement, pk=pk)

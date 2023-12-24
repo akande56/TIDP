@@ -71,7 +71,13 @@ class PrecurmentCreateForm(forms.ModelForm):
     priority = forms.ChoiceField(choices=Priority)
     project_file = forms.ImageField(required=False)
     
-  
+
+class PrecurmentEditForm(forms.ModelForm):
+    class Meta:
+        model = Precurement
+        exclude = ['tender_type']  
+    
+
     
 class ContractorDocumentForm(forms.ModelForm):
     class Meta:

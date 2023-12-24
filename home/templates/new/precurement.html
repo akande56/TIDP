@@ -2452,7 +2452,7 @@
                         <div class="row g-3 mb-3">
                             <div class="col">
                                 <label for="{{form.tender_type.id_for_label}}" class="form-label">Tender type</label>
-                                <select class="form-select tender_type_me" id="{{ form.tender_type.id_for_label }}" name="{{ form.tender_type.html_name }}">
+                                <select class="form-select tender_type_me" id="{{ form.tender_type.id_for_label }}" name="{{ form.tender_type.html_name }}" disabled>
                                     {% for choice in form.tender_type.field.choices %}
                                       {% if choice.0 %}
                                         <option value="{{ choice.0 }}" {% ifequal choice.0 precurement.tender_type %}selected{% endifequal %}>{{ choice.1 }}</option>
