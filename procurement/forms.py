@@ -69,7 +69,7 @@ class PrecurmentCreateForm(forms.ModelForm):
     ))
     budget = forms.CharField(max_length=20)
     priority = forms.ChoiceField(choices=Priority)
-    project_file = forms.FileField(required=False)
+    project_file = forms.ImageField(required=False)
     
   
     

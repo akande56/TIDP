@@ -259,7 +259,7 @@ def procurement_edit(request, pk):
     precurement = get_object_or_404(Precurement, pk=pk)
     
     if request.method == 'POST':
-        form = PrecurmentCreateForm(request.POST, instance=precurement)
+        form = PrecurmentCreateForm(request.POST, request.FILES,instance=precurement)
         if form.is_valid():
             form.save(commit=True)
             messages.success(request, "Procurement updated successfully!")
@@ -272,10 +272,6 @@ def procurement_edit(request, pk):
 
 def procurement_delete(request, pk):
     precurement = get_object_or_404(Precurement, pk=pk)
-    print('dellllll')
-
-    
-    print('post.....')
     precurement.delete()
     messages.success(request, "Procurement deleted successfully!")
     return redirect('precurement_list')

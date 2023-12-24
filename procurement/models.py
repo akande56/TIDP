@@ -30,7 +30,7 @@ class Precurement(models.Model):
     description = models.CharField(max_length=30, default='details of project')
     budget = models.CharField(max_length=20)
     priority =models.CharField(max_length=20,choices=Priority, default=3) 
-    project_file = models.FileField(upload_to='project_files/', null=True, blank=True)
+    project_file = models.ImageField(upload_to='project_files/', null=True, blank=True)
     
     def __str__(self):
         return str(self.title)
