@@ -1,4 +1,5 @@
 django-storage-supabase == 0.1.0
+requests==2.25.1
 asgiref==3.5.1
 Django==3.2
 django-ckeditor==6.3.2
