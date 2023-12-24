@@ -71,6 +71,7 @@ INSTALLED_APPS = [
     'widget_tweaks',
     'ckeditor',
     'ckeditor_uploader',
+    "cloudinary",
 ]
 
 LOCAL_APPS = [
@@ -341,8 +342,11 @@ CKEDITOR_CONFIGS = {
 # PWA_APP_LANG = 'en-US'
 
 # CLOUDINARY
-DEFAULT_FILE_STORAGE = 'django_storage_supabase'
+# CLOUDINARY
+DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
     
-SUPABASE_API_KEY = env('API_KEY')
-SUPABASE_URL = env('SUPA_URL')
-SUPABASE_ROOT_PATH = '/dir/'
+CLOUDINARY_STORAGE = {
+    'CLOUD_NAME': env("CLOUD_NAME"),
+     'API_KEY': env("API_KEY"),
+     'API_SECRET': env("API_SECRET"),	
+}
