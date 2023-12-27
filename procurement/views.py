@@ -12,8 +12,13 @@ from .forms import (
     PrecurmentCreateForm,
     ContractorDocumentForm,
     PrecurmentEditForm,
+    TenderDocumentForm,
 )
-from .models import Precurement, Precurement_contractors
+from .models import (
+    Precurement, 
+    Precurement_contractors, 
+    Procurement_tender_doc,
+)
 from accounts.models import UserPersona, Account, Contractors,ContractorDocument
 
 # Create your views here.
@@ -103,7 +108,7 @@ class PrecurementListView(View):
         precurements = Precurement.objects.all()
         form = self.form_class()
         return render(request, self.template_name, {'precurements': precurements, 'form': form})
-
+    
     def post(self, request):
         form = self.form_class(request.POST)
         if form.is_valid():
@@ -150,7 +155,7 @@ def contractor_document_list(request, contractor_id):
     documents = ContractorDocument.objects.filter(contractor=contractor_id)
     return render(request, 'new/contractor_document_list.html', {'documents': documents})
 
-
+# contractor portofolio
 def create_contractor_document(request):
     
     try:
@@ -253,11 +258,39 @@ def fetch_contractors(request):
   return JsonResponse({'contractors': list(contractors)})
 
 
-
-class PrecurementDetailView(DetailView):
-    model = Precurement
+class PrecurementDetailView(View):
     template_name = 'new/precurement_detail.html'
-    context_object_name = 'precurement'
+
+    def get(self, request, pk):
+        precurement = get_object_or_404(Precurement, pk=pk)
+        contractor = get_object_or_404(Contractors, account__user=request.user)
+        existing_document = Procurement_tender_doc.objects.get(precurement=precurement, contractor=contractor)
+        form = TenderDocumentForm()
+        return render(request, self.template_name, {'precurement': precurement, 'form': form, 'existing_document': existing_document})
+    
+    #handle contractor tender document
+    def post(self, request, pk):
+        precurement = get_object_or_404(Precurement, pk=pk)
+        form = TenderDocumentForm(request.POST, request.FILES)
+        
+        # Try to get the contractor or raise a 404 error
+        contractor = get_object_or_404(Contractors, account__user=request.user)
+
+        if form.is_valid():
+            existing_document = Procurement_tender_doc.objects.filter(precurement=precurement).first()
+
+            if existing_document:
+                # Update the existing document
+                existing_document.file = form.cleaned_data['file']
+                existing_document.save()
+                messages.success(request, "Tender document updated successfully!")
+            else:
+                # Create a new document
+                Procurement_tender_doc.objects.create(contractor=contractor, precurement=precurement, file=form.cleaned_data['file'])
+                messages.success(request, "Tender document added successfully!")
+            return redirect('precurement_detail', pk=pk)
+
+        return render(request, self.template_name, {'precurement': precurement, 'form': form})
 
 
 def procurement_edit(request, pk):
@@ -304,9 +337,21 @@ def procurement_edit(request, pk):
 
     return redirect('precurement_list')
 
+
 def procurement_delete(request, pk):
     precurement = get_object_or_404(Precurement, pk=pk)
     precurement.delete()
     messages.success(request, "Procurement deleted successfully!")
     return redirect('precurement_list')
 
+
+
+#FILES
+def procurement_list(request):
+    procurements = Precurement.objects.all()
+    return render(request, 'new/procurement_list.html', {'procurements': procurements})
+
+def procurement_files(request, pk):
+    procurement = Precurement.objects.get(pk=pk)
+    files = Procurement_tender_doc.objects.filter(precurement = procurement)
+    return render (request, 'new/procurement_tender_documents.html', {'files': files, 'procurement': procurement})

@@ -35,7 +35,11 @@ class Precurement(models.Model):
     def __str__(self):
         return str(self.title)
 
-
+# abdulsalam (Archpragmatic)
+# model to hold precurement-contractor relationship
+# Note: you will noticed i used User as the primary model for invited persona...
+# Reason is beacuse invitee are not limited to contractor persona. may include all member of the organization, thus
+# to make it easy and have a generalize focus, i used User model
 
 class Precurement_contractors(models.Model):
     """Model definition for Precurement_contractors."""
@@ -50,3 +54,17 @@ class Precurement_contractors(models.Model):
     def __str__(self):
         """Unicode representation of Precurement_contractors."""
         return str(self.precurement.title)
+
+
+
+class Procurement_tender_doc(models.Model):
+    contractor = models.ForeignKey(Contractors, on_delete=models.CASCADE, related_name='interested_contractor')
+    precurement = models.ForeignKey(Precurement, on_delete=models.CASCADE, related_name='procurement')
+    file = models.ImageField(upload_to='contractor_tender_doc/')
+
+    class Meta:
+        verbose_name = 'Procurement_tender_doc'
+        verbose_name_plural = 'Procurement_tender_docs'
+
+    def __str__(self):
+        return f"{self.contractor.company_name} - {self.precurement.title}"

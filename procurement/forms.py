@@ -1,7 +1,7 @@
 from django import forms
 from django.core.exceptions import ValidationError
 from accounts.models import Account, UserPersona ,Contractors,ContractorDocument
-from .models import Precurement
+from .models import Precurement, Procurement_tender_doc
 
 
 Tender = (
@@ -92,3 +92,12 @@ class ContractorDocumentForm(forms.ModelForm):
         # For example, you can check the file size or format here
 
         return cleaned_data
+
+
+
+class TenderDocumentForm(forms.ModelForm):
+    class Meta:
+        model = Procurement_tender_doc
+        fields = ['file']
+
+    file = forms.ImageField(label='Tender Document', required=True)

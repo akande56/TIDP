@@ -5,34 +5,72 @@
   style="display: inline-block; margin-top: 10px; margin-bottom: 10px; margin-left: 30px;">
   <i class="fa fa-arrow-left" aria-hidden="true"></i>
 </a>
-<div class="container mt-4 offset-1">
-  <h2 class="mb-2">{{ precurement.title }}</h2>
-  <p><strong>Category:</strong> {{ precurement.category }}</p>
-  <p><strong>Responsibility:</strong> {{ precurement.responsibility }}</p>
-  <p><strong>Start Date:</strong> {{ precurement.start_date }}</p>
-  <p><strong>End Date:</strong> {{ precurement.end_date }}</p>
-  <p><strong>Tender Type:</strong> {{ precurement.get_tender_type_display }}</p>
+<div class="container mt-4 ">
+  <div class="row">
+    <!-- Column 1: Procurement Details -->
+    <div class="col-md-6">
+      <h2 class="mb-2">{{ precurement.title }}</h2>
+      <p><strong>Category:</strong> {{ precurement.category }}</p>
+      <p><strong>Responsibility:</strong> {{ precurement.responsibility }}</p>
+      <p><strong>Start Date:</strong> {{ precurement.start_date }}</p>
+      <p><strong>End Date:</strong> {{ precurement.end_date }}</p>
+      <p><strong>Tender Type:</strong> {{ precurement.get_tender_type_display }}</p>
 
-  {% if precurement.contractor.count > 0 %}
-  <p><strong>Contractors:</strong></p>
-  <ul>
-    {% for contractor in precurement.contractor.all %}
-    <li>{{ contractor.company_name }}</li>
-    {% endfor %}
-  </ul>
-  {% else %}
-  <p><strong>No Contractors Assigned</strong></p>
-  {% endif %}
+      {% if account.user_persona.persona_tier != 11 %}
+      {% if precurement.contractor.count > 0 %}
+      <div class="dropdown">
+        <p class="dropdown-toggle" id="contractorDropdown" role="button" data-bs-toggle="dropdown"
+          aria-expanded="false">
+          Contractor
+        </p>
+        <ul class="dropdown-menu" aria-labelledby="contractorDropdown">
+          {% for contractor in precurement.contractor.all %}
+          <li><a class="dropdown-item" href="#">{{ contractor.company_name }}</a></li>
+          {% endfor %}
+        </ul>
+      </div>
+      {% else %}
+      <p><strong>No Contractors Assigned</strong></p>
+      {% endif %}
+      {% endif %}
 
-  <p><strong>Description:</strong> {{ precurement.description }}</p>
-  <p><strong>Budget:</strong> {{ precurement.budget }}</p>
-  <p><strong>Priority:</strong> {{ precurement.get_priority_display }}</p>
-  {% if precurement.project_file %}
-  <p>Project File: <a href="{{ precurement.project_file.url }}" target="_blank">{{ precurement.project_file.name }}</a>
-  </p>
-  {% endif %}
-` {% if account.user_persona.persona_tier == 11 %}
-  <a href="#" class="btn btn-primary">Show interest</a>
-  {% endif %}
+      <p><strong>Description:</strong> {{ precurement.description }}</p>
+      <p><strong>Budget:</strong> {{ precurement.budget }}</p>
+      <p><strong>Priority:</strong> {{ precurement.get_priority_display }}</p>
+      {% if precurement.project_file %}
+      <p>Project File: <a href="{{ precurement.project_file.url }}" target="_blank">{{ precurement.project_file.name}}</a>
+      </p>
+      {% endif %}
+      {% if account.user_persona.persona_tier == 11 %}
+      <button class="btn btn-primary" onclick="showInterest()">Show Interest</button>
+      {% endif %}
+    </div>
+
+    <!-- Column 2: Tender Document Upload Form (Initially Hidden) -->
+    <div class="col-md-6 mt-4" id="tenderDocumentColumn" style="display: none;">
+      <h2 class="mb-2">Upload Tender Document</h2>
+      {% if existing_document %}
+      
+        <p class="mb-0"><strong>Existing Tender Document:</strong></p>
+        <a href="{{ existing_document.file.url }}" target="_blank">{{ existing_document.file.name }}</a>
+      
+      {% endif %}
+      <form class="mt-4"action="{% url 'precurement_detail' precurement.pk %}" method="post" enctype="multipart/form-data" >
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="btn btn-primary">Submit/Update Document</button>
+      </form>
+      
+    </div>
+  </div>
 </div>
+
+<script>
+  function showInterest() {
+    // Toggle the visibility of the tender document column
+    var tenderDocumentColumn = document.getElementById('tenderDocumentColumn');
+    tenderDocumentColumn.style.display = 'block';
+  }
+</script>
+
 {% endblock %}

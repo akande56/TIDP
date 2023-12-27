@@ -1,0 +1,112 @@
+{% extends 'new/base.html' %}
+{% load widget_tweaks %}
+
+
+{% block content %}
+<style>
+    /* Add a hover effect to the link */
+    .row-deck h5:hover {
+        color: #007bff;
+        /* Change the color to your desired hover color */
+        cursor: pointer;
+        /* Change the cursor to a pointer to indicate interactivity */
+        text-decoration: underline;
+        /* Add underline on hover, you can customize this */
+    }
+</style>
+<!-- Body: Body -->
+<div class="body d-flex py-3">
+    <div class="container-xxl">
+        <div class="row clearfix g-3">
+            
+            <div class="row clearfix g-3">
+                <div class="col-sm-12">
+                    <div class="card mb-3">
+                        <div class="card-body">
+                            <table id="myProjectTable" class="table table-hover align-middle mb-0" style="width:100%">
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Project Name</th>
+                                        <th>Category</th>
+                                        <th>Tender type</th>
+                                        <th>Start date</th>
+                                        <th>End date</th>
+                                        <th>View</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for precurement in procurements %}
+                                    <tr>
+                                        <td>
+                                            <span class="fw-bold"></span>
+                                        </td>
+                                        <td>
+                                            <span class="fw-bold ms-1"> {{precurement.title}} </span>
+                                        </td>
+                                        <td>
+                                            {{precurement.category}}
+
+                                        </td>
+                                        <td>
+                                            {{precurement.tender_type}}
+                                        </td>
+                                        <td>
+                                            <!-- <div class="btn-group" role="group" aria-label="Basic outlined example">
+                                                 <button type="button" class="btn btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#depedit"><i class="icofont-edit text-success"></i></button>
+                                               {% comment "" %}  <button type="button" class="btn btn-outline-secondary deleterow"><i class="icofont-ui-delete text-danger"></i></button>{% endcomment %}
+                                             </div> -->
+                                            {{precurement.start_date}}
+                                        </td>
+                                        <td>
+                                            {{precurement.end_date}}
+                                        </td>
+                                        <td>
+                                            <a href="{% url 'procurement_Filelist' precurement.pk %}">Files</a>
+                                        </td>
+                                    </tr>
+                                    {% endfor %}
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div><!-- Row End -->
+    </div>
+</div>
+
+
+
+<div class="modal fade" id="addUser" tabindex="-1" aria-labelledby="addUserLabel" aria-hidden="true">
+    <form method="post" action="{% url 'create_contractor_document' %}" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="modal-dialog modal-dialog-centered modal-md modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title fw-bold" id="add-group-modelLabel"> Upload Business Information</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label for="title" class="form-label">Title</label>
+                        {{ form.title|add_class:"form-control" }}
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="file" class="form-label">File</label>
+                        {{ form.file|add_class:"form-control" }}
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-secondary">Submit</button>
+                </div>
+            </div>
+        </div>
+    </form>
+
+</div>
+
+{% endblock content %}

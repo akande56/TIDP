@@ -12,6 +12,8 @@ from .views import (
     PrecurementDetailView,
     procurement_edit,
     procurement_delete,
+    procurement_list,
+    procurement_files,
 )
 
 urlpatterns = [
@@ -27,4 +29,6 @@ urlpatterns = [
     path('procurement/<int:pk>/', PrecurementDetailView.as_view(), name='precurement_detail'),
     path('procurement/<int:pk>/edit/', procurement_edit, name='precurement_edit'),
     path('delete/<int:pk>/', procurement_delete, name='precurement_delete'),
+    path('file/procurement_list', procurement_list, name='fprocurement_list'),
+    path('file/procurement_list/file_list/<int:pk>/', procurement_files, name='procurement_Filelist'),
 ]
