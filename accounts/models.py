@@ -97,3 +97,23 @@ class ContractorDocument(models.Model):
     def __str__(self):
         """Unicode representation of ContractorDocument."""
         return str(self.title)
+
+
+
+class Notification(models.Model):
+    """Model definition for Notification."""
+
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='notify_user')
+    message = models.TextField()
+    is_read = models.BooleanField(default=False)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        """Meta definition for Notification."""
+
+        verbose_name = 'Notification'
+        verbose_name_plural = 'Notifications'
+        ordering = ['-created_at']
+    def __str__(self):
+        """Unicode representation of Notification."""
+        return str('{} - {}'.format(self.user, self.created_at))

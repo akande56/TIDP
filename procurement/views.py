@@ -262,9 +262,19 @@ class PrecurementDetailView(View):
     template_name = 'new/precurement_detail.html'
 
     def get(self, request, pk):
-        precurement = get_object_or_404(Precurement, pk=pk)
-        contractor = get_object_or_404(Contractors, account__user=request.user)
-        existing_document = Procurement_tender_doc.objects.get(precurement=precurement, contractor=contractor)
+        precurement = get_object_or_404(Precurement, pk=pk)    
+        try:
+            contractor = Contractors.objects.get(account__user=request.user)
+        except Contractors.DoesNotExist:
+            contractor = None
+        if contractor:
+            try:
+                # contractor = get_object_or_404(Contractors, account__user=request.user)
+                existing_document = Procurement_tender_doc.objects.get(precurement=precurement, contractor=contractor)
+            except Procurement_tender_doc.DoesNotExist or Contractors.DoesNotExist:
+                existing_document = None
+        else:
+            existing_document = None
         form = TenderDocumentForm()
         return render(request, self.template_name, {'precurement': precurement, 'form': form, 'existing_document': existing_document})
     
@@ -295,14 +305,16 @@ class PrecurementDetailView(View):
 
 def procurement_edit(request, pk):
     precurement = get_object_or_404(Precurement, pk=pk)
-    
+    print('instance precument pk:')
+    print(precurement.pk)
     if request.method == 'POST':
+        print('post called...')
         form = PrecurmentEditForm(request.POST, request.FILES, instance=precurement)
         if form.is_valid():
             precurement = form.save(commit=True)
         
             tender_type = precurement.tender_type
-
+            
             # Send notification to users based on the tender type, i.e., update/create Precurment_contractors
             if tender_type == 'open tender':
                 recipients = User.objects.all()  
@@ -321,7 +333,7 @@ def procurement_edit(request, pk):
                 exclude_list = [con.account.user for con in exclude]
                 recipients = User.objects.exclude(pk__in=[instance.pk for instance in exclude_list])
             precurement.save()
-            print(precurement.contractor)
+            
 
             # Update or create Precurment_contractors objects for the recipients
             for recipient in recipients:
@@ -331,6 +343,8 @@ def procurement_edit(request, pk):
                 )
 
             messages.success(request, "Procurement updated successfully!")
+            print('precurment deatil end, pk:....')
+            print(precurement)
             return redirect('precurement_detail', pk=precurement.pk)
     else:
         form = PrecurmentEditForm(instance=precurement)

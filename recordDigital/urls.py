@@ -28,13 +28,13 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', home, name="home"),
     path('', include("home.urls")),
-    path('procument/', include("procurement.urls")),
+    path('procurement/', include("procurement.urls")),
     path('account/', include("accounts.urls")),
     path('meet/', include("meeting.urls")),
     path('logout/', LogoutView.as_view(), name='logout'),
     path('correspondance/', include("correspondance.urls")),
     path('ckeditor', include("ckeditor_uploader.urls")),    
-    # path('__debug__/', include('debug_toolbar.urls')),    
+    path('__debug__/', include('debug_toolbar.urls')),    
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 # path('', include('pwa.urls')),
