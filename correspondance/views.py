@@ -1,11 +1,11 @@
-import imp
+from datetime import datetime
 from pyexpat import model
 from venv import create
 from django import forms
-from django.shortcuts import redirect, render
+from django.shortcuts import redirect, render, get_object_or_404
 from django.contrib.contenttypes.models import ContentType
 from django.views.generic import View
-from django.http import response
+from django.http import response, JsonResponse
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db import transaction
 from accounts.models import Account
@@ -61,8 +61,6 @@ class Correspondance(LoginRequiredMixin, View):
             'value': 2,
             "internal": 2,
         }
-        print('ssssss')
-        print(account_id)
         if account.user_persona.persona_tier <= 5:
             context['unread'] = Routing.objects.filter(
                 send_to=account, viewed=False, reciever_stage='Done').count()
@@ -98,8 +96,10 @@ class CorrespondanceDetails(LoginRequiredMixin, View):
 
     def get(self, request, id, **kwargs):
         account = Account.objects.get(user=request.user)
-        route = Routing.objects.get(id=id)
+        route   = Routing.objects.get(id=id)
         folders = Folder_Content.objects.filter(folder=route.folder)
+        files = File.objects.filter(folder_content__in=folders)
+        print(files)
 
         form_initials = {
             "content_type": route.get_content_type,
@@ -110,6 +110,7 @@ class CorrespondanceDetails(LoginRequiredMixin, View):
         context = {
             'memo': route,
             'folders': folders,
+            'files': files,
             'comment_form': form
         }
         return render(request, 'new/message_details.html', context)
@@ -172,37 +173,46 @@ class NewMail(LoginRequiredMixin, View):
             form.fields['send_to'].queryset = my_department
         else:
             form = None
-
+        
         context = {
             'form': form,
             'upload_form': UploadFileForm,
             'value': 2,
             "internal": 1,
         }
-
+        
+        attachments = request.session.get('attachment', [])
+        if attachments:
+            request.session.pop('attachment')
         return render(request, self.template_name, context)
 
     def post(self, request, **kwargs):
         print('under post......')
+        print(request.session.get('attachment', []))
+    
         form = InternalMemoForm(request.POST or None)
         account = Account.objects.get(user=request.user)
         upload_form = UploadFileForm(request.POST, request.FILES)
+    
         if upload_form.is_valid():
-            context = {
-                'form': form,
-                'upload_form': UploadFileForm
-            }
-            response = TemplateResponse(
-                request, context=context, template=self.template_name)
             instance = upload_form.save()
             instance.name = request.FILES['media'].name
             instance.save()
 
-            try:
-                request.session['attachment'] += [instance.media.path, instance.id]
-            except KeyError:
-                request.session['attachment'] = [
-                    instance.media.path, instance.id]
+            attachments = request.session.get('attachment', [])
+            timestamp = datetime.now().timestamp()
+            attachments.append({'path': instance.media.url, 'id': instance.id, 'timestamp': timestamp})
+            request.session['attachment'] = attachments
+            request.session.modified = True
+
+            print(request.session['attachment'])
+
+            context = {
+                'form': form,
+                'upload_form': UploadFileForm,
+            }
+
+            response = TemplateResponse(request, context=context, template=self.template_name)
             return response
 
         if form.is_valid():
@@ -314,20 +324,37 @@ class NewMail(LoginRequiredMixin, View):
                     pass
                 try:
                     for item in request.session['attachment']:
-                        attachments = (request.session['attachment'])
-                        for i in range(1, len(attachments), 2):
-                            file = File.objects.get(
-                                id=attachments[i]
+                        # attachments = (request.session['attachment'])
+                        # for i in range(1, len(attachments), 2):
+                            # print('moooo')
+                            # print(i)
+                        print('file')
+                        file = File.objects.get(
+                                id=item['id']
                             )
-                            file.folder_content = f_content
-                            file.save()
-
-                        del request.session['attachment']
-                        request.session.modified = True
+                        file.folder_content = f_content
+                        print('f_contne')
+                        print(file.folder_content)
+                        file.save()
+                        print('file:')
+                        print('gggggggggggggg')
+                        print(file.folder_content)
+                    del request.session['attachment']
+                    request.session.modified = True
                 except:
                     pass
             messages.success(request, 'Memo Send Successfully')
         return redirect('correspondance')
+
+
+
+def delete_attachment(request, file_id):
+    file_instance = get_object_or_404(File, id=file_id)
+    file_instance.delete()
+    if 'attachment' in request.session:
+        request.session['attachment'] = [item for item in request.session['attachment'] if item['id'] != file_id]
+    return JsonResponse({'status': 'success'})
+
 
 
 class ProtocolView(LoginRequiredMixin, View):

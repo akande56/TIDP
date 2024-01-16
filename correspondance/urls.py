@@ -9,6 +9,7 @@ from .views import (
    ProtocolViewMemo,
    SenderProtocolFiles,
    CorrespondanceDetails,
+   delete_attachment,
 )
 
 urlpatterns = [
@@ -21,5 +22,6 @@ urlpatterns = [
     path('protocol/view', ProtocolView.as_view(), name='protocol_view'),
     path('protocol/<int:id>/view/', ProtocolViewMemo.as_view(), name='protocol_view_memo'),
     path('download/<int:id>/', downloadfile, name='download_file'),
+    path('delete_attachment/<int:file_id>/', delete_attachment, name='delete_attachment'),
 ]
 

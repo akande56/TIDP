@@ -16,7 +16,6 @@ PERSONA = (
     (9, 'Tier 9 Registry Officer'),
     (10, 'Tier 10 ICT Personal'),
     (11, 'Tier 11 Contractors'),
-
 )
 
 # Create your models here.

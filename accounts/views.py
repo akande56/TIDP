@@ -1,11 +1,18 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
+from django.contrib.auth import get_user_model
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.views import PasswordChangeView
 from django.db import transaction
 from django.http import JsonResponse
-
+from django.urls import reverse_lazy
+from django.contrib.messages.views import SuccessMessageMixin
+from django.contrib.auth.views import (
+    PasswordResetView, 
+)
+from django.views import View
 from accounts.models import (
     Account, 
     UserPersona, 
@@ -15,6 +22,8 @@ from accounts.models import (
 from .forms import (
     # UserRegistrationForm,
     UserLoginForm,
+    ChangePasswordForm,
+    # CustomPasswordResetForm
 )
 
 
@@ -60,3 +69,43 @@ def mark_notifications_as_read(request):
     user = request.user
     Notification.objects.filter(user=user, is_read=False).update(is_read=True)
     return JsonResponse({'status': 'success'})
+
+
+
+class ChangePasswordView(SuccessMessageMixin,PasswordChangeView):
+    form_class = ChangePasswordForm
+    template_name = 'new/change_password.html'  # Create this template
+    success_url = reverse_lazy('home')
+    success_message = "Password changed successfully"
+
+
+# class CustomPasswordResetView(View):
+#     template_name = 'new/custom_password_reset.html'  # Update with your template
+
+#     def get(self, request):
+#         form = CustomPasswordResetForm()
+#         return render(request, self.template_name, {'form': form})
+
+#     def post(self, request):
+#         form = CustomPasswordResetForm(request.POST)
+
+#         if form.is_valid():
+#             username = form.cleaned_data['username']
+#             new_password = form.cleaned_data['new_password']
+
+#             # Retrieve the user
+#             User = get_user_model()
+#             user = User.objects.get(username=username)
+
+#             # Update the password
+#             user.set_password(new_password)
+#             user.save()
+
+#             # Log in the user if needed
+#             user = authenticate(request, username=username, password=new_password)
+#             if user is not None:
+#                 login(request, user)
+
+#             return reverse_lazy('login')  # Update with your success URL
+
+#         return render(request, self.template_name, {'form': form})

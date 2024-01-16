@@ -1,4 +1,4 @@
-
+{% load static %}
 
 <!DOCTYPE html>
 <html lang="zxx">
@@ -11,23 +11,23 @@
     <meta name="description" content="">
     <title>RecordDigita</title>
     <!--favicon-->
-    <link rel="shortcut icon" type="image/png" href="/static/landing/images/favicon.png">
+    <link rel="shortcut icon" type="image/png" href="{% static 'landing/images/favicon.png' %}">
     <!--bootstrap css-->
-    <link rel="stylesheet" type="text/css" href="/static/landing/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="{% static 'landing/css/bootstrap.min.css' %}">
     <!--owl carousel css-->
-    <link rel="stylesheet" type="text/css" href="/static/landing/css/owl.carousel.min.css">
+    <link rel="stylesheet" type="text/css" href="{% static 'landing/css/owl.carousel.min.css' %}">
     <!--magnific popup css-->
-    <link rel="stylesheet" type="text/css" href="/static/landing/css/magnific-popup.css">
+    <link rel="stylesheet" type="text/css" href="{% static 'landing/css/magnific-popup.css' %}">
     <!--font awesome css-->
-    <link rel="stylesheet" type="text/css" href="/static/landing/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="{% static 'landing/css/font-awesome.min.css' %}">
     <!--icofont css-->
-    <link rel="stylesheet" type="text/css" href="/static/landing/css/icofont.min.css">
+    <link rel="stylesheet" type="text/css" href="{% static 'landing/css/icofont.min.css' %}">
     <!--animate css-->
-    <link rel="stylesheet" type="text/css" href="/static/landing/css/animate.css">
+    <link rel="stylesheet" type="text/css" href="{% static 'landing/css/animate.css' %}">
     <!--main css-->
-    <link rel="stylesheet" type="text/css" href="/static/landing/css/style.css">
+    <link rel="stylesheet" type="text/css" href="{% static 'landing/css/style.css' %}">
     <!--responsive css-->
-    <link rel="stylesheet" type="text/css" href="/static/landing/css/responsive.css">
+    <link rel="stylesheet" type="text/css" href="{% static 'landing/css/responsive.css' %}">
 </head>
 
 <body>
@@ -39,7 +39,7 @@
                 <nav class="navbar navbar-expand-lg">
                     <div class="container">
                         <!--logo-->
-                        <a class="logo" href="#"><img src="/static/images/favicon.png" alt="logo" /></a>
+                        <a class="logo" href="#"><img src="{% static 'images/favicon.png' %}" alt="logo" /></a>
                         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarContent" aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation">
                             <span class="icon-bar"><i class="icofont-navigation-menu"></i></span>
                         </button>
@@ -79,6 +79,19 @@
     </header>
     <!--end header-->
     <!--start hero area-->
+    {% if messages %}
+            {% for message in messages %}
+                {% if message.tags == "danger" %}
+                    <div class="alert alert-danger" role="alert">
+                        {{ message }} 
+                    </div>
+                {% else %}
+                    <div class="alert alert-success" role="alert">
+                        {{ message }} 
+                    </div>
+                {% endif %}
+            {% endfor %}
+        {% endif %}
     <section id="hero-area" class="hero-three" data-scroll-index="0">
         <div class="slider owl-carousel">
             <!--start slide single-->
@@ -87,7 +100,7 @@
                     <div class="row">
                         <div class="col-md-5">
                             <div class="caption-img">
-                                <img src="/static/images/system.png" class="img-fluid" alt="image">
+                                <img src="{% static 'images/system.png' %}" class="img-fluid" alt="image">
                             </div>
                         </div>
                         <div class="col-md-7">
@@ -208,7 +221,7 @@
                 <div class="col-lg-6 col-md-4">
                     <div class="about-img bg d-table">
                         <div class="align-middle d-table-cell">
-                            <img src="/static/images/system.png" class="img-fluid animation-jump" alt="image">
+                            <img src="{% static 'images/system.png' %}" class="img-fluid animation-jump" alt="image">
                         </div>
                     </div>
                 </div>
@@ -226,7 +239,7 @@
                     <!--start footer single-->
                     <div class="col-lg-3 col-md-6">
                         <div class="footer-single">
-                            <img src="/static/img/trans.png" class="img-fluid" alt="" />
+                            <img src="{% static 'img/trans.png' %}" class="img-fluid" alt="" />
                             
                         </div>
                     </div>
@@ -283,23 +296,23 @@
     </footer>
     <!--end footer-->
     <!--jQuery js-->
-    <script src="/static/landing/js/jquery-3.3.1.min.js"></script>
+    <script src="{% static 'landing/js/jquery-3.3.1.min.js' %}"></script>
     <!--proper js-->
-    <script src="/static/landing/js/popper.min.js"></script>
+    <script src="{% static 'landing/js/popper.min.js' %}"></script>
     <!--bootstrap js-->
-    <script src="/static/landing/js/bootstrap.min.js"></script>
+    <script src="{% static 'landing/js/bootstrap.min.js' %}"></script>
     <!--magnic popup js-->
-    <script src="/static/landing/js/magnific-popup.min.js"></script>
+    <script src="{% static 'landing/js/magnific-popup.min.js' %}"></script>
     <!--owl carousel js-->
-    <script src="/static/landing/js/owl.carousel.min.js"></script>
+    <script src="{% static 'landing/js/owl.carousel.min.js' %}"></script>
     <!--scrollIt js-->
-    <script src="/static/landing/js/scrollIt.min.js"></script>
+    <script src="{% static 'landing/js/scrollIt.min.js' %}"></script>
     <!--contact js-->
-    <script src="/static/landing/js/contact.js"></script>
+    <script src="{% static 'landing/js/contact.js' %}"></script>
     <!--validator js-->
-    <script src="/static/landing/js/validator.min.js"></script>
+    <script src="{% static 'landing/js/validator.min.js' %}"></script>
     <!--main js-->
-    <script src="/static/landing/js/custom.js"></script>
+    <script src="{% static 'landing/js/custom.js' %}"></script>
 </body>
 
 

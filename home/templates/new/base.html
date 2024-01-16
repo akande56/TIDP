@@ -1,3 +1,4 @@
+{% load static %}
 <!doctype html>
 <html class="no-js" lang="en" dir="ltr">
 
@@ -14,9 +15,10 @@
     <!-- project css file  -->
     {% block styles %}{% endblock styles %}
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha384-GLhlTQ8iN17SqbEhlZ3Pvu9HqIByQ8FCSsNBIFPz9Obt/9eF5oJQ5I626aRdI1Hf" crossorigin="anonymous">
-    <link rel="stylesheet" href="/static/css/my-task.style.min.css">
-    <link rel="stylesheet" href="/static/dashboard/fonts/fontawesome.css">
-    <link rel="stylesheet" href="/static/css/custom.css">
+    <link rel="stylesheet" href="{% static 'css/my-task.style.min.css' %}">
+    <link rel="stylesheet" href="{% static 'dashboard/fonts/fontawesome.css' %}">
+    <link rel="stylesheet" href="{% static 'css/custom.css' %}">
+    <link rel="stylesheet" href="{% static 'landing/css/font-awesome.min.css' %}">
     
     
 </head>
@@ -35,9 +37,9 @@
                     <!-- header rightbar icon -->
                     <div class="h-right d-flex align-items-center mr-5 mr-lg-0 order-1">
                         <div class="d-flex">
-                            <a class="nav-link text-primary collapsed" href="#" title="Get Help">
+                            <!-- <a class="nav-link text-primary collapsed" href="#" title="Get Help">
                                 <i class="icofont-info-square fs-5"></i>
-                            </a>
+                            </a> -->
                             <div class="avatar-list avatar-list-stacked px-3">
                                 <span class="avatar rounded-circle text-center pointer" data-bs-toggle="modal" data-bs-target="#addUser"><i class="icofont-ui-add"></i></span>
                             </div>
@@ -177,13 +179,17 @@
 </div>
 
 <!-- Jquery Core Js -->
-<script src="/static/bundles/libscripts.bundle.js"></script>
 
-<!-- Plugin Js-->
-<script src="/static/bundles/apexcharts.bundle.js"></script>
 
 <!-- Jquery Page Js -->
-<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<!-- <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script> -->
+<script src="{% static 'landing/js/jquery-3.3.1.min.js' %}"></script>
+<script src="{% static 'js/popper.min.js' %}"></script>
+<script src="{% static 'js/bootstrap.min.js' %}"></script>
+<script src="{% static 'bundles/libscripts.bundle.js' %}"></script>
+
+<!-- Plugin Js-->
+<script src="{% static 'bundles/apexcharts.bundle.js' %}"></script>
 <script>
     function fetchNotifications() {
         $.ajax({

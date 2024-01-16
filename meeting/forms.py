@@ -17,4 +17,8 @@ class SetUpMeetingFor(forms.ModelForm):
 class NewMeetingForm(forms.ModelForm):
     class Meta:
         model = Schedule_Meeting
-        exclude = ('id', "attachment", "draft", "minutes_of_meeting", 'done', 'scheduled_by')
+        exclude = ('id', 'draft', 'minutes_of_meeting', 'done', 'scheduled_by', 'status')
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['attachment'].required = False

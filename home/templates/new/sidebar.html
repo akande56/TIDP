@@ -1,7 +1,7 @@
     <!-- sidebar -->
     <div class="sidebar px-4 py-4 py-md-5 me-0">
         <div class="d-flex flex-column h-100">
-            <a href="index.html" class="mb-0 brand-icon">
+            <a href="#" class="mb-0 brand-icon">
                 <span class="logo-icon">
                     <svg  width="35" height="35" fill="currentColor" class="bi bi-clipboard-check" viewBox="0 0 16 16">
                         <path fill-rule="evenodd" d="M10.854 7.146a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 1 1 .708-.708L7.5 9.793l2.646-2.647a.5.5 0 0 1 .708 0z"/>
@@ -27,7 +27,7 @@
                     <a class="m-link {% if value is 2 %}active{% endif %}"  data-bs-toggle="collapse" data-bs-target="#correspondance" href="{% url 'correspondance' %}">
                         <i class="icofont-briefcase"></i><span> Correspondance</span> <span class="arrow icofont-dotted-down ms-auto text-end fs-5"></span></a>
                         <ul class="sub-menu collapse {% if value is 2 %}show {% endif %}" id="correspondance">
-                            <li><a class="ms-link {% if value is 2 and internal is 1%}active{% endif %}" href="{% url 'new_mail' %}"> <span>New Mail</span></a></li>
+                            <li><a class="ms-link {% if value is 2 and internal is 1%}active{% endif %}" href="{% url 'new_mail' %}"> <span>New Memo</span></a></li>
                             <li><a class="ms-link {% if value is 2 and internal is 2%}active{% endif %}" href="{% url 'correspondance' %}"> <span>Memos/Correspondance</span></a></li>
                         </ul>
                 </li>
@@ -69,10 +69,11 @@
                     </li>
                 {% endif %}            
                 <li class="collapsed">
-                    <a class="m-link" data-bs-toggle="collapse" data-bs-target="#menu-Componentsone" href="#"><i
+                    <a class="m-link" data-bs-target="#menu-Componentsone" href="{% url 'change_password' %}"><i
                             class="icofont-ui-calculator"></i> <span>Accounts</span> <span class="arrow ms-auto text-end fs-5"></span></a>
                     <!-- Menu: Sub menu ul -->
                 </li>
+                
 
             </ul>
 

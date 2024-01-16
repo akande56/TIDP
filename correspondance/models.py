@@ -38,7 +38,7 @@ class Folder_Content(models.Model):
     created = models.DateTimeField(auto_now_add=True)
 
 class File(models.Model):
-    media = models.FileField(upload_to="file/")
+    media = models.ImageField(upload_to="memo_file/") #previoiusly file field
     folder_content = models.ForeignKey(Folder_Content, blank=True, null=True, on_delete=models.CASCADE)
     name = models.CharField(max_length=1000, blank=True, null=True)
 

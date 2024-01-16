@@ -1,5 +1,6 @@
 from django import forms
-
+from django.contrib.auth.models import User
+from django.contrib.auth.forms import PasswordChangeForm
 from accounts.models import Account, UserPersona, Contractors
 
 
@@ -51,3 +52,12 @@ class CreateUserForm(forms.Form):
         )
 
 
+
+class ChangePasswordForm(PasswordChangeForm):
+    class Meta:
+        model = User  # Your user model
+
+
+# class CustomPasswordResetForm(forms.Form):
+#     username = forms.CharField(max_length=150, required=True)
+#     new_password = forms.CharField(widget=forms.PasswordInput, required=True)
