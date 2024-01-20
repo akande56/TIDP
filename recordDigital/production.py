@@ -70,7 +70,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'widget_tweaks',
     'ckeditor',
-    'ckeditor_uploader',
+    # 'ckeditor_uploader',
     "cloudinary",
 ]
 
@@ -286,29 +286,29 @@ LOGIN_REDIRECT_URL = '/dashboard'
 
 
 CKEDITOR_IMAGE_BACKEND = "pillow"
-CKEDITOR_UPLOAD_SLUGIFY_FILENAME = True
+# CKEDITOR_UPLOAD_SLUGIFY_FILENAME = True
 
 CKEDITOR_UPLOAD_PATH = 'uploads/'
-CKEDITOR_ALLOW_NONIMAGE_FILES = True
-CKEDITOR_JQUERY_URL = 'https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js'
-CKEDITOR_CONFIGS = {
-    'default': {
-        'toolbar': (
-            ['Cut', 'Copy', 'Paste', 'PasteText', 'PasteFromWord', '-', 'Print', 'SpellChecker', 'Scayt'],
-            ['Undo', 'Redo', '-', 'Find', 'Replace', '-', 'SelectAll', 'RemoveFormat'],
-            ['Bold', 'Italic', 'Underline', 'Strike', '-', 'Subscript', 'Superscript'],
-            ['NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', 'Blockquote'],
-            ['JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock'],
-            ['Link', 'Unlink', 'Anchor'],
-            ['Image', 'Flash', 'Table', 'HorizontalRule', 'Smiley', 'SpecialChar', 'PageBreak'],
-            ['Styles', 'Format', 'Font', 'FontSize'],
-            ['TextColor', 'BGColor'],
-        ),
-        'height': '100%',
-        'width': '100%',
-        'toolbarCanCollapse': False,
-    }
-}
+# CKEDITOR_ALLOW_NONIMAGE_FILES = True
+# CKEDITOR_JQUERY_URL = 'https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js'
+# CKEDITOR_CONFIGS = {
+#     'default': {
+#         'toolbar': (
+#             ['Cut', 'Copy', 'Paste', 'PasteText', 'PasteFromWord', '-', 'Print', 'SpellChecker', 'Scayt'],
+#             ['Undo', 'Redo', '-', 'Find', 'Replace', '-', 'SelectAll', 'RemoveFormat'],
+#             ['Bold', 'Italic', 'Underline', 'Strike', '-', 'Subscript', 'Superscript'],
+#             ['NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', 'Blockquote'],
+#             ['JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock'],
+#             ['Link', 'Unlink', 'Anchor'],
+#             ['Image', 'Flash', 'Table', 'HorizontalRule', 'Smiley', 'SpecialChar', 'PageBreak'],
+#             ['Styles', 'Format', 'Font', 'FontSize'],
+#             ['TextColor', 'BGColor'],
+#         ),
+#         'height': '100%',
+#         'width': '100%',
+#         'toolbarCanCollapse': False,
+#     }
+# }
 
 
 # PWA_SERVICE_WORKER_PATH = os.path.join(
