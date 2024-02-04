@@ -11,48 +11,46 @@
             <div class="col-md-12">
                 <div class="card mb-3">
                     <div class="card-header py-3 d-flex justify-content-between bg-transparent border-bottom-0">
-                        <h6 class="mb-0 fw-bold ">Compose A New Memo</h6> 
+                        <h6 class="mb-0 fw-bold">Compose A New Memo</h6>
                     </div>
                     <div class="card-body">
-                        <form id="advanced-form" method="post" data-parsley-validate >{% csrf_token %}
+                        <form id="combined-form" method="post" data-parsley-validate enctype="multipart/form-data">
+                            {% csrf_token %}
                             <div class="row g-3 align-items-center">
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="text-input3" class="form-label">Title </label>
-                                        {% render_field form.title class="form-control"  %}
+                                        <label for="text-input3" class="form-label">Title</label>
+                                        {% render_field form.title class="form-control" %}
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="text-input3" class="form-label">Send To</label>
-                                        {% render_field form.send_to class="form-control"  %}
+                                        {% render_field form.send_to class="form-control" %}
                                     </div>
-                                </div>  
-                                <label class="form-label" for="exampleInputEmail4">Content</label>
-                                    {% render_field form.content class="form-control" id="exampleInputEmail1" placeholder="Subject" %}
-                            </div> </br>
-                            <a href="#!" data-bs-toggle="modal" data-bs-target="#pdfUPLOAD" data-bs-toggle="tooltip" data-bs-placement="top" title="Attach files" class="text-body">
-                                Attachment <i class="fas fa-paperclip"></i>
-                            </a> 
-                            {% for item in request.session.attachment %}
-    {% if not forloop.counter|divisibleby:2 %}
-        <li>
-            <a href="{{ item.path }}" title="View Attachment" class="text-body">{{ item.path }}</a>
-            <button type="button" class="btn btn-danger delete-attachment" data-file-id="{{ item.id }}" title="Delete Attachment" onclick="handleDeleteButtonClick({{ item.id }})">
-                <i class="fas fa-trash"></i> Delete
-            </button>
-            
-        </li>
-    {% endif %}
-{% endfor %}
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label class="form-label" for="exampleInputEmail4">Urgent</label>
-                                {% render_field form.urgent %}
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label class="form-label" for="exampleInputEmail4">Content</label>
+                                        {% render_field form.content class="form-control" id="exampleInputEmail1" placeholder="Subject" %}
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label class="form-label" for="exampleInputEmail4">Attachment</label>
+                                        <input type="file" name="media" id="fileInput" style="display: none;" multiple/>
+                                        <button type="button" class="btn btn-secondary" onclick="document.getElementById('fileInput').click();">Add File</button>
+                                        <ul id="selectedFilesList"></ul>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="form-label" for="exampleInputEmail4">Urgent</label>
+                                        {% render_field form.urgent %}
+                                    </div>
+                                </div>
                             </div>
-                        </div>
-                    </br>   
-                             <button type="submit" class="btn btn-primary">Send</button>
+                            <button type="submit" class="btn btn-primary">Send</button>
                         </form>
                     </div>
                 </div>
@@ -65,26 +63,6 @@
 
 
 
-<div class="modal fade" id="pdfUPLOAD" tabindex="-1" aria-labelledby="addUserLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-lg">
-    <div class="modal-content">
-        <div class="modal-header">
-            <h5 class="modal-title  fw-bold" id="addUserLabel">Attach a File</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-            <form method="post" enctype="multipart/form-data"> {% csrf_token %}
-            <div class="inviteby_email">
-                <div class="input-group mb-2">
-                    {% render_field upload_form.media class="form-control" id="exampleInputEmail1" %}
-                    <button class="btn btn-dark" type="submit" id="button-addon2">Upload</button>
-                </div>
-            </div>
-            <form>
-        </div>
-    </div>
-    </div>
-</div> 
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 <script>
     $(document).ready(function() {
@@ -114,6 +92,50 @@
         });
     });
 </script>
+<script>
+    // JavaScript to update the file list when a new file is selected
+    document.getElementById('fileInput').addEventListener('change', function (e) {
+        var fileList = document.getElementById('selectedFilesList');
+        for (var i = 0; i < e.target.files.length; i++) {
+            var listItem = document.createElement('li');
+            listItem.textContent = e.target.files[i].name;
+            listItem.file = e.target.files[i];
+            fileList.appendChild(listItem);
+        }
+    });
+
+    // JavaScript to handle form submission
+    document.getElementById('combined-form').addEventListener('submit', function (event) {
+        // Create a FormData object
+        var formData = new FormData(document.getElementById('combined-form'));
+
+        // Get all selected files and append them to the 'media' field
+        var fileList = document.getElementById('selectedFilesList');
+        for (var i = 0; i < fileList.children.length; i++) {
+            console.log(i)
+            formData.append('media', fileList.children[i].file);
+            console.log(fileList.children[i].file)
+        }
+
+        // Log the FormData object and form field values to the console
+        console.log('Form Data just before submission:', formData);
+
+        // Log form field values
+        var formFieldValues = {};
+        for (var pair of formData.entries()) {
+            formFieldValues[pair[0]] = pair[1];
+        }
+        console.log('Form Field Values:', formFieldValues);
+
+        // Uncomment the line below to submit the form to the server
+        document.getElementById('combined-form').submit();
+
+        // Prevent default form submission for demonstration purposes
+        // event.preventDefault();
+    });
+</script>
+
+
 {% endblock content %}
 
 

@@ -21,7 +21,8 @@ from .forms import (
     InternalMemoForm,
     MinuteOnMemoForm,
     UploadFileForm,
-    CommentForm
+    CommentForm,
+    CombineInternalMemoForm_UploadForm,
 )
 import random
 import string
@@ -98,7 +99,10 @@ class CorrespondanceDetails(LoginRequiredMixin, View):
         account = Account.objects.get(user=request.user)
         route   = Routing.objects.get(id=id)
         folders = Folder_Content.objects.filter(folder=route.folder)
+        print('folders2..')
+        print(folders)
         files = File.objects.filter(folder_content__in=folders)
+        print('files..')
         print(files)
 
         form_initials = {
@@ -139,7 +143,7 @@ class NewMail(LoginRequiredMixin, View):
 
     def get(self, request, **kwargs):
         account = Account.objects.get(user=request.user)
-        form = InternalMemoForm()
+        form = CombineInternalMemoForm_UploadForm()
         # User Persona is Minister/DG
         if account.user_persona.persona_tier == 1:
             exclude_my_department = Unit.objects.exclude(
@@ -176,66 +180,45 @@ class NewMail(LoginRequiredMixin, View):
         
         context = {
             'form': form,
-            'upload_form': UploadFileForm,
             'value': 2,
             "internal": 1,
         }
         
-        attachments = request.session.get('attachment', [])
-        if attachments:
-            request.session.pop('attachment')
         return render(request, self.template_name, context)
 
     def post(self, request, **kwargs):
-        print('under post......')
-        print(request.session.get('attachment', []))
-    
-        form = InternalMemoForm(request.POST or None)
-        account = Account.objects.get(user=request.user)
-        upload_form = UploadFileForm(request.POST, request.FILES)
-    
-        if upload_form.is_valid():
-            instance = upload_form.save()
-            instance.name = request.FILES['media'].name
-            instance.save()
-
-            attachments = request.session.get('attachment', [])
-            timestamp = datetime.now().timestamp()
-            attachments.append({'path': instance.media.url, 'id': instance.id, 'timestamp': timestamp})
-            request.session['attachment'] = attachments
-            request.session.modified = True
-
-            print(request.session['attachment'])
-
-            context = {
-                'form': form,
-                'upload_form': UploadFileForm,
-            }
-
-            response = TemplateResponse(request, context=context, template=self.template_name)
-            return response
-
+        form = CombineInternalMemoForm_UploadForm(request.POST, request.FILES)
         if form.is_valid():
-            print('post request initiated....')
+            account = Account.objects.get(user=request.user)
+            files_list = request.FILES.getlist('media')
+            print('files list...')
+            print(files_list)
+            print('2nd file ist')
+            print(request.FILES)
             with transaction.atomic():
-                folder = form.save(commit=False)
+                # Create a new Folder instance
+                folder = Folder(
+                    title=form.cleaned_data["title"],
+                    urgent=form.cleaned_data["urgent"]
+                )
+                
                 identifier = ''.join(random.choice(
                     string.ascii_uppercase + string.ascii_lowercase + string.digits) for _ in range(8))
                 folder.unique_identifier = identifier
                 folder.created_by = account
                 folder.draft = True
                 folder.save()
+
+                # Create Folder_Content instance
                 f_content = Folder_Content.objects.create(
                     folder=folder,
                     created_by=account,
-                    content=form.cleaned_data["content"],
+                    content=form.cleaned_data['content'],
                     title=folder.title
                 )
+
                 # Get the current unit
                 current_unit = Unit.objects.get(users=account)
-                # Get Curremt Unit and Check if there is clearical officer then forward to be ecleared int he registry else send direct
-                # current_user = current_unit.users.get(user_persona__persona_tier=6)
-                # print('{}, {}'.format(send_to, account))
                 current_user = current_unit.users.filter(
                     Q(user_persona__persona_tier=1) |
                     Q(user_persona__persona_tier=2) |
@@ -243,24 +226,15 @@ class NewMail(LoginRequiredMixin, View):
                     Q(user_persona__persona_tier=4) |
                     Q(user_persona__persona_tier=5)
                 ).first()
-                print('Current Users units:')
-                print(current_user)
+
                 if current_user.user_persona.persona_tier <= 5:
-                    print('tire less than 5....')
                     send_to_user = current_unit.users.filter(
                         Q(user_persona__persona_tier=6)
                     ).first()
                     
-                    print('chosen selected recipient:')
-                    print(form.cleaned_data['send_to'])
-
                     send_to_unit = form.cleaned_data['send_to']
-                    print(send_to_unit.users.filter(
-                        user_persona__persona_tier=1).count())
-                    # Unit has a clearical office
+
                     if current_unit.users.filter(user_persona__persona_tier=6).count():
-                        print('count before creating routing...')
-                        print(current_unit.users.filter(user_persona__persona_tier=6).count())
                         Routing.objects.create(
                             send_to=send_to_user,
                             folder=folder,
@@ -269,7 +243,6 @@ class NewMail(LoginRequiredMixin, View):
                             sender_stage='Clearing',
                             initiated_unit=current_unit
                         )
-                    # Current unit don't have clearical officer we send to intended unit clearifcal officer
                     elif send_to_unit.users.filter(user_persona__persona_tier=6).count():
                         Routing.objects.create(
                             send_to=send_to_user,
@@ -281,8 +254,6 @@ class NewMail(LoginRequiredMixin, View):
                             initiated_unit=current_unit
                         )
                     elif send_to_unit.users.filter(user_persona__persona_tier=7).count():
-                        print(send_to_unit.users.filter(
-                            user_persona__persona_tier=7))
                         Routing.objects.create(
                             send_to=send_to_user,
                             folder=folder,
@@ -320,30 +291,23 @@ class NewMail(LoginRequiredMixin, View):
                         reciever_stage='Done',
                         initiated_unit=current_unit
                     )
-                else:
-                    pass
+
+                # Create File instances
                 try:
-                    for item in request.session['attachment']:
-                        # attachments = (request.session['attachment'])
-                        # for i in range(1, len(attachments), 2):
-                            # print('moooo')
-                            # print(i)
-                        print('file')
-                        file = File.objects.get(
-                                id=item['id']
-                            )
-                        file.folder_content = f_content
-                        print('f_contne')
-                        print(file.folder_content)
-                        file.save()
-                        print('file:')
-                        print('gggggggggggggg')
-                        print(file.folder_content)
-                    del request.session['attachment']
-                    request.session.modified = True
+                    for file in files_list:
+                        f = File.objects.create(
+                            media=file,
+                            folder_content=f_content
+                        )
+                        f.save()
+                        print(f)
                 except:
                     pass
-            messages.success(request, 'Memo Send Successfully')
+
+            messages.success(request, 'Memo Sent Successfully')
+        else:
+            print(form.errors)
+
         return redirect('correspondance')
 
 
