@@ -40,7 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'widget_tweaks',
     'ckeditor',
-    # 'ckeditor_uploader',
+    'ckeditor_uploader',
     # 'pwa',
     "debug_toolbar",
 ]

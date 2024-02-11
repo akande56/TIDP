@@ -64,7 +64,7 @@ class CommentForm(forms.Form):
 class CombineInternalMemoForm_UploadForm(forms.Form):
     title = forms.CharField(max_length=255)
     unique_identifier = forms.CharField(max_length=8, required=False)
-    content = forms.CharField(required=True, widget=CKEditorWidget())
+    content = forms.CharField(widget=CKEditorWidget(), required=True, max_length=1000)
     send_to = forms.ModelChoiceField(required=True, queryset=Unit.objects.all())
     media = forms.ImageField(label='Attachment', widget=forms.ClearableFileInput(attrs={'multiple': True}), required=False)
     name = forms.CharField(max_length=1000, required=False)
@@ -74,8 +74,6 @@ class CombineInternalMemoForm_UploadForm(forms.Form):
     urgent = forms.BooleanField(initial=False, required=False)
     reciever_stage = forms.CharField(max_length=200, required=False)
     
-    # Add other fields as needed
-
     def clean(self):
         cleaned_data = super().clean()
         # Add any custom validation or cleaning logic here

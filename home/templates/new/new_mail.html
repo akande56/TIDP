@@ -29,12 +29,8 @@
                                         {% render_field form.send_to class="form-control" %}
                                     </div>
                                 </div>
-                                <div class="col-md-12">
-                                    <div class="form-group">
                                         <label class="form-label" for="exampleInputEmail4">Content</label>
-                                        {% render_field form.content class="form-control" id="exampleInputEmail1" placeholder="Subject" %}
-                                    </div>
-                                </div>
+                                        {% render_field form.content class="form-control" placeholder="Subject" %}
                                 <div class="col-md-12">
                                     <div class="form-group">
                                         <label class="form-label" for="exampleInputEmail4">Attachment</label>
@@ -134,7 +130,9 @@
         // event.preventDefault();
     });
 </script>
-
+<script>
+    CKEDITOR.replace('id_content');
+ </script>
 
 {% endblock content %}
 
