@@ -1,3 +1,6 @@
+from PIL import Image
+from io import BytesIO
+from django.core.files.base import ContentFile
 from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
 from django.contrib.auth import get_user_model
@@ -24,6 +27,7 @@ from .forms import (
     UserLoginForm,
     ChangePasswordForm,
     # CustomPasswordResetForm
+    SignatureForm,
 )
 
 
@@ -109,3 +113,40 @@ class ChangePasswordView(SuccessMessageMixin,PasswordChangeView):
 #             return reverse_lazy('login')  # Update with your success URL
 
 #         return render(request, self.template_name, {'form': form})
+
+class SignatureView(View):
+    template_name = 'new/signature_form.html'
+
+    def get(self, request):
+        form = SignatureForm()
+        current_signature = Account.objects.get(user = request.user).signature
+        return render(request, self.template_name, {'form': form, 'current_signature': current_signature})
+
+    def post(self, request):
+        form = SignatureForm(request.POST, request.FILES)
+
+        if form.is_valid():
+            signature = form.cleaned_data.get('signature')
+            account = Account.objects.get(user=request.user)
+
+            # Open the image using Pillow
+            with Image.open(signature) as img:
+                # Resize the image
+                new_width = 100  # Set the desired width
+                new_height = 50  # Set the desired height
+                resized_img = img.resize((new_width, new_height))
+
+                # Save the resized image to a BytesIO buffer
+                buffer = BytesIO()
+                resized_img.save(buffer, format='JPEG')
+                image_content = buffer.getvalue()
+
+                # Save the resized image to the account's signature field
+                account.signature.save('resized_signature.jpg', ContentFile(image_content))
+
+            messages.success(request, 'Signature updated successfully.')
+            return redirect('dashboard')
+        else:
+            print(form.errors)
+
+        return render(request, self.template_name, {'form': form})

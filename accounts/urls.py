@@ -7,6 +7,7 @@ from .views import (
     mark_notifications_as_read,
     ChangePasswordView,
     # CustomPasswordResetView, 
+    SignatureView,
 )
 
 
@@ -16,5 +17,6 @@ urlpatterns = [
     path('ajax/show-notifications/', show_notifications, name='show_notifications'),
     path('ajax/mark-notifications-as-read/', mark_notifications_as_read, name='mark_notifications_as_read'),
     path('change-password/', ChangePasswordView.as_view(), name='change_password'),
+    path('update_signature/', SignatureView.as_view(), name='update_signature'),
     # path('password_reset/', CustomPasswordResetView.as_view(), name='password_reset'),
 ]

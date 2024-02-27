@@ -37,17 +37,21 @@
                         <td>{{contractor.account.user.date_joined}}</td>
                         <td id="status-{{ contractor.id }}"> {{contractor.status}} </td>
                         <td><a href="{% url 'contractor_document_list' contractor_id=contractor.id %}" class="btn btn-secondary">Check</a></td>
+                        
+                        {% if account.user_persona.persona_tier == 12 %}
                         <td>
-                          <div class="dropdown">
-                            <button class="btn btn-secondary dropdown-toggle status-update-btn" data-contractor-id="{{ contractor.id }}" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                Update Status
-                            </button>
-                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                <a class="dropdown-item update-status-option" data-new-status="verified">Verified</a>
-                                <a class="dropdown-item update-status-option" data-new-status="pending">Pending</a>
-                            </div>
-                        </div>
-                        </td>
+                            <div class="dropdown">
+                              <button class="btn btn-secondary dropdown-toggle status-update-btn" data-contractor-id="{{ contractor.id }}" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                  Update Status
+                              </button>
+                              <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                  <a class="dropdown-item update-status-option" data-new-status="verified">Verified</a>
+                                  <a class="dropdown-item update-status-option" data-new-status="pending">Pending</a>
+                              </div>
+                          </div>
+                          </td>
+                        {% endif %}
+                            
                     </tr>
                 {% endfor %}
             </tbody>

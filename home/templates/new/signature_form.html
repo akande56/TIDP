@@ -1,0 +1,26 @@
+{% extends 'new/base.html' %}
+
+{% block content %}
+<div class="body d-flex px-5">
+    <div class="container-xxl">
+
+        <div class="row g-0"> 
+            <div class="col-lg-6 d-flex justify-content-center align-items-center border-0 rounded-lg auth-h50">
+                <div class="w-100 p-3 p-md-5 card border-0 bg-dark text-light" style="max-width: 32rem;">
+                    <!-- Form -->
+                    <img class="mb-5" src="{{account.signature.url}}" alt="curren signature" srcset="">
+                    <form method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        {{ form.as_p }}
+                        <button class="btn btn-secondary" type="submit">Update Signature</button>
+                    </form>                   
+                    <!-- End Form -->
+                </div>
+            </div>
+        </div> <!-- End Row -->
+    </div>
+</div>    
+{% endblock %}
+
+<h2>Update Signature</h2>
+ 

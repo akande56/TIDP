@@ -320,7 +320,7 @@ class UnitDetailsView(LoginRequiredMixin, View):
                 unit.save()
                 messages.success(request, 'Congratulations the Staff has been added to Unit successfully')
                 return redirect("unit_detail", slug=slug)
-            elif unit.unit_type=='Department' and (staff.user_persona.persona_tier==3 or staff.user_persona.persona_tier==8 or staff.user_persona.persona_tier==4 or staff.user_persona.persona_tier==5 or staff.user_persona.persona_tier==6):
+            elif unit.unit_type=='Department' and (staff.user_persona.persona_tier==3 or staff.user_persona.persona_tier==12 or staff.user_persona.persona_tier==8 or staff.user_persona.persona_tier==4 or staff.user_persona.persona_tier==5 or staff.user_persona.persona_tier==6):
                 if (staff.user_persona.persona_tier==3):
                     for get_staff in unit.users.select_related():
                         if get_staff == staff:
@@ -354,6 +354,10 @@ class UnitDetailsView(LoginRequiredMixin, View):
                     unit.users.add(staff)
                     unit.save()
                     messages.success(request, 'Congratulations You Have Added a Ass. Director to this Unit')
+                elif staff.user_persona.persona_tier==12:
+                    unit.users.add(staff)
+                    unit.save()
+                    messages.success(request, 'Congratulations you have added Procurement officer successfully')
                 elif staff.user_persona.persona_tier==8:
                     unit.users.add(staff)
                     unit.save()

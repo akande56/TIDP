@@ -5,10 +5,12 @@ from django import forms
 from django.shortcuts import redirect, render, get_object_or_404
 from django.contrib.contenttypes.models import ContentType
 from django.views.generic import View
-from django.http import response, JsonResponse
+from django.http import response, JsonResponse, HttpResponse
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db import transaction
+from django.utils.decorators import method_decorator
 from accounts.models import Account
+from accounts.decorators import user_passes_test, is_persona_tier_12 
 from home.models import Unit
 from .models import (
     Folder,
@@ -34,7 +36,11 @@ from django.http import StreamingHttpResponse
 from wsgiref.util import FileWrapper
 import mimetypes
 from django.db.models import Q
-
+from reportlab.pdfgen import canvas
+from reportlab.lib.pagesizes import letter
+from reportlab.lib import colors
+from reportlab.lib.units import inch
+from reportlab.lib.utils import ImageReader
 
 # Create your views here.
 def downloadfile(request, id):
@@ -99,11 +105,8 @@ class CorrespondanceDetails(LoginRequiredMixin, View):
         account = Account.objects.get(user=request.user)
         route   = Routing.objects.get(id=id)
         folders = Folder_Content.objects.filter(folder=route.folder)
-        print('folders2..')
-        print(folders)
         files = File.objects.filter(folder_content__in=folders)
-        print('files..')
-        print(files)
+        
 
         form_initials = {
             "content_type": route.get_content_type,
@@ -136,6 +139,8 @@ class CorrespondanceDetails(LoginRequiredMixin, View):
                 content=content_data
             )
         return redirect("correspondance_details", id=id)
+
+
 
 
 class NewMail(LoginRequiredMixin, View):
@@ -191,10 +196,10 @@ class NewMail(LoginRequiredMixin, View):
         if form.is_valid():
             account = Account.objects.get(user=request.user)
             files_list = request.FILES.getlist('media')
-            print('files list...')
-            print(files_list)
-            print('2nd file ist')
-            print(request.FILES)
+            # print('files list...')
+            # print(files_list)
+            # print('2nd file ist')
+            # print(request.FILES)
             with transaction.atomic():
                 # Create a new Folder instance
                 folder = Folder(
@@ -219,6 +224,8 @@ class NewMail(LoginRequiredMixin, View):
 
                 # Get the current unit
                 current_unit = Unit.objects.get(users=account)
+                print('current user unit')
+                print(current_unit)
                 current_user = current_unit.users.filter(
                     Q(user_persona__persona_tier=1) |
                     Q(user_persona__persona_tier=2) |
@@ -226,54 +233,81 @@ class NewMail(LoginRequiredMixin, View):
                     Q(user_persona__persona_tier=4) |
                     Q(user_persona__persona_tier=5)
                 ).first()
+                print('current unit users tier from 1-5')
+                print(current_user)
 
+                
                 if current_user.user_persona.persona_tier <= 5:
-                    send_to_user = current_unit.users.filter(
+                    print('if the one creating memo is between tier 1-5')
+                    
+                    print('getting unit clerical officer')
+                    
+                    # send_to_user = current_unit.users.filter(
+                    #     Q(user_persona__persona_tier=6)
+                    # ).first()
+
+                    # changed receiving user to intended offive clerical officer
+                    send_to_unit = form.cleaned_data['send_to']
+                    send_to_user = send_to_unit.users.filter(
                         Q(user_persona__persona_tier=6)
                     ).first()
                     
-                    send_to_unit = form.cleaned_data['send_to']
-
-                    if current_unit.users.filter(user_persona__persona_tier=6).count():
-                        Routing.objects.create(
+                    # removing sending to current unit clerical officer
+                    # if current_unit.users.filter(user_persona__persona_tier=6).count():
+                    #     print('send to clerical office of current unii')
+                    #     Routing.objects.create(
+                    #         send_to=send_to_user,
+                    #         folder=folder,
+                    #         forwarded_by=account,
+                    #         intended_unit=send_to_unit,
+                    #         sender_stage='Clearing',
+                    #         initiated_unit=current_unit
+                    #     )
+                    if send_to_unit.users.filter(user_persona__persona_tier=6).count():
+                        rout =Routing.objects.create(
                             send_to=send_to_user,
                             folder=folder,
                             forwarded_by=account,
                             intended_unit=send_to_unit,
-                            sender_stage='Clearing',
-                            initiated_unit=current_unit
-                        )
-                    elif send_to_unit.users.filter(user_persona__persona_tier=6).count():
-                        Routing.objects.create(
-                            send_to=send_to_user,
-                            folder=folder,
-                            forwarded_by=account,
-                            intended_unit=send_to_unit,
-                            sender_stage='Done',
+                            sender_stage="Done",
                             reciever_stage="Clearing",
                             initiated_unit=current_unit
                         )
+                        rout.save()
+
                     elif send_to_unit.users.filter(user_persona__persona_tier=7).count():
-                        Routing.objects.create(
-                            send_to=send_to_user,
+                        rout = Routing.objects.create(
+                            send_to=send_to_unit.users.filter(
+                        Q(user_persona__persona_tier=7)
+                            ).first(),
                             folder=folder,
                             forwarded_by=account,
                             intended_unit=send_to_unit,
-                            sender_stage='Done',
+                            sender_stage="Done",
                             reciever_stage="Protocol",
                             initiated_unit=current_unit
                         )
+                        rout.save()
                     else:
-                        Routing.objects.create(
-                            send_to=send_to_user,
+                        rout = Routing.objects.create(
+                            send_to=send_to_unit.users.filter(
+                                Q(user_persona__persona_tier=1) |
+                                Q(user_persona__persona_tier=2) |
+                                Q(user_persona__persona_tier=3) |
+                                Q(user_persona__persona_tier=4) |
+                                Q(user_persona__persona_tier=5)
+                            ).first(),
                             folder=folder,
                             forwarded_by=account,
                             intended_unit=send_to_unit,
-                            sender_stage='Done',
+                            sender_stage="Done",
                             reciever_stage="Done",
                             initiated_unit=current_unit
                         )
+                        rout.save()
+                        
                 elif current_user.user_persona.persona_tier == 6:
+                    print('the one creating memo is the clerical officer of the current unit')
                     send_to = current_unit.users.filter(
                         Q(user_persona__persona_tier=1) |
                         Q(user_persona__persona_tier=2) |
@@ -282,7 +316,7 @@ class NewMail(LoginRequiredMixin, View):
                         Q(user_persona__persona_tier=5)
                     ).first()
 
-                    Routing.objects.create(
+                    rout = Routing.objects.create(
                         send_to=send_to,
                         folder=folder,
                         forwarded_by=account,
@@ -291,7 +325,7 @@ class NewMail(LoginRequiredMixin, View):
                         reciever_stage='Done',
                         initiated_unit=current_unit
                     )
-
+                    rout.save()
                 # Create File instances
                 try:
                     for file in files_list:
@@ -382,8 +416,18 @@ class RecieverClearicalFiles(LoginRequiredMixin, View):
     template_name = "clearance.html"
 
     def get(self, request, id, **kwargs):
+        account = Account.objects.get(user=request.user)
+        current_unit = Unit.objects.get(users=account)
+
         route = Routing.objects.get(id=id)
         route.reciever_stage = "Done"
+        route.send_to = current_unit.users.filter(
+                        Q(user_persona__persona_tier=1) |
+                        Q(user_persona__persona_tier=2) |
+                        Q(user_persona__persona_tier=3) |
+                        Q(user_persona__persona_tier=4) |
+                        Q(user_persona__persona_tier=5)
+                    ).first()
         route.save()
 
         return redirect('correspondance')
@@ -567,3 +611,171 @@ class NewCorrespondance(LoginRequiredMixin, View):
                     pass
             messages.success(request, 'Memo Send Successfully')
         return redirect('correspondance')
+
+
+# class PDFGenerationView(View):
+#     def get(self, request, routing_id):
+#         # Get the routing object
+#         routing = get_object_or_404(Routing, id=routing_id)
+
+#         # Create a response object with PDF content
+#         response = HttpResponse(content_type='application/pdf')
+#         response['Content-Disposition'] = f'attachment; filename="routing_details.pdf"'
+
+#         # Create PDF content using ReportLab
+#         p = canvas.Canvas(response, pagesize=letter)
+
+#         # Set font size and style for headers
+#         p.setFont("Times-Bold", 16)
+
+#         p.drawString(0.5 * inch, 10 * inch, 'Routing Details')
+
+#         # Set font size and style for sub-headers
+#         p.setFont("Times-Bold", 12)
+
+#         # Add routing details
+#         p.drawString(0.5 * inch, 9.5 * inch, f'Sender: {routing.forwarded_by}')
+#         p.drawString(0.5 * inch, 9 * inch, f'Receiver: {routing.send_to}')
+#         p.drawString(0.5 * inch, 8.5 * inch, f'Intended Unit: {routing.intended_unit}')
+#         p.drawString(0.5 * inch, 8 * inch, f'Sender Stage: {routing.sender_stage}')
+#         p.drawString(0.5 * inch, 7.5 * inch, f'Receiver Stage: {routing.reciever_stage}')
+
+#         # Add folder details
+#         folder = routing.folder
+#         p.drawString(0.5 * inch, 7 * inch, f'Folder Details:')
+#         p.drawString(0.7 * inch, 6.8 * inch, f'Title: {folder.title}')
+#         p.drawString(0.7 * inch, 6.6 * inch, f'Unique Identifier: {folder.unique_identifier}')
+#         p.drawString(0.7 * inch, 6.4 * inch, f'Created By: {folder.created_by}')
+#         p.drawString(0.7 * inch, 6.2 * inch, f'Draft: {folder.draft}')
+#         p.drawString(0.7 * inch, 6 * inch, f'Archive: {folder.archive}')
+#         p.drawString(0.7 * inch, 5.8 * inch, f'Urgent: {folder.urgent}')
+
+#         # Content
+#         content = Folder_Content.objects.filter(folder=folder)
+#         p.drawString(0.5 * inch, 5.4 * inch, f'Folder Content:')
+#         y_position = 5.2 * inch
+#         for item in content:
+#             p.drawString(0.7 * inch, y_position, f'Title: {item.title}')
+#             p.drawString(0.7 * inch, y_position - 0.2 * inch, f'Content: {item.content}')
+#             y_position -= 0.4 * inch
+
+#         # Add links to files
+#         files = File.objects.filter(folder_content__folder=folder)
+#         p.drawString(0.7 * inch, y_position - 0.4 * inch, 'Attached Files:')
+#         y_position -= 0.6 * inch
+#         for file in files:
+#             file_link = f'<a href="{file.media.url}">{file.name}</a>'
+#             p.drawString(0.7 * inch, y_position, file_link, True)
+#             y_position -= 0.2 * inch
+
+#         # Set font size and style for comments header
+#         p.setFont("Times-BoldItalic", 12)
+#         p.setFillColor(colors.yellow)
+
+#         # Add comments header
+#         p.drawString(0.7 * inch, y_position - 0.4 * inch, f'Comments:')
+#         y_position -= 0.6 * inch
+
+#         # Set font size and style for comments
+#         p.setFont("Times-Italic", 12)
+#         p.setFillColor(colors.black)
+
+#         # Add comments
+#         comments = Comment.objects.filter(content_type=routing.get_content_type, object_id=routing.id)
+#         for comment in comments:
+#             p.drawString(0.7 * inch, y_position, f'{comment.account}: {comment.content}')
+#             y_position -= 0.2 * inch
+
+#         p.showPage()
+#         p.save()
+
+#         return response
+class PDFGenerationView(View):
+    def get(self, request, routing_id):
+        # Get the routing object
+        routing = get_object_or_404(Routing, id=routing_id)
+
+        # Create a response object with PDF content
+        response = HttpResponse(content_type='application/pdf')
+        response['Content-Disposition'] = f'attachment; filename="routing_details.pdf"'
+
+        # Create PDF content using ReportLab
+        p = canvas.Canvas(response, pagesize=letter)
+
+        # Set font size and style for headers
+        p.setFont("Times-Bold", 16)
+
+        p.drawString(0.5 * inch, 10 * inch, 'Routing Details')
+
+        # Set font size and style for sub-headers (reduced size)
+        p.setFont("Times-Bold", 10)
+
+        # Add routing details in the first column
+        p.drawString(0.5 * inch, 9.5 * inch, f'Sender: {routing.forwarded_by}')
+        p.drawString(0.5 * inch, 9 * inch, f'Receiver: {routing.send_to}')
+        p.drawString(0.5 * inch, 8.5 * inch, f'Intended Unit: {routing.intended_unit}')
+        p.drawString(0.5 * inch, 8 * inch, f'Sender Stage: {routing.sender_stage}')
+        p.drawString(0.5 * inch, 7.5 * inch, f'Receiver Stage: {routing.reciever_stage}')
+
+        # Add folder details in the second column
+        folder = routing.folder
+        p.setFont("Times-Bold", 16)
+        p.drawString(4 * inch, 10 * inch, f'Folder Details:')
+        p.setFont("Times-Bold", 10)
+        p.drawString(4.2 * inch, 9.5 * inch, f'Title: {folder.title}')
+        p.drawString(4.2 * inch, 9 * inch, f'Unique Identifier: {folder.unique_identifier}')
+        p.drawString(4.2 * inch, 8.5 * inch, f'Created By: {folder.created_by}')
+        p.drawString(4.2 * inch, 8 * inch, f'Draft: {folder.draft}')
+        p.drawString(4.2 * inch, 7.5 * inch, f'Archive: {folder.archive}')
+        p.drawString(4.2 * inch, 7 * inch, f'Urgent: {folder.urgent}')
+
+        p.setFont("Times-Bold", 12)
+        # Content
+        content = Folder_Content.objects.filter(folder=folder)
+        p.drawString(0.5 * inch, 5.4 * inch, f'Folder Content:')
+        y_position = 5.2 * inch
+        for item in content:
+            p.drawString(0.7 * inch, y_position, f'Title: {item.title}')
+            p.drawString(0.7 * inch, y_position - 0.2 * inch, f'Content: {item.content}')
+            y_position -= 0.4 * inch
+
+        # Add links to files
+        files = File.objects.filter(folder_content__folder=folder)
+        p.drawString(0.7 * inch, y_position - 0.4 * inch, 'Attached Files:')
+        y_position -= 0.6 * inch
+        for file in files:
+            file_link = f'<a href="{file.media.url}">{file.name}</a>'
+            p.drawString(0.7 * inch, y_position, file_link, True)
+            y_position -= 0.2 * inch
+
+        # Set font size and style for comments header
+        p.setFont("Times-BoldItalic", 12)
+        p.setFillColor(colors.yellow)
+
+        # Add comments header
+        p.drawString(0.7 * inch, y_position - 0.4 * inch, f'Comments:')
+        y_position -= 0.6 * inch
+
+        # Set font size and style for comments
+        p.setFont("Times-Italic", 12)
+        p.setFillColor(colors.black)
+
+        # Add comments with signatures
+        comments = Comment.objects.filter(content_type=routing.get_content_type, object_id=routing.id)
+        for comment in comments:
+            p.drawString(0.7 * inch, y_position, f'{comment.account}: {comment.content}')
+            y_position -= 0.2 * inch
+
+            # Add user signature
+            signature = comment.account.signature
+            if signature:
+                signature_image = ImageReader(signature.path)
+                p.drawImage(signature_image, 0.7 * inch, y_position - 0.2 * inch, width=50, height=25)
+
+            y_position -= 0.4 * inch
+
+
+        p.showPage()
+        p.save()
+
+        return response

@@ -61,3 +61,9 @@ class ChangePasswordForm(PasswordChangeForm):
 # class CustomPasswordResetForm(forms.Form):
 #     username = forms.CharField(max_length=150, required=True)
 #     new_password = forms.CharField(widget=forms.PasswordInput, required=True)
+
+
+class SignatureForm(forms.ModelForm):
+    class Meta:
+        model = Account
+        fields = ['signature']

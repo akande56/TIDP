@@ -7,6 +7,7 @@ from django.db.models.query import QuerySet
 from django.views.generic import View,CreateView, DetailView
 from django.contrib.auth.models import User
 from django.urls import reverse_lazy
+from django.utils.decorators import method_decorator
 from .forms import (
     ContractorFormSignUp, 
     PrecurmentCreateForm,
@@ -20,7 +21,7 @@ from .models import (
     Procurement_tender_doc,
 )
 from accounts.models import UserPersona, Account, Contractors,ContractorDocument
-
+from accounts.decorators import user_passes_test, is_persona_tier_12
 # Create your views here.
 
 
@@ -49,6 +50,8 @@ class RegisterContractor(View):
                 with transaction.atomic():
                     user.save()
                     tier = UserPersona.objects.get(persona_tier=11)
+                    print('sssssssssss')
+                    print(tier)
                     account = Account.objects.create(
                         user=user,
                         user_persona=tier
@@ -64,7 +67,7 @@ class RegisterContractor(View):
                     contractor.save()
                     # redirect('contactor_register')
             except UserPersona.DoesNotExist:
-                messages.error(request, "Error Contact Support")
+                messages.error(request, "Error Contact Support, Contractor persona not supported at the moment")
                 return redirect('login')
 
         messages.success(request, "Registration succssfull, please login to access dashboard")
@@ -188,6 +191,7 @@ def create_contractor_document(request):
 
 
 ## add precurment
+@method_decorator(user_passes_test(is_persona_tier_12), name='dispatch')
 class PrecurementCreateView(CreateView):
     model = Precurement
     form_class = PrecurmentCreateForm
@@ -303,6 +307,7 @@ class PrecurementDetailView(View):
         return render(request, self.template_name, {'precurement': precurement, 'form': form})
 
 
+@user_passes_test(is_persona_tier_12)
 def procurement_edit(request, pk):
     precurement = get_object_or_404(Precurement, pk=pk)
     print('instance precument pk:')

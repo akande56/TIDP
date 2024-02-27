@@ -16,11 +16,12 @@ PERSONA = (
     (9, 'Tier 9 Registry Officer'),
     (10, 'Tier 10 ICT Personal'),
     (11, 'Tier 11 Contractors'),
+    (12, 'Tier 12 Procurement Officer'),
 )
 
 # Create your models here.
 class UserPersona(models.Model):
-    name = models.CharField(max_length=100)
+    name = models.CharField(max_length=200)
     description = models.TextField()
     persona_tier = models.IntegerField(choices=PERSONA)
     # no_of_user = models.IntegerField(default=0)
@@ -37,6 +38,7 @@ class Account(models.Model):
     user_persona = models.ForeignKey(UserPersona, on_delete=models.CASCADE, related_name='ruser_persona') #added related name abduls, for easy query
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='ruser_account') #added related name abduls
     profile_pic_url = models.CharField(max_length=500, default=0, null=True)
+    signature = models.ImageField(upload_to='signatures/', blank=True, null=True)
 
     def __str__(self):
         return "{}: {} in the {}".format(self.user.first_name, self.user_persona.name, self.unit_set.first())
