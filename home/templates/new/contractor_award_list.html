@@ -4,6 +4,7 @@
 {% block content %}
   <div class="body d-flex py-3">
     <div class="container-xxl">
+        <h2>Awarded Procurement</h2>
         <div class="col-sm-12">
             <div class="card mb-3">
                 <div class="card-body">
@@ -32,7 +33,7 @@
                                     
                                     {% for contractor in award.contractors.all %}
                                             <p>{{ contractor.company_name }}</p>
-                                                
+
                                         {% endfor %}
                                 </td>
                                 <td>
