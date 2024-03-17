@@ -24,11 +24,12 @@ class Schedule_Meeting(models.Model):
     paticipants = models.ManyToManyField(Account, related_name="paticipant")
     venue = models.CharField(max_length=1000, null=True, blank=True, choices=VENUE)
     description = RichTextField(blank=True, null=True)
+    agenda = RichTextField(blank=True, null=True)
     draft = models.BooleanField(default=False)
     minutes_of_meeting = RichTextField(blank=True, null=True)
     done = models.BooleanField(default=False)
     scheduled_by = models.ForeignKey(Account, on_delete=models.CASCADE)
-    attachment = models.ImageField(upload_to='meeting_files/', null=True, blank=True) #previously filepath
+    attachment = models.ImageField(upload_to='meetingfiles/', null=True, blank=True) #previously filepath
     created = models.DateTimeField(auto_now_add=True)
     address = models.CharField(max_length=50, null=True, blank=True)
     link = models.CharField(max_length=50, null=True, blank=True)

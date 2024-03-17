@@ -366,7 +366,7 @@ def procurement_delete(request, pk):
 
 
 # Award contracors....
-
+@method_decorator(user_passes_test(is_persona_tier_12), name='dispatch')
 class AwardContractorView(View):
     template_name = 'new/award_contractor.html'
 

@@ -149,4 +149,4 @@ class SignatureView(View):
         else:
             print(form.errors)
 
-        return render(request, self.template_name, {'form': form})
+        return render(request, self.template_name, {'form': form})  

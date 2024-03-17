@@ -126,8 +126,12 @@
                             {% render_field form.title  class="form-control"  %}
                         </div>
                         <div class="mb-3">
-                            <label  class="form-label">Description & Agandas</label>
+                            <label  class="form-label">Description </label>
                             {% render_field form.description  class="form-control" cols="50" rows="2"  %}
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Agenda</label>
+                        <textarea  name="{{ form.agenda.html_name }}" class="form-control" id="{{form.agenda.id_for_label}}" rows="3" >{{ meeting.agenda }}</textarea>
                         </div>
                         <div class="deadline-form mb-3">
                             <div class="row">
@@ -206,8 +210,12 @@
                                 {% render_field form.title class="form-control" value=meeting.title %}
                             </div>
                             <div class="mb-3">
-                                <label class="form-label">Description & Agendas</label>
+                                <label class="form-label">Description</label>
                             <textarea  name="{{ form.description.html_name }}" class="form-control" id="{{form.description.id_for_label}}" rows="3" >{{ meeting.description }}</textarea>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Agenda</label>
+                            <textarea  name="{{ form.agenda.html_name }}" class="form-control" id="{{form.agenda.id_for_label}}" rows="3" >{{ meeting.agenda }}</textarea>
                             </div>
                             <div class="deadline-form mb-3">
                                 <div class="row">
@@ -243,6 +251,7 @@
                                 <div class="col-sm">
                                     <label class="form-label">Venue</label>
                                     {% render_field form.venue class="form-select" value=meeting.vanue  %}
+                                    
                                 </div>
                             </div>
                             <div class="row g-3 mb-3" id="addressField">

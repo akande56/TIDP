@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-
+from django.contrib.auth.models import User
 from home.models import Unit
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -37,13 +37,19 @@ class NewMail(LoginRequiredMixin, View):
 class Dashboard(LoginRequiredMixin, View):
     
     def get(self, request, **kwargs):
+        users = User.objects.all().count()
+        personas = UserPersona.objects.all().count()
+        units = Unit.objects.all().count()
+
         context = {
             'value': 1,
             # 'form': BusinessInfoForm,
             'form': ContractorDocumentForm,
+            'users': users,
+            'personas': personas,
+            'units': units
         }
         user = Account.objects.get(user=request.user)
-        print(user.user_persona.persona_tier)
         if user.user_persona.persona_tier == 11:
             # get contractor status
             contractor = Contractors.objects.get(account=user)
@@ -84,7 +90,11 @@ class UserPersonaView(LoginRequiredMixin, View):
     
     def get(self, request, **kwargs):
         context = {
+        "c_personas": self.model.objects.all().count(),
         "personas": self.model.objects.all(),
+        # "active_users": User.objects.filter(is_active = True).count(),
+        # 'inactive_users': User.objects.filter(is_active = False).count(),
+        # 'units': Unit.objects.all().count(),
         "form": CreatePersonaForm,
         'value': 6,
         'internal': 1,
@@ -151,7 +161,7 @@ class GroupState(LoginRequiredMixin, View):
 class UsersView(LoginRequiredMixin, View):
     
     def get(self, request, **kwargs):
-        print ("a111")
+        
         context = {
             'form': CreateUserForm(),
             'users': Account.objects.filter(),

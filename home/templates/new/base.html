@@ -118,16 +118,20 @@
                                         <div class="d-flex py-1">
                                             <img class="avatar rounded-circle" src="/static/images/profile_av.png" alt="profile">
                                             <div class="flex-fill ms-3">
-                                                <p class="mb-0"><span class="font-weight-bold">{{ account.user.first_name }}</span></p>
-                                                <small class="">ukringim@recorddigita.com</small>
+                                                <p class="mb-0"><span class="font-weight-bold">{{ account.user.username }}</span></p>
+                                                <small class="">{{account.user.email}}</small>
                                             </div>
                                         </div>
                                         
                                         <div><hr class="dropdown-divider border-dark"></div>
                                     </div>
                                     <div class="list-group m-2 ">
-                                        <a href="task.html" class="list-group-item list-group-item-action border-0 "><i class="icofont-tasks fs-5 me-3"></i>My Task</a>
+                                        <!-- <a href="task.html" class="list-group-item list-group-item-action border-0 "><i class="icofont-tasks fs-5 me-3"></i>My Task</a> -->
+                                        
+                                        {% if account.user_persona.persona_tier != 11 %}
                                         <a href="members.html" class="list-group-item list-group-item-action border-0 "><i class="icofont-ui-user-group fs-6 me-3"></i>members</a>
+                                        {% endif %}
+                                            
                                         <a href="{% url 'logout' %}" class="list-group-item list-group-item-action border-0 "><i class="icofont-logout fs-6 me-3"></i>Signout</a>
                                         <a href="{% url 'update_signature' %}" class="list-group-item list-group-item-action border-0">Add/update Signature</a>
                                         <div><hr class="dropdown-divider border-dark"></div>
