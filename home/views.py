@@ -249,6 +249,11 @@ class UnitDetailsView(LoginRequiredMixin, View):
 
         if form.is_valid():
             staff = form.cleaned_data['staff']
+            for u in Unit.objects.all():
+                for a in u.users.all():
+                    if a == staff:
+                        messages.error(request, 'Account has association to another Unit')
+                        return redirect("unit_detail", slug = slug)
             if unit.unit_type=='Minister/DG' and (staff.user_persona.persona_tier==1 or staff.user_persona.persona_tier==8 or staff.user_persona.persona_tier==6 or staff.user_persona.persona_tier==7):
                 if (staff.user_persona.persona_tier==1):
                     for get_staff in unit.users.select_related():

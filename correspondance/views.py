@@ -690,92 +690,19 @@ class NewCorrespondance(LoginRequiredMixin, View):
 #         p.save()
 
 #         return response
+
 class PDFGenerationView(View):
+    template_name = 'new/pdf_template.html'  # Update with your template name
+
     def get(self, request, routing_id):
-        # Get the routing object
         routing = get_object_or_404(Routing, id=routing_id)
 
-        # Create a response object with PDF content
-        response = HttpResponse(content_type='application/pdf')
-        response['Content-Disposition'] = f'attachment; filename="routing_details.pdf"'
+        context = {
+            'routing': routing,
+            'folder': routing.folder,
+            'content': Folder_Content.objects.filter(folder=routing.folder),
+            'files': File.objects.filter(folder_content__folder=routing.folder),
+            'comments': Comment.objects.filter(content_type=routing.get_content_type, object_id=routing.id),
+        }
 
-        # Create PDF content using ReportLab
-        p = canvas.Canvas(response, pagesize=letter)
-
-        # Set font size and style for headers
-        p.setFont("Times-Bold", 16)
-
-        p.drawString(0.5 * inch, 10 * inch, 'Routing Details')
-
-        # Set font size and style for sub-headers (reduced size)
-        p.setFont("Times-Bold", 10)
-
-        # Add routing details in the first column
-        p.drawString(0.5 * inch, 9.5 * inch, f'Sender: {routing.forwarded_by}')
-        p.drawString(0.5 * inch, 9 * inch, f'Receiver: {routing.send_to}')
-        p.drawString(0.5 * inch, 8.5 * inch, f'Intended Unit: {routing.intended_unit}')
-        p.drawString(0.5 * inch, 8 * inch, f'Sender Stage: {routing.sender_stage}')
-        p.drawString(0.5 * inch, 7.5 * inch, f'Receiver Stage: {routing.reciever_stage}')
-
-        # Add folder details in the second column
-        folder = routing.folder
-        p.setFont("Times-Bold", 16)
-        p.drawString(4 * inch, 10 * inch, f'Folder Details:')
-        p.setFont("Times-Bold", 10)
-        p.drawString(4.2 * inch, 9.5 * inch, f'Title: {folder.title}')
-        p.drawString(4.2 * inch, 9 * inch, f'Unique Identifier: {folder.unique_identifier}')
-        p.drawString(4.2 * inch, 8.5 * inch, f'Created By: {folder.created_by}')
-        p.drawString(4.2 * inch, 8 * inch, f'Draft: {folder.draft}')
-        p.drawString(4.2 * inch, 7.5 * inch, f'Archive: {folder.archive}')
-        p.drawString(4.2 * inch, 7 * inch, f'Urgent: {folder.urgent}')
-
-        p.setFont("Times-Bold", 12)
-        # Content
-        content = Folder_Content.objects.filter(folder=folder)
-        p.drawString(0.5 * inch, 5.4 * inch, f'Folder Content:')
-        y_position = 5.2 * inch
-        for item in content:
-            p.drawString(0.7 * inch, y_position, f'Title: {item.title}')
-            p.drawString(0.7 * inch, y_position - 0.2 * inch, f'Content: {item.content}')
-            y_position -= 0.4 * inch
-
-        # Add links to files
-        files = File.objects.filter(folder_content__folder=folder)
-        p.drawString(0.7 * inch, y_position - 0.4 * inch, 'Attached Files:')
-        y_position -= 0.6 * inch
-        for file in files:
-            file_link = f'<a href="{file.media.url}">{file.name}</a>'
-            p.drawString(0.7 * inch, y_position, file_link, True)
-            y_position -= 0.2 * inch
-
-        # Set font size and style for comments header
-        p.setFont("Times-BoldItalic", 12)
-        p.setFillColor(colors.yellow)
-
-        # Add comments header
-        p.drawString(0.7 * inch, y_position - 0.4 * inch, f'Comments:')
-        y_position -= 0.6 * inch
-
-        # Set font size and style for comments
-        p.setFont("Times-Italic", 12)
-        p.setFillColor(colors.black)
-
-        # Add comments with signatures
-        comments = Comment.objects.filter(content_type=routing.get_content_type, object_id=routing.id)
-        for comment in comments:
-            p.drawString(0.7 * inch, y_position, f'{comment.account}: {comment.content}')
-            y_position -= 0.2 * inch
-
-            # Add user signature
-            signature = comment.account.signature
-            if signature:
-                signature_image = ImageReader(signature.path)
-                p.drawImage(signature_image, 0.7 * inch, y_position - 0.2 * inch, width=50, height=25)
-
-            y_position -= 0.4 * inch
-
-
-        p.showPage()
-        p.save()
-
-        return response
+        return render(request, self.template_name, context)

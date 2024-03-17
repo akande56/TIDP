@@ -23,6 +23,7 @@
                 <div class="col-sm-12">
                     <div class="card mb-3">
                         <div class="card title h3">{{procurement}}</div>
+                        <div><a href="{% url 'award_contract' procurement.pk %}">Award Contractors</a></div>
                         <div class="card-body">
                             <table id="myProjectTable" class="table table-hover align-middle mb-0" style="width:100%">
                                 <thead>
@@ -43,7 +44,7 @@
                                             <span class="fw-bold ms-1"> {{file.contractor.company_name}} </span>
                                         </td>
                                         <td>
-                                            <a href="{{file.file.url}}">{{file.file.file}}</a>
+                                            <a href="{{file.file.url}}" target="_blank">{{file.file.file}}</a>
 
                                         </td>
                                         

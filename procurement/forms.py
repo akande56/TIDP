@@ -94,6 +94,13 @@ class ContractorDocumentForm(forms.ModelForm):
         return cleaned_data
 
 
+class AwardContractorForm(forms.Form):
+    contractors = forms.ModelMultipleChoiceField(queryset=Contractors.objects.filter(status = 'verified'))
+    award_date = forms.DateField(widget=forms.DateInput(attrs={'type': 'date'}))
+    amount = forms.DecimalField(max_digits=10, decimal_places=2)
+    remarks = forms.CharField(widget=forms.Textarea, required=False)
+    document = forms.ImageField(required=False)
+
 
 class TenderDocumentForm(forms.ModelForm):
     class Meta:

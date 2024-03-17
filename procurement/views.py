@@ -1,10 +1,13 @@
+from django.core.paginator import Paginator
+from django.core.exceptions import ValidationError
 from django.http import JsonResponse, request, HttpResponseBadRequest
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db import transaction
 from django.db.models.query import QuerySet
-from django.views.generic import View,CreateView, DetailView
+from django.db.models import Q
+from django.views.generic import View,CreateView, ListView
 from django.contrib.auth.models import User
 from django.urls import reverse_lazy
 from django.utils.decorators import method_decorator
@@ -14,11 +17,13 @@ from .forms import (
     ContractorDocumentForm,
     PrecurmentEditForm,
     TenderDocumentForm,
+    AwardContractorForm,
 )
 from .models import (
     Precurement, 
     Precurement_contractors, 
     Procurement_tender_doc,
+    ContractorAward,
 )
 from accounts.models import UserPersona, Account, Contractors,ContractorDocument
 from accounts.decorators import user_passes_test, is_persona_tier_12
@@ -224,7 +229,8 @@ class PrecurementCreateView(CreateView):
 
         # Send notification to users based on the tender type i.e in tender list
         if tender_type == 'open tender':
-            recipients = User.objects.all()
+            contractors = Contractors.objects.filter(status = 'verified')
+            recipients = [contractor.account.user for contractor in contractors]
         elif tender_type == 'selective tender':
             contractors = form.cleaned_data.get('contractor', [])
             if not isinstance(contractors, QuerySet):
@@ -233,12 +239,13 @@ class PrecurementCreateView(CreateView):
             precurement.contractor.set(contractor_ids)
             recipients = [contractor.account.user for contractor in contractors]
         elif tender_type == 'direct labour':
-            exclude_list = []
-            exclude = Contractors.objects.all()
-            exclude_list = [con.account.user for con in exclude]
-            recipients = User.objects.exclude(pk__in=[instance.pk for instance in exclude_list])
-
-        
+            # exclude_list = []
+            # exclude = Contractors.objects.all()
+            # exclude_list = [con.account.user for con in exclude]
+            # recipients = User.objects.exclude(pk__in=[instance.pk for instance in exclude_list])
+            tiers = Account.objects.filter(Q(user_persona__persona_tier=2) | Q(user_persona__persona_tier=1))
+            recipients = tiers
+            
         # Recipient
         for recipient in recipients:
             Precurement_contractors.objects.create(
@@ -257,7 +264,7 @@ class PrecurementCreateView(CreateView):
     
 
 def fetch_contractors(request):
-  contractors = Contractors.objects.all().values('pk', 'company_name')
+  contractors = Contractors.objects.filter(status = 'verified').values('pk', 'company_name')
   
   return JsonResponse({'contractors': list(contractors)})
 
@@ -310,10 +317,7 @@ class PrecurementDetailView(View):
 @user_passes_test(is_persona_tier_12)
 def procurement_edit(request, pk):
     precurement = get_object_or_404(Precurement, pk=pk)
-    print('instance precument pk:')
-    print(precurement.pk)
     if request.method == 'POST':
-        print('post called...')
         form = PrecurmentEditForm(request.POST, request.FILES, instance=precurement)
         if form.is_valid():
             precurement = form.save(commit=True)
@@ -322,7 +326,8 @@ def procurement_edit(request, pk):
             
             # Send notification to users based on the tender type, i.e., update/create Precurment_contractors
             if tender_type == 'open tender':
-                recipients = User.objects.all()  
+                contractors = Contractors.objects.filter(status = 'verified')
+                recipients = [contractor.account.user for contractor in contractors]  
             elif tender_type == 'selective tender':
                 
                 contractors = form.cleaned_data.get('contractor', [])
@@ -333,10 +338,8 @@ def procurement_edit(request, pk):
                 precurement.contractor.set(contractor_ids)
                 recipients = [contractor.account.user for contractor in contractors]
             elif tender_type == 'direct labour':
-                exclude_list = []
-                exclude = Contractors.objects.all()
-                exclude_list = [con.account.user for con in exclude]
-                recipients = User.objects.exclude(pk__in=[instance.pk for instance in exclude_list])
+                tiers = Account.objects.filter(Q(user_persona__persona_tier=2) | Q(user_persona__persona_tier=1))
+                recipients = tiers
             precurement.save()
             
 
@@ -348,8 +351,6 @@ def procurement_edit(request, pk):
                 )
 
             messages.success(request, "Procurement updated successfully!")
-            print('precurment deatil end, pk:....')
-            print(precurement)
             return redirect('precurement_detail', pk=precurement.pk)
     else:
         form = PrecurmentEditForm(instance=precurement)
@@ -362,6 +363,82 @@ def procurement_delete(request, pk):
     precurement.delete()
     messages.success(request, "Procurement deleted successfully!")
     return redirect('precurement_list')
+
+
+# Award contracors....
+
+class AwardContractorView(View):
+    template_name = 'new/award_contractor.html'
+
+    def get(self, request, procurement_id):
+        procurement = get_object_or_404(Precurement, id=procurement_id)
+        contractors = Contractors.objects.filter(status='verified')
+
+        # Paginate the list of contractors
+        paginator = Paginator(contractors, 10)  # Show 10 contractors per page
+        page_number = request.GET.get('page')
+        page_obj = paginator.get_page(page_number)
+
+        form = AwardContractorForm()
+        context = {
+            'procurement': procurement,
+            'contractors': page_obj,  # Pass the paginated queryset to the template
+            'form': form,
+        }
+        return render(request, self.template_name, context)
+
+    def post(self, request, procurement_id):
+        procurement = get_object_or_404(Precurement, id=procurement_id)
+        contractors = Contractors.objects.filter(status='verified')
+
+        form = AwardContractorForm(request.POST, request.FILES)
+        if form.is_valid():
+            selected_contractors = form.cleaned_data.get('contractors')
+            award_date = form.cleaned_data.get('award_date')
+            amount = form.cleaned_data.get('amount')
+            document = form.cleaned_data.get('document')
+            remarks = form.cleaned_data.get('remarks')
+
+            try:
+                # Check if the uploaded document is an image
+                if document:
+                    if not document.content_type.startswith('image'):
+                        raise ValidationError('Invalid file type. Please upload an image.')
+
+                contractor_award = ContractorAward.objects.create(
+                    procurement=procurement,
+                    award_date=award_date,
+                    amount=amount,
+                    document=document,
+                    remarks=remarks
+                )
+                contractor_award.contractors.set(selected_contractors)
+                contractor_award.save()
+                messages.success(request, 'Contractors Awarded')
+                return redirect('dashboard')
+            except ValidationError as e:
+                messages.error(request, e)
+
+
+        context = {
+            'procurement': procurement,
+            'contractors': contractors,
+            'form': form,
+        }
+        return render(request, self.template_name, context)
+
+
+class ContractorAwardListView(ListView):
+    template_name = 'new/contractor_award_list.html'
+    model = ContractorAward
+    context_object_name = 'awards'
+
+    def get_queryset(self):
+        user = self.request.user
+        account = Account.objects.get(user=user)
+        contractor= Contractors.objects.get(account=account)
+        print(ContractorAward.objects.filter(contractors=contractor))
+        return ContractorAward.objects.filter(contractors=contractor)
 
 
 

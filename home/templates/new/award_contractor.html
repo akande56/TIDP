@@ -1,0 +1,85 @@
+{% extends "new/base.html" %}
+{% load widget_tweaks %}
+{% block content %}
+<div class="body">
+    <div class="container offset-2">
+        <div class="col-6">
+            <div class="card">
+                <div class="card-header py-3 bg-transparent border-bottom-0">
+                    <h2>Award Contractor for Procurement: {{ procurement.title }}</h2>
+                </div>
+                <div class="card-body">
+    
+    
+                    <form method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        
+                        <h3>Select Contractors:</h3>
+                        {% for contractor in contractors %}
+                        <label>
+                            <input type="checkbox" name="contractors" value="{{ contractor.id }}">
+                            {{ contractor.company_name }}
+                        </label><br>
+                        {% endfor %}
+                        <br>
+                        <label for="award_date">Award Date:</label>
+                        {% render_field form.award_date class="form-control" %}
+                        <br>
+                        
+                        <label for="amount">Amount:</label>
+                        {% render_field form.amount class="form-control" %}
+                        <br>
+                    
+                        <label for="document">Document:</label>
+                        {% render_field form.document class="form-control" %}
+                        <br>
+                    
+                        <label for="remarks">Remarks:</label>
+                        {% render_field form.remarks class="form-control" %}
+                        <br>
+                    
+                        <button type="submit" class="btn btn-primary">Award Contractors</button>
+                    </form>
+    
+                    {% if contractors.has_other_pages %}
+                    <div class="pagination">
+                        {% if contractors.has_previous %}
+                        <a href="?page=1">&laquo; First</a>
+                        <a href="?page={{ contractors.previous_page_number }}">Previous</a>
+                        {% endif %}
+                        {% for num in contractors.paginator.page_range %}
+                        {% if contractors.number == num %}
+                        <span class="current">{{ num }}</span>
+                        {% else %}
+                        <a href="?page={{ num }}">{{ num }}</a>
+                        {% endif %}
+                        {% endfor %}
+                        {% if contractors.has_next %}
+                        <a href="?page={{ contractors.next_page_number }}">Next</a>
+                        <a href="?page={{ contractors.paginator.num_pages }}">Last &raquo;</a>
+                        {% endif %}
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock content %}
+
+{% block javascript %}
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+<link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<script>
+    $(document).ready(function() {
+        $(".datepicker").datepicker({
+            dateFormat: 'yy-mm-dd', // Set the date format as desired
+            changeMonth: true,
+            changeYear: true,
+            yearRange: "-100:+0" // Adjust the year range as needed
+        });
+    });
+</script>
+{% endblock javascript %}

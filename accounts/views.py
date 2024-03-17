@@ -66,7 +66,7 @@ def login_(request):
 
 def show_notifications(request):
     user = request.user
-    notifications = Notification.objects.filter(user=user, is_read=False)[:5]  # Limit to the latest 5
+    notifications = Notification.objects.filter(user=user, is_read=False)[:8]  # Limit to the latest 8
     return JsonResponse({'notifications': [{'message': n.message, 'created_at': n.created_at} for n in notifications]})
 
 def mark_notifications_as_read(request):

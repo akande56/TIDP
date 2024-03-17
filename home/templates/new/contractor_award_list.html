@@ -1,0 +1,85 @@
+{% extends "new/base.html" %}
+{% load widget_tweaks %}
+
+{% block content %}
+  <div class="body d-flex py-3">
+    <div class="container-xxl">
+        <div class="col-sm-12">
+            <div class="card mb-3">
+                <div class="card-body">
+                    <table id="myProjectTable" class="table table-hover align-middle mb-0" style="width:100%">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Project Name</th>
+                                <th>Contractors</th>
+                                <th>Award date</th>
+                                <th>Amount</th>
+                                <th>remark</th>
+                                <th>document</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for award in awards %}
+                            <tr>
+                                <td>
+                                    <span class="fw-bold"></span>
+                                </td>
+                                <td>
+                                    <span class="fw-bold ms-1"> {{award.procurement.title}} </span>
+                                </td>
+                                <td>
+                                    
+                                    {% for contractor in award.contractors.all %}
+                                            <p>{{ contractor.company_name }}</p>
+                                                
+                                        {% endfor %}
+                                </td>
+                                <td>
+                                    {{award.award_date}}
+                                </td>
+                                <td>
+                                    {{award.amount}}
+                                </td>
+                                <td>
+                                    
+                                    <!-- Click display using Bootstrap modal -->
+                                    <button type="button" class="btn " data-toggle="modal" data-target="#remarkModal{{ award.id }}">
+                                        Click for Remark
+                                    </button>
+    
+                                    <!-- Bootstrap Modal for click display -->
+                                    <div class="modal fade" id="remarkModal{{ award.id }}" tabindex="-1" role="dialog" aria-labelledby="remarkModalLabel{{ award.id }}" aria-hidden="true">
+                                        <div class="modal-dialog" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="remarkModalLabel{{ award.id }}">Click Remark</h5>
+                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    {{ award.remarks }}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>
+                                    {% if award.document %}
+                                    <a href="{{award.document.url}}" target="_blank">view</a>
+                                    {% endif %}
+                                </td>
+                            </tr>
+                            {% endfor %}
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+  </div>
+{% endblock content %}<div class="row clearfix g-3">
+                

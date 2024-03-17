@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Routing Details</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+        }
+
+        .container {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .details-column {
+            width: 48%; /* Adjust as needed */
+        }
+
+        a {
+            color: blue;
+            text-decoration: underline;
+        }
+
+        .comment {
+            border-bottom: 1px solid #ddd;
+            padding-bottom: 10px;
+            margin-bottom: 10px;
+            background-color: #f9f9f9;
+        }
+
+        .comment h3 {
+            margin-top: 0;
+        }
+
+        .signature {
+            width: 50px;
+            height: 25px;
+        }
+
+        #downloadPdf {
+            display: block;
+            margin-top: 20px;
+            color: #fff;
+            background-color: #007bff;
+            padding: 10px;
+            text-align: center;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Routing Details</h1>
+    
+    <div class="container">
+        <div class="details-column">
+            <h2>Routing Details</h2>
+            <p>Sender: {{ routing.forwarded_by }}</p>
+            <p>Receiver: {{ routing.send_to }}</p>
+            <p>Intended Unit: {{ routing.intended_unit }}</p>
+            <p>Sender Stage: {{ routing.sender_stage }}</p>
+            <p>Receiver Stage: {{ routing.reciever_stage }}</p>
+        </div>
+
+        <div class="details-column">
+            <h2>Folder Details</h2>
+            <p>Title: {{ folder.title }}</p>
+            <p>Unique Identifier: {{ folder.unique_identifier }}</p>
+            <p>Created By: {{ folder.created_by }}</p>
+            <p>Draft: {{ folder.draft }}</p>
+            <p>Archive: {{ folder.archive }}</p>
+            <p>Urgent: {{ folder.urgent }}</p>
+        </div>
+    </div>
+
+    <h2>Folder Content</h2>
+    <ul>
+        {% for item in folder.folder_content.all %}
+            <li>{{ item.title }}</li>
+            <p>{{ item.content }}</p>
+        {% endfor %}
+    </ul>
+
+    <h2>Attached Files</h2>
+    <ul>
+        {% for file in files %}
+            <li><a href="{{ file.media.url }}">{{ file.name }}</a></li>
+        {% endfor %}
+    </ul>
+
+    <h2>Comments</h2>
+    {% for comment in comments %}
+        <div class="comment">
+            <h3>{{ comment.account }}</h3>
+            <p>{{ comment.content }}</p>
+            {% if comment.account.signature %}
+                <img src="{{ comment.account.signature.url }}" alt="Signature" class="signature">
+            {% endif %}
+        </div>
+    {% endfor %}
+
+    <a href="#" id="downloadPdf">Download as PDF</a>
+
+    <script>
+        document.getElementById('downloadPdf').addEventListener('click', function() {
+            window.print();  // Use window.print() to trigger the browser's print dialog
+        });
+    </script>
+</body>
+</html>

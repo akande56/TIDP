@@ -68,3 +68,12 @@ class Procurement_tender_doc(models.Model):
 
     def __str__(self):
         return f"{self.contractor.company_name} - {self.precurement.title}"
+
+
+class ContractorAward(models.Model):
+    procurement = models.ForeignKey(Precurement, on_delete=models.CASCADE)
+    contractors = models.ManyToManyField(Contractors)
+    award_date = models.DateField()
+    amount = models.DecimalField(max_digits=10, decimal_places=2)
+    document = models.ImageField(upload_to='awarding_documents/', null=True, blank=True)
+    remarks = models.TextField(null=True, blank=True) 
