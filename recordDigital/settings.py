@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'ckeditor_uploader',
     # 'pwa',
     "debug_toolbar",
+    "crispy_forms",
 ]
 
 LOCAL_APPS = [

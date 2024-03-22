@@ -24,7 +24,6 @@ class Schedule_Meeting(models.Model):
     paticipants = models.ManyToManyField(Account, related_name="paticipant")
     venue = models.CharField(max_length=1000, null=True, blank=True, choices=VENUE)
     description = RichTextField(blank=True, null=True)
-    agenda = RichTextField(blank=True, null=True)
     draft = models.BooleanField(default=False)
     minutes_of_meeting = RichTextField(blank=True, null=True)
     done = models.BooleanField(default=False)
@@ -34,6 +33,14 @@ class Schedule_Meeting(models.Model):
     address = models.CharField(max_length=50, null=True, blank=True)
     link = models.CharField(max_length=50, null=True, blank=True)
     status = models.CharField(max_length=100,choices=STATUS, default='all')
+
+class Agenda(models.Model):
+    meeting = models.ForeignKey(Schedule_Meeting, on_delete=models.CASCADE, related_name='agendas')
+    agenda = models.CharField(max_length=500)
+    minutes = models.IntegerField(blank=True, null=True) 
+
+    def __str__(self):
+        return self.agenda
 
 class OnlineMeeting(models.Model):
     meeting = models.ForeignKey(Schedule_Meeting, on_delete=models.CASCADE)

@@ -55,132 +55,146 @@
         <!-- Row end  -->
         <div class="row clearfix g-3">
             <div class="col-sm-12">
-                  <div class="card mb-3">
-                      <div class="card-body">
-                          <table id="myProjectTable" class="table table-hover align-middle mb-0" style="width:100%">
-                              <thead>
-                                  <tr>
-                                      <th>S/N</th>
-                                      <th>Date</th>
-                                      <th>Venue</th>
-                                      <th>Scheduled By</th>
-                                      <th>Status</th>
-                                      <th>Actions</th>
-                                  </tr>
-                              </thead>
-                              <tbody>
-                                    {% for meeting in meetings %}
-                                        <tr>
-                                            <td>
-                                                <span class="fw-bold ms-1">{{ meeting.title }}</span>
-                                            </td>
-                                            <td>
-                                                <p>{{ meeting.start_time }} {{ meeting.start_on }} to {{ meeting.start_time }} {{ meeting.start_on }} </p>
-                                            </td>
-                                            <td>
-                                                <p>{{ meeting.venue }}</p> 
-                                            </td>
-                                            <td>
-                                                <p>{{ meeting.scheduled_by.user.first_name }}</p>
-                                            </td>
-                                            <td>
-                                                {% if meeting.done %}
-                                                        <span class="badge bg-success">    
-                                                            Finished
-                                                    {% else %}
-                                                        <span class="badge bg-warning">
-                                                            Up Comming
-                                                    {% endif %}
-                                                </span>
-                                            </td>
-                                            <td>
-                                                <div class="btn-group" role="group" aria-label="Basic outlined example">
-                                                    <button type="button" class="btn btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#editmeeting{{ meeting.id }}"><i class="icofont-edit text-success"></i></button>
-                                                        <button type="button" class="btn btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#deletemeeting{{ meeting.id}}"><i class="icofont-ui-delete text-danger"></i></button>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                    {% endfor %}
-                              </tbody>
-                          </table>
-                      </div>
-                  </div>
+                <div class="card mb-3">
+                    <div class="card-body">
+                        <table id="myProjectTable" class="table table-hover align-middle mb-0" style="width:100%">
+                            <thead>
+                                <tr>
+                                    <th>S/N</th>
+                                    <th>Title</th>
+                                    <th>Date</th>
+                                    <th>Venue</th>
+                                    <th>Scheduled By</th>
+                                    <th>Status</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for meeting in meetings %}
+                                <tr>
+                                    <td>{{ forloop.counter }}</td>
+                                    <td>{{ meeting.title }}</td>
+                                    <td>
+                                        <p>{{ meeting.start_on|date:"D, d M Y" }} {{ meeting.start_time|time:"h:i A" }} to {{ meeting.end_on|date:"D, d M Y" }} {{ meeting.end_time|time:"h:i A" }}</p>
+                                    </td>
+                                    <td>{{ meeting.venue }}</td>
+                                    <td>{{ meeting.scheduled_by.user.first_name }}</td>
+                                    <td>
+                                        {% if meeting.done %}
+                                        <span class="badge bg-success">Finished</span>
+                                        {% else %}
+                                        <span class="badge bg-warning">Upcoming</span>
+                                        {% endif %}
+                                    </td>
+                                    <td>
+                                        <div class="btn-group" role="group" aria-label="Basic outlined example">
+                                            <button type="button" class="btn btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#editmeeting{{ meeting.id }}"><i class="icofont-edit text-success"></i></button>
+                                            <button type="button" class="btn btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#deleteMeetingModal{{ meeting.id }}"><i class="icofont-ui-delete text-danger"></i></button>
+                                        </div>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
             </div>
-          </div><!-- Row End -->
+        </div>
     </div>
 </div>
 
 <!-- Create task-->
 <div class="modal fade" id="createmeet" tabindex="-1"  aria-hidden="true">
     <form action="{% url 'meeting' %}" method="POST" enctype="multipart/form-data" class="your-form-class">
-         {% csrf_token %}
+        {% csrf_token %}
         <div class="modal-dialog modal-dialog-centered modal-md modal-dialog-scrollable">
             <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title  fw-bold" id="createprojectlLabel"> Schedule Meeting</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>                    
-                    <div class="modal-body">
-                        <div class="mb-3">
-                            <label  class="form-label">Meeting Title</label>
-                            {% render_field form.title  class="form-control"  %}
-                        </div>
-                        <div class="mb-3">
-                            <label  class="form-label">Description </label>
-                            {% render_field form.description  class="form-control" cols="50" rows="2"  %}
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label">Agenda</label>
-                        <textarea  name="{{ form.agenda.html_name }}" class="form-control" id="{{form.agenda.id_for_label}}" rows="3" >{{ meeting.agenda }}</textarea>
-                        </div>
-                        <div class="deadline-form mb-3">
-                            <div class="row">
-                                <div class="col">
-                                    <label for="datepickerded" class="form-label">From</label>
-                                    {% render_field form.start_on type="date" class="form-control" id="datepickerded" %}  <br/>
-                                    {% render_field form.start_time type="time" class="form-control" id="timepickerded1" value="08:00:00" %}
-                                </div>
-                                <div class="col">
-                                    <label for="datepickerdedone" class="form-label">To</label>
-                                    {% render_field form.end_on type="date" class="form-control" id="datepickerded" %}<br/>
-                                    {% render_field form.end_time type="time" class="form-control" id="timepickerded1" value="08:00:00" %}
-                                </div>
+                <div class="modal-header">
+                    <h5 class="modal-title fw-bold">Schedule Meeting</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>                    
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label class="form-label">Meeting Title</label>
+                        <input type="text" class="form-control" name="title">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Description</label>
+                        <textarea class="form-control" name="description" cols="50" rows="2"></textarea>
+                    </div>
+                    <div class="deadline-form mb-3">
+                        <div class="row">
+                            <div class="col">
+                                <label class="form-label">From</label>
+                                <input type="date" class="form-control" name="start_on"><br/>
+                                <input type="time" class="form-control" name="start_time" value="08:00:00">
                             </div>
-                        </div>
-                        <div class="mb-3">
-                            <label for="formFile" class="form-label">Attachment</label>
-                            <input type="file" class="form-control" id="{{ form.attachment.id_for_label }}" name="{{ form.attachment.html_name }}">
-                            
-                        </div>                      
-                        <div class="row g-3 mb-3">
-                            <div class="col-sm">
-                                <label  class="form-label">Paticipants</label>
-                                {% render_field form.paticipants class="form-select" %}
-                            </div>
-                        </div>
-                        <div class="row g-3 mb-3">
-                            <div class="col-sm">
-                                <label class="form-label">Venue</label>
-                                {% render_field form.venue class="form-select" id="venueField" %}
-                            </div>
-                        </div>
-                        <div class="row g-3 mb-3" id="addressField">
-                            <div class="col-sm">
-                                <label class="form-label">Address</label>
-                                {% render_field form.address class="form-control" %}
-                            </div>
-                        </div>
-                        <div class="row g-3 mb-3" id="linkField">
-                            <div class="col-sm">
-                                <label class="form-label">Link</label>
-                                {% render_field form.link class="form-control" %}
+                            <div class="col">
+                                <label class="form-label">To</label>
+                                <input type="date" class="form-control" name="end_on"><br/>
+                                <input type="time" class="form-control" name="end_time" value="08:00:00">
                             </div>
                         </div>
                     </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Done</button>
-                        <button type="submit" class="btn btn-primary">Create</button>
+                    <div class="mb-3">
+                        <label class="form-label">Attachment</label>
+                        <input type="file" class="form-control" name="attachment">
                     </div>
+                    <div class="row g-3 mb-3">
+                        <div class="col-sm">
+                            <label class="form-label">Participants</label>
+                                <select class="form-select" multiple name="participants">
+                                    {% for participant in participants %}
+                                        <option value="{{ participant.id }}">{{ participant.user.first_name }}</option>
+                                    {% endfor %}
+                                </select>
+                        </div>
+                    </div>
+                    <div class="row g-3 mb-3">
+                        <div class="col-sm">
+                            <label class="form-label">Venue</label>
+                            <select class="form-select" id="venueField" name="venue">
+                                <option value="physical">Physical</option>
+                                <option value="online">Online</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row g-3 mb-3" id="addressField">
+                        <div class="col-sm">
+                            <label class="form-label">Address</label>
+                            <input type="text" class="form-control" name="address">
+                        </div>
+                    </div>
+                    <div class="row g-3 mb-3" id="linkField">
+                        <div class="col-sm">
+                            <label class="form-label">Link</label>
+                            <input type="text" class="form-control" name="link">
+                        </div>
+                    </div>
+                    
+                    <hr>
+                    <h4>Agenda</h4>
+                    <div id="agenda-container">
+                        <div class="row form-row agenda-row">
+                            <div class="form-group col-md-5">
+                                <input type="text" class="form-control" name="agenda[]" placeholder="Agenda">
+                            </div>
+                            <div class="form-group col-md-5">
+                                <input type="number" class="form-control" name="minutes[]" placeholder="Minutes">
+                            </div>
+                            <div class="form-group col-md-2">
+                                <button type="button" class="btn btn-danger delete-agenda">Delete</button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <button type="button" class="btn btn-success mt-2" onclick="addAgenda()">Add Agenda</button>
+                    
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Done</button>
+                    <button type="submit" class="btn btn-primary">Create</button>
+                </div>
             </div>
         </div>
     </form>
@@ -188,92 +202,139 @@
 
 
 {% for meeting in meetings  %}
-<div class="modal fade" id="editmeeting{{meeting.id}}" tabindex="-1" aria-labelledby="addUserLabel" aria-hidden="true">
+<div class="modal fade" id="editmeeting{{ meeting.id }}" tabindex="-1" aria-labelledby="addUserLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-lg">
-    <div class="modal-content">
-        <div class="modal-header">
-            <h5 class="modal-title  fw-bold" id="addUserLabel">Edit Meeting</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-            <form action="{% url 'edit_meeting' meeting.id %}" method="POST" enctype="multipart/form-data" class="your-form-class">
-                {% csrf_token %}
-                <div class="modal-dialog modal-dialog-centered modal-md modal-dialog-scrollable">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title fw-bold" id="createprojectlLabel">Schedule Meeting</h5>
-                            
-                        </div>
-                        <div class="modal-body">
-                            <div class="mb-3">
-                                <label class="form-label">Meeting Title</label>
-                                {% render_field form.title class="form-control" value=meeting.title %}
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title fw-bold" id="addUserLabel">Edit Meeting</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form action="{% url 'edit_meeting' meeting.id %}" method="POST" enctype="multipart/form-data" class="your-form-class">
+                    {% csrf_token %}
+                    <div class="modal-dialog modal-dialog-centered modal-md modal-dialog-scrollable">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title fw-bold" id="createprojectlLabel">Schedule Meeting</h5>
                             </div>
-                            <div class="mb-3">
-                                <label class="form-label">Description</label>
-                            <textarea  name="{{ form.description.html_name }}" class="form-control" id="{{form.description.id_for_label}}" rows="3" >{{ meeting.description }}</textarea>
-                            </div>
-                            <div class="mb-3">
-                                <label class="form-label">Agenda</label>
-                            <textarea  name="{{ form.agenda.html_name }}" class="form-control" id="{{form.agenda.id_for_label}}" rows="3" >{{ meeting.agenda }}</textarea>
-                            </div>
-                            <div class="deadline-form mb-3">
-                                <div class="row">
-                                    <div class="col">
-                                        <label for="datepickerded" class="form-label">From</label>
-                                        {% render_field form.start_on type="date" class="form-control" id="datepickerded" value=meeting.start_on %}
-                                        <br/>
-                                        {% render_field form.start_time type="time" class="form-control" id="timepickerded1" value=meeting.start_time %}
-                                    </div>
-                                    <div class="col">
-                                        <label for="datepickerdedone" class="form-label">To</label>
-                                        {% render_field form.end_on type="date" class="form-control" id="datepickerded" value=meeting.end_on %}
-                                        <br/>
-                                        {% render_field form.end_time type="time" class="form-control" id="timepickerded1" value=meeting.end_time %}
-                                    </div>
+                            <div class="modal-body">
+                                <div class="mb-3">
+                                    <label class="form-label">Meeting Title</label>
+                                    <input type="text" class="form-control" name="title" value="{{ meeting.title }}">
                                 </div>
-                            </div>
-                            <div class="mb-3">
-                                <label for="{{ form.attachment.id_for_label }}" class="form-label">Attachment</label>
-                            {% if meeting.attachment %}
-                            <p>Current File: <a href="{{ meeting.attachment.url }}" target="_blank">{{ meeting.attachment.name }}</a></p>
-                            {% endif %}
-                            <input type="file" class="form-control" id="{{ form.attachment.id_for_label }}" name="{{ form.attachment.html_name }}">
-                            </div>
-                            <div class="row g-3 mb-3">
-                                <div class="col-sm">
-                                    <label class="form-label">Participants</label>
-                                    {% render_field form.paticipants class="form-select" %}
+                                <div class="mb-3">
+                                    <label class="form-label">Description</label>
+                                    <textarea name="description" class="form-control" rows="3">{{ meeting.description }}</textarea>
                                 </div>
                                 
-                            </div>
-                            <div class="row g-3 mb-3" id="venueField">
-                                <div class="col-sm">
-                                    <label class="form-label">Venue</label>
-                                    {% render_field form.venue class="form-select" value=meeting.vanue  %}
-                                    
+                                <div class="deadline-form mb-3">
+                                    <div class="row">
+                                        <div class="col">
+                                            <label for="datepickerded" class="form-label">From</label>
+                                            <input type="date" class="form-control" name="start_on" value="{{ meeting.start_on|date:'Y-m-d'  }}">
+                                            <br/>
+                                            <input type="time" class="form-control" name="start_time" value="{{ meeting.start_time|time:'H:i' }}">
+                                        </div>
+                                        <div class="col">
+                                            <label for="datepickerdedone" class="form-label">To</label>
+                                            <input type="date" class="form-control" name="end_on" value="{{ meeting.end_on|date:'Y-m-d'  }}">
+                                            <br/>
+                                            <input type="time" class="form-control" name="end_time" value="{{ meeting.end_time|time:'H:i' }}">
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="row g-3 mb-3" id="addressField">
-                                <div class="col-sm">
-                                    <label class="form-label">Address</label>
-                                    {% render_field form.address class="form-control" value=meeting.address %}
+                                <div class="mb-3">
+                                    <label for="attachment" class="form-label">Attachment</label>
+                                    {% if meeting.attachment %}
+                                        <p>Current File: <a href="{{ meeting.attachment.url }}" target="_blank">{{ meeting.attachment.name }}</a></p>
+                                    {% endif %}
+                                    <input type="file" class="form-control" name="attachment">
                                 </div>
-                            </div>
-                            <div class="row g-3 mb-3" id="linkField">
-                                <div class="col-sm">
-                                    <label class="form-label">Link</label>
-                                    {% render_field form.link class="form-control" value=meeting.link %}
+                                <div class="row g-3 mb-3">
+                                    <div class="col-sm">
+                                        <label class="form-label">Participants</label>
+                                        <select class="form-select" multiple name="participants">
+                                            {% for participant in participants %}
+                                                <option value="{{ participant.id }}" {% if participant in meeting.participants.all %}selected{% endif %}>{{ participant.user.first_name }}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
                                 </div>
+                                <div class="row g-3 mb-3" id="venueField">
+                                    <div class="col-sm">
+                                        <label class="form-label">Venue</label>
+                                        <select class="form-select" id="venue" name="venue">
+                                            <option value="physical" {% if meeting.venue == "physical" %}selected{% endif %}>Physical</option>
+                                            <option value="online" {% if meeting.venue == "online" %}selected{% endif %}>Online</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="row g-3 mb-3" id="addressField">
+                                    <div class="col-sm">
+                                        <label class="form-label">Address</label>
+                                        <input type="text" class="form-control" name="address" value="{{ meeting.address }}">
+                                    </div>
+                                </div>
+                                <div class="row g-3 mb-3" id="linkField">
+                                    <div class="col-sm">
+                                        <label class="form-label">Link</label>
+                                        <input type="text" class="form-control" name="link" value="{{ meeting.link }}">
+                                    </div>
+                                </div>
+                                <h4>Agenda</h4>
+                                <div id="edit-agenda-container{{ meeting.id }}">
+                                    {% for agenda in meeting.agendas.all %}
+                                    <div class="row form-row agenda-row">
+                                        <div class="form-group col-md-5">
+                                            <input type="text" class="form-control" name="agenda[]" value="{{ agenda.agenda }}" placeholder="Agenda">
+                                        </div>
+                                        <div class="form-group col-md-5">
+                                            <input type="number" class="form-control" name="minutes[]" value="{{ agenda.minutes }}" placeholder="Minutes">
+                                        </div>
+                                        <div class="form-group col-md-2">
+                                            <button type="button" class="btn btn-danger edit-delete-agenda" data-agenda-id="{{ agenda.id }}">Delete</button>
+                                        </div>
+                                    </div>
+                                    {% endfor %}
+                                </div>
+                                <!-- Add Agenda button -->
+                                <button type="button" class="btn btn-success mt-2 edit-add-agenda" data-meeting-id="{{ meeting.id }}">Add Agenda</button>
                             </div>
-                        </div>
-                        <div class="modal-footer">
-                            
-                            <button type="submit" class="btn btn-primary">Update</button>
+                            <div class="modal-footer">
+                                <button type="submit" class="btn btn-success">Update</button>
+                            </div>
                         </div>
                     </div>
-                </div>
-            </form>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- delete -->
+<div class="modal fade" id="deleteMeetingModal{{ meeting.id }}" tabindex="-1" aria-labelledby="deleteMeetingModalLabel{{ meeting.id }}" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="deleteMeetingModalLabel{{ meeting.id }}">Confirm Deletion</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>Are you sure you want to delete this meeting?</p>
+                <p>Meeting title: {{meeting.title}}</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                <!-- Form to trigger deletion -->
+                <form action="{% url 'delete_schedule_meeting' meeting.id %}" method="post">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-danger">Delete</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
             <!-- <div class="inviteby_email">
                 <div class="input-group mb-3">
                     <input type="email" class="form-control" placeholder="Paticipant"  aria-describedby="exampleInputEmail1">
@@ -430,26 +491,98 @@
     $(document).ready(function() {
         // Hide address and link fields initially
         $("#addressField").hide();
-        $("#linkField").hide();
+            $("#linkField").hide();
 
-        // Attach change event to the venue field
-        $("#venueField").change(function() {
-            // Check the selected value
-            var selectedValue = $(this).val();
+            // Attach change event to the venue field
+            $("#venueField").change(function() {
+                // Check the selected value
+                var selectedValue = $(this).val();
 
-            // Toggle visibility of address and link fields based on the selected value
-            if (selectedValue === "physical") {
-                $("#addressField").show();
-                $("#linkField").hide();
-            } else if (selectedValue === "online") {
-                $("#addressField").hide();
-                $("#linkField").show();
-            } else {
-                $("#addressField").hide();
-                $("#linkField").hide();
-            }
+                // Toggle visibility of address and link fields based on the selected value
+                if (selectedValue === "physical") {
+                    $("#addressField").show();
+                    $("#linkField").hide();
+                } else if (selectedValue === "online") {
+                    $("#addressField").hide();
+                    $("#linkField").show();
+                } else {
+                    $("#addressField").hide();
+                    $("#linkField").hide();
+                }
+            });
+        });
+</script>
+
+<script>
+    function addAgenda() {
+        var agendaContainer = document.getElementById('agenda-container');
+        var newAgendaDiv = document.createElement('div');
+        newAgendaDiv.classList.add('form-row', 'agenda-row', 'row', 'mt-2');
+        newAgendaDiv.innerHTML = `
+            <div class="form-group col-md-5">
+                <input type="text" class="form-control" name="agenda[]" placeholder="Agenda">
+            </div>
+            <div class="form-group col-md-5">
+                <input type="number" class="form-control" name="minutes[]" placeholder="Minutes">
+            </div>
+            <div class="form-group col-md-2">
+                <button type="button" class="btn btn-danger delete-agenda">Delete</button>
+            </div>
+        `;
+        agendaContainer.appendChild(newAgendaDiv);
+
+        // Add event listener to delete button
+        var deleteButton = newAgendaDiv.querySelector('.delete-agenda');
+        deleteButton.addEventListener('click', function() {
+            newAgendaDiv.remove();
+        });
+    }
+</script>
+<!-- edit -->
+<script>
+    $(document).ready(function() {
+        // Delete agenda item
+        $(document).on('click', '.edit-delete-agenda', function() {
+            var agendaId = $(this).data('agenda-id');
+            $.ajax({
+                type: 'POST',
+                url: 'meet/delete_agenda/' + agendaId + '/',
+                data: {
+                    'agenda_id': agendaId,
+                    'csrfmiddlewaretoken': '{{ csrf_token }}'
+                },
+                success: function(response) {
+                    // Remove the deleted agenda row from the DOM
+                    $('[data-agenda-id="' + agendaId + '"]').closest('.agenda-row').remove();
+                }
+            });
+        });
+
+    });
+</script>
+<script>
+    // Event listener for the add button in edit form
+    $('.edit-add-agenda').on('click', function() {
+        var meetingId = $(this).data('meeting-id');
+        var agendaContainer = $('#edit-agenda-container' + meetingId);
+        var newAgendaDiv = $('<div>').addClass('row form-row agenda-row');
+        newAgendaDiv.html(`
+            <div class="form-group col-md-5">
+                <input type="text" class="form-control" name="agenda[]" placeholder="Agenda">
+            </div>
+            <div class="form-group col-md-5">
+                <input type="number" class="form-control" name="minutes[]" placeholder="Minutes">
+            </div>
+            <div class="form-group col-md-2">
+                <button type="button" class="btn btn-danger edit-delete-agenda" data-agenda-id="{{ agenda.id }}">Delete</button>
+            </div>
+        `);
+        agendaContainer.append(newAgendaDiv);
+        
+        // Add event listener to delete button
+        newAgendaDiv.find('.edit-delete-agenda').on('click', function() {
+            $(this).closest('.agenda-row').remove();
         });
     });
 </script>
-
 {% endblock scripts %}

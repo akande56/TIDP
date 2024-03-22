@@ -1,9 +1,12 @@
 from dataclasses import field
 from django import forms
+from django.forms.widgets import ClearableFileInput
 from .models import File, Folder, File
 from home.models import Unit
 from accounts.models import Account
 from ckeditor.widgets import CKEditorWidget
+
+
 
 class InternalMemoForm(forms.ModelForm):
     content = forms.CharField(required=True, widget=CKEditorWidget())
@@ -60,13 +63,16 @@ class CommentForm(forms.Form):
         attrs={'placeholder': "Comment",  'rows':"4", "cols": "4", "class": 'form-control'}
     ))
 
+# due to update from django 3.1 to 4.2.11; error in multiple file, had to override clearablefileinput to True
+class MultipleFileInput(ClearableFileInput):
+    allow_multiple_selected = True
 
 class CombineInternalMemoForm_UploadForm(forms.Form):
     title = forms.CharField(max_length=255)
     unique_identifier = forms.CharField(max_length=8, required=False)
     content = forms.CharField(widget=CKEditorWidget(), required=True, max_length=1000)
     send_to = forms.ModelChoiceField(required=True, queryset=Unit.objects.all())
-    media = forms.ImageField(label='Attachment', widget=forms.ClearableFileInput(attrs={'multiple': True}), required=False)
+    media = forms.ImageField(label='Attachment', widget=MultipleFileInput, required=False)
     name = forms.CharField(max_length=1000, required=False)
     created_by = forms.ModelChoiceField(queryset=Account.objects.all(), required=False)
     draft = forms.BooleanField(initial=True, required=False)
