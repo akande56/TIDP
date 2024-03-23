@@ -59,6 +59,7 @@ def meeting(request):
         venue = request.POST.get('venue')
         description = request.POST.get('description')
         attachment = request.FILES.get('attachment')
+
         if not attachment:
             return HttpResponseBadRequest('No file provided.')
 
@@ -71,6 +72,7 @@ def meeting(request):
         link = request.POST.get('link')
         agendas = request.POST.getlist('agenda[]')
         minutes = request.POST.getlist('minutes[]')
+        total_minutes = sum(int(minute) for minute in minutes if minute)
        
         # Create Schedule_Meeting instance
         my_account = Account.objects.get(user=request.user)
@@ -86,7 +88,8 @@ def meeting(request):
             description=description,
             attachment=attachment,
             address=address,
-            link=link
+            link=link,
+            minutes_of_meeting = total_minutes
         )
         # Add participants
         for participant_id in participants:
@@ -205,6 +208,7 @@ def edit_meeting(request, meeting_id):
         link = request.POST.get('link')
         agendas = request.POST.getlist('agenda[]')
         minutes = request.POST.getlist('minutes[]')
+        total_minutes = sum(int(minute) for minute in minutes if minute)
        
         # Update meeting instance
         meeting.title = title
@@ -217,12 +221,13 @@ def edit_meeting(request, meeting_id):
         meeting.attachment = attachment
         meeting.address = address
         meeting.link = link
+        meeting.minutes_of_meeting = total_minutes
 
         # Update participants
         meeting.paticipants.clear()
         for participant_id in participants:
             meeting.paticipants.add(participant_id)
-        print('scu....')
+        
         meeting.save()
         
         # Update or create agenda instances

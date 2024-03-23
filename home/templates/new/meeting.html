@@ -154,6 +154,7 @@
                         <div class="col-sm">
                             <label class="form-label">Venue</label>
                             <select class="form-select" id="venueField" name="venue">
+                                <option value="physical">----------</option>
                                 <option value="physical">Physical</option>
                                 <option value="online">Online</option>
                             </select>
@@ -180,14 +181,17 @@
                                 <input type="text" class="form-control" name="agenda[]" placeholder="Agenda">
                             </div>
                             <div class="form-group col-md-5">
-                                <input type="number" class="form-control" name="minutes[]" placeholder="Minutes">
+                                <input type="number" class="form-control create-minutes-input" name="minutes[]" placeholder="Minutes">
                             </div>
                             <div class="form-group col-md-2">
                                 <button type="button" class="btn btn-danger delete-agenda">Delete</button>
                             </div>
                         </div>
                     </div>
-                    
+                    <div class="mb-3">
+                        <label class="form-label">Minutes of Meeting</label>
+                        <textarea id="create-minutes-of-meeting" name="minutes_of_meeting" class="form-control" rows="1"></textarea>
+                    </div>
                     <button type="button" class="btn btn-success mt-2" onclick="addAgenda()">Add Agenda</button>
                     
                 </div>
@@ -289,7 +293,7 @@
                                             <input type="text" class="form-control" name="agenda[]" value="{{ agenda.agenda }}" placeholder="Agenda">
                                         </div>
                                         <div class="form-group col-md-5">
-                                            <input type="number" class="form-control" name="minutes[]" value="{{ agenda.minutes }}" placeholder="Minutes">
+                                            <input type="number" class="form-control edit-minutes-input" name="minutes[]" value="{{ agenda.minutes }}" placeholder="Minutes">
                                         </div>
                                         <div class="form-group col-md-2">
                                             <button type="button" class="btn btn-danger edit-delete-agenda" data-agenda-id="{{ agenda.id }}">Delete</button>
@@ -297,6 +301,11 @@
                                     </div>
                                     {% endfor %}
                                 </div>
+                                <div class="mb-3">
+                                    <label class="form-label">Minutes of Meeting</label>
+                                    <textarea id="edit-minutes-of-meeting{{ meeting.id }}" name="minutes_of_meeting" class="form-control" rows="1">{{ meeting.minutes_of_meeting }}</textarea>
+                                </div>
+                                
                                 <!-- Add Agenda button -->
                                 <button type="button" class="btn btn-success mt-2 edit-add-agenda" data-meeting-id="{{ meeting.id }}">Add Agenda</button>
                             </div>
@@ -513,6 +522,7 @@
         });
 </script>
 
+<!-- create agenda -->
 <script>
     function addAgenda() {
         var agendaContainer = document.getElementById('agenda-container');
@@ -523,7 +533,7 @@
                 <input type="text" class="form-control" name="agenda[]" placeholder="Agenda">
             </div>
             <div class="form-group col-md-5">
-                <input type="number" class="form-control" name="minutes[]" placeholder="Minutes">
+                <input type="number" class="form-control create-minutes-input" name="minutes[]" placeholder="Minutes">
             </div>
             <div class="form-group col-md-2">
                 <button type="button" class="btn btn-danger delete-agenda">Delete</button>
@@ -535,10 +545,35 @@
         var deleteButton = newAgendaDiv.querySelector('.delete-agenda');
         deleteButton.addEventListener('click', function() {
             newAgendaDiv.remove();
+            updateTotalMinutes();
         });
+
+        updateTotalMinutes();
     }
+
+    function updateTotalMinutes() {
+        var totalMinutes = calculateTotalMinutes();
+        // Set the total minutes value to the "Minutes of Meeting" field
+        document.getElementById('create-minutes-of-meeting').value = totalMinutes;
+    }
+
+    function calculateTotalMinutes() {
+        var totalMinutes = 0;
+        var minutesInputs = document.querySelectorAll('.create-minutes-input');
+        minutesInputs.forEach(function(input) {
+            if (input.value) {
+                console.log('inpit value')
+                console.log(input.value)
+                totalMinutes += parseInt(input.value);
+            }
+        });
+        return totalMinutes;
+    }
+
 </script>
-<!-- edit -->
+
+
+<!-- edit agenda -->
 <script>
     $(document).ready(function() {
         // Delete agenda item
@@ -557,11 +592,14 @@
                 }
             });
         });
-
     });
-</script>
-<script>
-    // Event listener for the add button in edit form
+
+$(document).ready(function() {
+        editUpdateTotalMinutes();
+    });
+    
+// Event listener for the add button in edit form
+$(document).ready(function() {
     $('.edit-add-agenda').on('click', function() {
         var meetingId = $(this).data('meeting-id');
         var agendaContainer = $('#edit-agenda-container' + meetingId);
@@ -571,18 +609,38 @@
                 <input type="text" class="form-control" name="agenda[]" placeholder="Agenda">
             </div>
             <div class="form-group col-md-5">
-                <input type="number" class="form-control" name="minutes[]" placeholder="Minutes">
+                <input type="number" class="form-control edit-minutes-input" name="minutes[]" placeholder="Minutes">
             </div>
             <div class="form-group col-md-2">
                 <button type="button" class="btn btn-danger edit-delete-agenda" data-agenda-id="{{ agenda.id }}">Delete</button>
             </div>
         `);
         agendaContainer.append(newAgendaDiv);
-        
+
         // Add event listener to delete button
         newAgendaDiv.find('.edit-delete-agenda').on('click', function() {
             $(this).closest('.agenda-row').remove();
+            editUpdateTotalMinutes(meetingId); // Update total minutes after deleting agenda item
         });
+
+        editUpdateTotalMinutes(meetingId); // Update total minutes after adding agenda item
     });
+});
+
+function editUpdateTotalMinutes(meetingId) {
+    var totalMinutes = editCalculateTotalMinutes(meetingId);
+    $('#edit-minutes-of-meeting' + meetingId).val(totalMinutes);
+}
+
+function editCalculateTotalMinutes(meetingId) {
+    var totalMinutes = 0;
+    $('#edit-agenda-container' + meetingId + ' .edit-minutes-input').each(function() {
+        var minutes = parseInt($(this).val()) || 0;
+        totalMinutes += minutes;
+    });
+    return totalMinutes;
+}    
+    
 </script>
+
 {% endblock scripts %}
