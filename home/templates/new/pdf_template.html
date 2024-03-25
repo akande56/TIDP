@@ -1,110 +1,79 @@
+{% load static %}
 <!DOCTYPE html>
 <html>
+
 <head>
     <title>Routing Details</title>
-    <style>
-        body {
-            font-family: 'Arial', sans-serif;
-        }
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
+        integrity="sha384-GLhlTQ8iN17SqbEhlZ3Pvu9HqIByQ8FCSsNBIFPz9Obt/9eF5oJQ5I626aRdI1Hf" crossorigin="anonymous">
+    <!-- <link rel="stylesheet" href="{% static 'landing/css/font-awesome.min.css' %}"> -->
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
 
-        .container {
-            display: flex;
-            justify-content: space-between;
-        }
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <!-- <script src="{% static 'landing/js/jquery-3.3.1.min.js' %}"></script> -->
+    <script src="{% static 'js/popper.min.js' %}"></script>
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'bundles/libscripts.bundle.js' %}"></script>
 
-        .details-column {
-            width: 48%; /* Adjust as needed */
-        }
-
-        a {
-            color: blue;
-            text-decoration: underline;
-        }
-
-        .comment {
-            border-bottom: 1px solid #ddd;
-            padding-bottom: 10px;
-            margin-bottom: 10px;
-            background-color: #f9f9f9;
-        }
-
-        .comment h3 {
-            margin-top: 0;
-        }
-
-        .signature {
-            width: 50px;
-            height: 25px;
-        }
-
-        #downloadPdf {
-            display: block;
-            margin-top: 20px;
-            color: #fff;
-            background-color: #007bff;
-            padding: 10px;
-            text-align: center;
-            text-decoration: none;
-            border-radius: 5px;
-        }
-    </style>
 </head>
+
 <body>
-    <h1>Routing Details</h1>
-    
+    <h1 class="text-center">Summary</h1>
+
     <div class="container">
-        <div class="details-column">
+        <!-- <div class="details-column">
             <h2>Routing Details</h2>
             <p>Sender: {{ routing.forwarded_by }}</p>
             <p>Receiver: {{ routing.send_to }}</p>
             <p>Intended Unit: {{ routing.intended_unit }}</p>
             <p>Sender Stage: {{ routing.sender_stage }}</p>
             <p>Receiver Stage: {{ routing.reciever_stage }}</p>
-        </div>
+        </div> -->
 
-        <div class="details-column">
-            <h2>Folder Details</h2>
+        <div class="">
+            <!-- <h2>Folder Details</h2> -->
+            <p>File ID: {{ folder.unique_identifier }}</p>
             <p>Title: {{ folder.title }}</p>
-            <p>Unique Identifier: {{ folder.unique_identifier }}</p>
-            <p>Created By: {{ folder.created_by }}</p>
-            <p>Draft: {{ folder.draft }}</p>
-            <p>Archive: {{ folder.archive }}</p>
-            <p>Urgent: {{ folder.urgent }}</p>
+            <p>Date/Time: {{folder.created}}</p>
+            <p> Initiated Office: {{routing.intended_unit}} </p>
+            <!-- <p>Created By: {{ folder.created_by }}</p> -->
+            <!-- <p>Draft: {{ folder.draft }}</p> -->
+            <!-- <p>Archive: {{ folder.archive }}</p> -->
+            <!-- <p>Urgent: {{ folder.urgent }}</p> -->
+        </div>
+        <div class="col-md-12">
+            <h2>Content</h2>
+            <textarea name="content" cols="100" rows="10">{{ content.content }}</textarea>
+        </div>
+        <div class="col-md-6 mt-3">
+            <h2>Attachement List: </h2>
+            <ul>
+                {% for file in files %}
+                <li class=""><a href="{{ file.media.url }}">{{ file.name }}</a></li>
+                {% endfor %}
+            </ul>
+        </div>
+        <hr class="font-weight-bold">
+        <div class="col-md-6">
+
+            <h2>Comments</h2>
+            {% for comment in comments %}
+            
+            <div class="card mt-2">
+                <div class="card-header">
+                    {{ comment.account }} <span class="text-muted">{{comment.timestamp}}</span>
+                </div>
+                <div class="card-body">
+                    <p>{{ comment.content }}</p>
+                    {% if comment.account.signature %}
+                    <img src="{{ comment.account.signature.url }}" alt="Signature" class="signature">
+                    {% endif %}
+                </div>
+            </div>
+            {% endfor %}
+
         </div>
     </div>
-
-    <h2>Folder Content</h2>
-    <ul>
-        {% for item in folder.folder_content.all %}
-            <li>{{ item.title }}</li>
-            <p>{{ item.content }}</p>
-        {% endfor %}
-    </ul>
-
-    <h2>Attached Files</h2>
-    <ul>
-        {% for file in files %}
-            <li><a href="{{ file.media.url }}">{{ file.name }}</a></li>
-        {% endfor %}
-    </ul>
-
-    <h2>Comments</h2>
-    {% for comment in comments %}
-        <div class="comment">
-            <h3>{{ comment.account }}</h3>
-            <p>{{ comment.content }}</p>
-            {% if comment.account.signature %}
-                <img src="{{ comment.account.signature.url }}" alt="Signature" class="signature">
-            {% endif %}
-        </div>
-    {% endfor %}
-
-    <a href="#" id="downloadPdf">Download as PDF</a>
-
-    <script>
-        document.getElementById('downloadPdf').addEventListener('click', function() {
-            window.print();  // Use window.print() to trigger the browser's print dialog
-        });
-    </script>
 </body>
+
 </html>

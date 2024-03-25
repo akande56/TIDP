@@ -1,7 +1,9 @@
-from datetime import datetime
-from pyexpat import model
-from venv import create
-from django import forms
+# from datetime import datetime
+# from pyexpat import model
+# from venv import create
+# from django import forms
+import requests
+import json
 from django.shortcuts import redirect, render, get_object_or_404
 from django.contrib.contenttypes.models import ContentType
 from django.views.generic import View
@@ -9,6 +11,7 @@ from django.http import response, JsonResponse, HttpResponse
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db import transaction
 from django.utils.decorators import method_decorator
+from django.template.loader import render_to_string
 from accounts.models import Account
 from accounts.decorators import user_passes_test, is_persona_tier_12 
 from home.models import Unit
@@ -29,18 +32,18 @@ from .forms import (
 import random
 import string
 from django.contrib import messages
-from config.utility import set_cookie
+# from config.utility import set_cookie
 from django.template.response import TemplateResponse
 import os
 from django.http import StreamingHttpResponse
 from wsgiref.util import FileWrapper
 import mimetypes
 from django.db.models import Q
-from reportlab.pdfgen import canvas
-from reportlab.lib.pagesizes import letter
-from reportlab.lib import colors
-from reportlab.lib.units import inch
-from reportlab.lib.utils import ImageReader
+# from reportlab.pdfgen import canvas
+# from reportlab.lib.pagesizes import letter
+# from reportlab.lib import colors
+# from reportlab.lib.units import inch
+# from reportlab.lib.utils import ImageReader
 
 # Create your views here.
 def downloadfile(request, id):
@@ -691,18 +694,75 @@ class NewCorrespondance(LoginRequiredMixin, View):
 
 #         return response
 
+# class PDFGenerationView(View):
+#     template_name = 'new/pdf_template.html'  # Update with your template name
+
+#     def get(self, request, routing_id):
+#         routing = get_object_or_404(Routing, id=routing_id)
+
+#         context = {
+#             'routing': routing,
+#             'folder': routing.folder,
+#             'content': Folder_Content.objects.get(folder=routing.folder),
+#             'files': File.objects.filter(folder_content__folder=routing.folder),
+#             'comments': Comment.objects.filter(content_type=routing.get_content_type, object_id=routing.id),
+#         }
+#         return render(request, self.template_name, context)
+
+
 class PDFGenerationView(View):
-    template_name = 'new/pdf_template.html'  # Update with your template name
-
     def get(self, request, routing_id):
+        # Get the routing object
         routing = get_object_or_404(Routing, id=routing_id)
+        folder = routing.folder
+        content = Folder_Content.objects.get(folder=folder)
+        files = File.objects.filter(folder_content__folder=folder)
+        comments = Comment.objects.filter(content_type=routing.get_content_type, object_id=routing.id)
+        API2PDF_API_KEY = os.environ.get('API2PDF_API_KEY')
 
-        context = {
+        # Construct HTML content for PDF
+        html_content = render_to_string('new/pdf_template.html',{
             'routing': routing,
-            'folder': routing.folder,
-            'content': Folder_Content.objects.filter(folder=routing.folder),
-            'files': File.objects.filter(folder_content__folder=routing.folder),
-            'comments': Comment.objects.filter(content_type=routing.get_content_type, object_id=routing.id),
+            'folder': folder,
+            'content' : content,
+            'files': files,
+            'comments': comments
+                }
+            )
+
+        # Parameters for the Api2Pdf API request
+        params = {
+            'html': html_content,
+            "inlinePdf": True,
+	        "fileName": "correspondance_summary.pdf",
+	        "options": {
+		        "orientation": "portrait",
+		        "pageSize": "A4",
+            }
         }
 
-        return render(request, self.template_name, context)
+        headers = {
+	        "content-type": "application/json",
+            "X-RapidAPI-Key": API2PDF_API_KEY,
+	        "X-RapidAPI-Host": "api2pdf-api2pdf-v1.p.rapidapi.com"
+        }
+        url = 'https://api2pdf-api2pdf-v1.p.rapidapi.com/wkhtmltopdf/html'
+
+        # Make a POST request to the Api2Pdf endpoint
+        response = requests.post(url = url, json=params, headers= headers)
+
+        # Check if request was successful
+        if response.status_code == 200:
+            # Get the PDF content from the response
+            response_data = json.loads(response.content)
+            pdf_url = response_data.get('pdf')
+
+            if pdf_url:
+                # Redirect the user to the PDF URL
+                return redirect(pdf_url)
+            else:
+                return HttpResponse('PDF URL not found in the response.', status=500)
+            
+        else:
+            # If request fails, return an error response
+            return HttpResponse('Error generating PDF', status=response.status_code)
